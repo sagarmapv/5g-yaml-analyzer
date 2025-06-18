@@ -11,7 +11,7 @@ setup instructions:
 A lightweight web tool to parse, inspect, and explore **5G SBI YAML API files** (from 3GPP specs).  
 Built with **Python + Flask**, it dynamically lists **Network Functions → Services → SBI messages** with URI/method/params/response breakdown.
 
-
+```
 
 ## 📁 Project Structure
 
@@ -49,7 +49,7 @@ To use the app:
 1. Download the full set of OpenAPI YAML files (e.g., from the [5GC_APIs GitHub repo](https://github.com/jdegre/5GC_APIs))
 2. Place them inside:
 
-```bash
+
 Yaml-Files/5GC_APIs/
 
 
