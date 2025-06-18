@@ -1,0 +1,59 @@
+# POC Summary: 5G SBI YAML Viewer & Analyzer
+
+## 👇 Problem Statement
+5G SBI (Service-Based Interfaces) are defined via OpenAPI (YAML) specs.  
+Manually exploring the service URIs, methods, and message structure across 20+ Network Functions is:
+- ⏱️ Time-consuming
+- 🧠 Error-prone
+- 📄 Scattered across files
+
+## 🎯 What This POC Solves
+- ✅ Parses 3GPP YAMLs → Swagger JSONs
+- ✅ Extracts and organizes data (method, URI, parameters, responses)
+- ✅ Builds a **Bank of SBI messages per NF-Service**
+- ✅ Auto-generates an **index mapping** of NFs → Services
+- ✅ Exposes all in a web viewer (Flask-based) → Click & Explore
+
+## 🧱 Architecture
+- `Yaml-Files/` → Raw OpenAPI specs
+- `Parsed-JSON/` → YAMLs parsed using Swagger-compatible tools
+- `Bank/` → Rich metadata JSON per API
+- `index.json` → UI data source (NF → Service map)
+- `Web-UI/` → HTML/JS explorer
+- `app.py` → Flask server with auto-refresh on launch
+
+## 🚀 Phase 1 Outcome
+✔️ Verified that all YAMLs can be batch-parsed  
+✔️ Extracted useful metadata (URI, method, params, status codes)  
+✔️ Confirmed clarity of structure for every service  
+✔️ Built local viewer
+✔️ Combined parsing + bank + index in one step  
+
+## 🤖 Future Vision: Agent + MCP + RAG
+
+> This viewer is just **Step 1**. The long-term plan includes:
+
+- ✅ **MCP-compatible Agent Interface**:
+  - Build a REST server exposing search/query on SBI Bank
+  - Conform to Model Context Protocol (MCP) standards
+
+- ✅ **LLM Integration (RAG)**:
+  - Fine-tuned models to answer queries like:
+    - *"Which SBI messages use Nudm_UEContext?"*
+    - *"Show all N7 responses from PCF with status 403"*
+  - Sources: Bank JSON + YAML
+
+- ✅ **Agent Orchestration**:
+  - Viewer Agent (responds to UI)
+  - Data Agent (fetches from Bank)
+  - Search Agent (runs semantic query)
+
+
+## 🔁 Next Steps
+- [ ] Convert Bank into MCP-compatible endpoint
+- [ ] Integrate with local LLM
+- [ ] Add curl generator from parsed JSON
+
+
+🛠️ Designed by: Aditya Madduri  
+🌼 Jaya Guru Datta  

@@ -1,0 +1,20 @@
+# Ignore virtual environments
+venv/
+5G-Env/
+.env/
+__pycache__/
+*.pyc
+*.pyo
+
+# IDEs
+.vscode/
+.idea/
+
+# System
+*.DS_Store
+
+# Output files
+Bank/
+Parsed-JSON/
+index.json
+*.log

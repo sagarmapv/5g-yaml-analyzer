@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>5G SBI YAML Viewer</title>
+  <style>
+    body { font-family: monospace; margin: 0; display: flex; flex-direction: row; height: 100vh; }
+    #file-list { width: 250px; background: #2a2a2a; color: #fff; padding: 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; border-right: 2px solid #444; flex-shrink: 0;}
+    .nf-header { font-weight: bold; margin-top: 10px; color: #ffd700; }
+    .service-link { display: block; color: #9cf; margin-left: 10px; cursor: pointer; text-decoration: underline; }
+    .yaml-link { color: #f99; margin-left: 5px; text-decoration: none; font-size: small; }
+    #viewer { flex: 1; display: flex; }
+    .pane { width: 50%; height: 100%; padding: 10px; box-sizing: border-box; overflow: auto; }
+    .left { background: #f4f4f4; border-right: 1px solid #ccc; }
+    .right { background: #e8f5e9; }
+    pre { white-space: pre-wrap; word-wrap: break-word; }
+    .section-header { font-weight: bold; cursor: pointer; color: #333; margin-top: 5px; }
+    .section-content { margin-left: 15px; display: none; margin-top: 3px; }
+    .message-block { border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; background: #fff; }
+  </style>
+</head>
+<body>
+  <div id="file-list">
+    <div id="file-list-header">
+      <h3 style="margin-bottom: 10px;">Click on NF to see files</h3>
+    </div>
+    <div id="file-list-body"></div>
+  </div>
+
+  <div id="viewer">
+    <div class="pane left">
+      <h3>Raw YAML</h3>
+      <pre id="yaml-display">Select a Service...</pre>
+    </div>
+    <div class="pane right">
+      <h3>Parsed Summary</h3>
+      <div id="json-display">Select a Service...</div>
+    </div>
+  </div>
+
+  <script>
+    const fileListDiv = document.getElementById('file-list');
+    const fileListBody = document.getElementById('file-list-body');
+    const yamlDisplay = document.getElementById('yaml-display');
+    const jsonDisplay = document.getElementById('json-display');
+
+    async function loadIndex() {
+      const response = await fetch('/index');
+      const indexData = await response.json();
+
+      fileListBody.innerHTML = ""; // now clears only the body, not header
+
+      for (const [nfName, services] of Object.entries(indexData)) {
+        const nfHeader = document.createElement('div');
+        nfHeader.className = 'nf-header';
+        nfHeader.textContent = nfName;
+        nfHeader.style.cursor = "pointer";
+
+        const serviceListDiv = document.createElement('div');
+        serviceListDiv.style.display = 'none';
+        serviceListDiv.style.marginLeft = '10px';
+
+        nfHeader.onclick = () => {
+          if (serviceListDiv.style.display === 'none') {
+            serviceListDiv.style.display = 'block';
+          } else {
+            serviceListDiv.style.display = 'none';
+          }
+        };
+
+        services.forEach(serviceEntry => {
+          const serviceLink = document.createElement('span');
+          serviceLink.className = 'service-link';
+          serviceLink.textContent = serviceEntry.service;
+          serviceLink.onclick = () => loadService(serviceEntry.source_file);
+
+          const yamlLink = document.createElement('a');
+          yamlLink.className = 'yaml-link';
+          yamlLink.href = `/yaml/${serviceEntry.source_file}`;
+          yamlLink.textContent = ' [YAML]';
+          yamlLink.target = '_blank';
+
+          const wrapper = document.createElement('div');
+          wrapper.appendChild(serviceLink);
+          wrapper.appendChild(yamlLink);
+
+          serviceListDiv.appendChild(wrapper);
+        });
+
+        fileListDiv.appendChild(nfHeader);
+        fileListDiv.appendChild(serviceListDiv);
+      }
+    }
+
+    async function loadService(filename) {
+      const yamlRes = await fetch(`/yaml/${filename}`);
+      const jsonRes = await fetch(`/parsed/${filename}`);
+      const yamlText = await yamlRes.text();
+      const jsonData = await jsonRes.json();
+
+      yamlDisplay.textContent = yamlText;
+      renderParsedSummary(jsonData);
+    }
+
+    function renderParsedSummary(parsedData) {
+      jsonDisplay.innerHTML = ""; // Clear previous content
+
+      parsedData.forEach(msg => {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'message-block';
+
+        const header = document.createElement('div');
+        header.style.fontWeight = "bold";
+        header.style.marginBottom = "5px";
+        header.textContent = `${msg.method} ${msg.path} (OperationId: ${msg.operationId})`;
+
+        msgDiv.appendChild(header);
+
+        if (msg.parameters && msg.parameters.length > 0) {
+          const paramHeader = createCollapsibleSection("Parameters", msg.parameters.map(p => `${p.in}: ${p.name} (required: ${p.required})`));
+          msgDiv.appendChild(paramHeader);
+        }
+
+        if (msg.request_body_required_fields && msg.request_body_required_fields.length > 0) {
+          const reqBodyHeader = createCollapsibleSection("Request Body Fields", msg.request_body_required_fields);
+          msgDiv.appendChild(reqBodyHeader);
+        }
+
+        if (msg.responses && msg.responses.length > 0) {
+          const respHeader = createCollapsibleSection("Responses", msg.responses.map(r => `${r.status_code}: ${r.description}`));
+          msgDiv.appendChild(respHeader);
+        }
+
+        jsonDisplay.appendChild(msgDiv);
+      });
+    }
+
+    function createCollapsibleSection(title, items) {
+      const sectionDiv = document.createElement('div');
+
+      const header = document.createElement('div');
+      header.className = 'section-header';
+      header.textContent = "▶️ " + title;
+
+      const contentDiv = document.createElement('div');
+      contentDiv.className = 'section-content';
+
+      items.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.textContent = item;
+        contentDiv.appendChild(itemDiv);
+      });
+
+      header.onclick = () => {
+        const isVisible = contentDiv.style.display === 'block';
+        contentDiv.style.display = isVisible ? 'none' : 'block';
+        header.textContent = (isVisible ? "▶️ " : "▼ ") + title;
+      };
+
+      sectionDiv.appendChild(header);
+      sectionDiv.appendChild(contentDiv);
+
+      return sectionDiv;
+    }
+
+    window.onload = loadIndex;
+  </script>
+</body>
+</html>
