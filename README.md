@@ -15,7 +15,7 @@ Built with **Python + Flask**, it dynamically lists **Network Functions → Serv
 
 ## 📁 Project Structure
 
-```
+```text
 
 5G-World/
 ├── Yaml-Files/             # Raw 3GPP YAMLs (5GC\_APIs)
