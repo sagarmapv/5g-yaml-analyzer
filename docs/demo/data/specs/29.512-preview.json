@@ -1,0 +1,108 @@
+{
+  "tsNumber": "29.512",
+  "title": "TS 29.512",
+  "tagline": "Session policy decisions that shape every PDU session",
+  "summary": "TS 29.512 defines the Session Management Policy Control Service on the PCF. The SMF is the primary consumer: it requests policy for each PDU session and applies QoS, charging, and traffic rules the PCF returns. This spec is the SBI contract for session-level policy \u2014 not radio, not registration, not user-plane forwarding.",
+  "whyItMatters": "Every PDU session that needs differentiated QoS or charging passes through this service. SMF cannot fully establish or modify a session without policy input from PCF. Fifteen other API specs in the corpus reuse 29.512 schemas \u2014 it is a shared policy vocabulary for the core.",
+  "defines": [
+    "SM Policy Association lifecycle (create, read, update, delete)",
+    "SmPolicyContextData and SmPolicyDecision data models"
+  ],
+  "primaryNf": "",
+  "entryPoints": [
+    {
+      "type": "sbi",
+      "method": "POST",
+      "path": "/npcf-smpolicycontrol/v1/sm-policies",
+      "operationId": "CreateSMPolicy",
+      "consumer": "SMF",
+      "description": "Primary entry \u2014 SMF creates an Individual SM Policy association for a PDU session."
+    },
+    {
+      "type": "sbi",
+      "method": "POST",
+      "path": "/npcf-smpolicycontrol/v1/sm-policies/{smPolicyId}/update",
+      "operationId": "UpdateSMPolicy",
+      "consumer": "SMF",
+      "description": "SMF reports session events or requests policy re-evaluation."
+    },
+    {
+      "type": "procedure",
+      "name": "PDU Session Establishment",
+      "refSpec": "23.502",
+      "trigger": "SMF needs session management policy before applying rules to UPF"
+    }
+  ],
+  "e2eFlowSteps": [
+    {
+      "order": 1,
+      "actors": [
+        "UE",
+        "RAN",
+        "AMF"
+      ],
+      "action": "UE requests PDU session establishment",
+      "in512": false,
+      "messageKind": "procedural"
+    },
+    {
+      "order": 2,
+      "actors": [
+        "AMF",
+        "SMF"
+      ],
+      "action": "AMF invokes Nsmf_PDUSession CreateSMContext",
+      "in512": false,
+      "refSpec": "29.502",
+      "operationId": "PostSmContexts",
+      "messageKind": "sbi"
+    },
+    {
+      "order": 3,
+      "actors": [
+        "SMF",
+        "NRF"
+      ],
+      "action": "SMF discovers PCF (Npcf_SMPolicyControl)",
+      "in512": false,
+      "refSpec": "29.510",
+      "operationId": "SearchNFInstances",
+      "messageKind": "sbi"
+    },
+    {
+      "order": 4,
+      "actors": [
+        "SMF",
+        "PCF"
+      ],
+      "action": "SMF sends CreateSMPolicy with SmPolicyContextData",
+      "in512": true,
+      "operationId": "CreateSMPolicy",
+      "messageKind": "sbi"
+    }
+  ],
+  "layerHints": {
+    "architectureTs": "23.502",
+    "serviceTs": "29.512",
+    "operations": [
+      {
+        "operationId": "CreateSMPolicy",
+        "explorerUrl": "/?q=CreateSMPolicy",
+        "description": "Primary entry \u2014 SMF creates an Individual SM Policy association for a PDU session."
+      },
+      {
+        "operationId": "UpdateSMPolicy",
+        "explorerUrl": "/?q=UpdateSMPolicy",
+        "description": "SMF reports session events or requests policy re-evaluation."
+      },
+      {
+        "operationId": "PDU Session Establishment",
+        "explorerUrl": "/?q=PDU Session Establishment",
+        "description": ""
+      }
+    ]
+  },
+  "storyUrl": "/specs/29.512",
+  "platformUrl": "/specs?ts=29.512",
+  "stitchAnchor": null
+}

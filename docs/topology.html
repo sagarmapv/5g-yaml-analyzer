@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="demo-mode" content="true">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5G NF Topology</title>
+  <link rel="stylesheet" href="./static/styles.css">
+  <link rel="stylesheet" href="./static/topology.css">
+  <script src="./static/vendor/vis-network.min.js"></script>
+</head>
+<body class="topology-page">
+  <header class="topology-header">
+    <div>
+      <h1>5G NF Topology</h1>
+      <p class="subtitle">Inferred SBI relationships from cross-spec YAML references</p>
+    </div>
+    <nav class="page-nav">
+      <a href="./index.html" class="nav-link" data-nav="explorer">Explorer</a>
+      <a href="./topology.html" class="nav-link" data-nav="topology">Topology</a>
+      <a href="./master-story.html?id=pdu-session-sm-policy" class="nav-link" data-nav="specs">Specs</a>
+      <a href="./master-story.html?id=pdu-session-sm-policy" class="nav-link" data-nav="stories">Stories</a>
+      <a href="./ladder.html?id=pdu-session-sm-policy&amp;nfs=SMF,PCF" class="nav-link" data-nav="ladder">Ladder</a>
+    </nav>
+  </header>
+
+  <aside class="topology-controls">
+    <label class="control-row">
+      <input type="checkbox" id="core-only" checked>
+      Core 5GC NFs only
+    </label>
+
+    <label class="control-row">
+      Min link strength
+      <input type="range" id="min-weight" min="1" max="20" value="2">
+      <span id="min-weight-value">2</span>
+    </label>
+
+    <button type="button" id="refresh-graph" class="primary-btn">Refresh graph</button>
+
+    <div class="legend">
+      <h3>Legend</h3>
+      <div class="legend-item"><span class="dot core"></span> Core 5GC NF</div>
+      <div class="legend-item"><span class="dot extended"></span> Extended NF</div>
+      <div class="legend-item"><span class="dot proxy"></span> Proxy (SCP / SEPP)</div>
+      <p class="legend-note">Arrows show inferred API coupling from YAML $ref links, SBI paths, and SCP/SEPP routing patterns. SCP and SEPP are proxies — they relay traffic rather than owning rich cross-NF schemas.</p>
+    </div>
+
+    <div id="node-details" class="edge-details hidden">
+      <h3>NF</h3>
+      <p id="node-summary"></p>
+      <a id="node-specs-link" href="./master-story.html?id=pdu-session-sm-policy">View specs →</a>
+    </div>
+
+    <div id="edge-details" class="edge-details hidden">
+      <h3>Link details</h3>
+      <p id="edge-summary"></p>
+      <ul id="edge-examples"></ul>
+    </div>
+  </aside>
+
+  <main class="topology-main">
+    <div id="graph-status" class="graph-status">Loading topology...</div>
+    <div id="nf-graph"></div>
+  </main>
+
+  <script src="./static/demo-loader.js"></script>
+  <script src="./static/site-nav.js"></script>
+  <script src="./static/topology.js"></script>
+</body>
+</html>

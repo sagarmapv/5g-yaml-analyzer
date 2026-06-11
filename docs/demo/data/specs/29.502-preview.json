@@ -1,0 +1,103 @@
+{
+  "tsNumber": "29.502",
+  "title": "Session Management Services; Stage 3 (SMF SBI)",
+  "tagline": "SMF PDU Session \u2014 the service that triggers session policy",
+  "summary": "TS 29.502 defines the Nsmf_PDUSession service on the SMF. It is the Stage-3 SBI for creating and managing PDU sessions, SM contexts, and user-plane resources. In the 29.512 story, SMF runs these procedures first \u2014 then calls PCF for session management policy before applying rules to the UPF.",
+  "whyItMatters": "Without 29.502, there is no SBI contract for how AMF hands a PDU session to SMF or how SMF programs the UPF. The 512 policy call sits inside the PDU session establishment procedure defined in TS 23.502 and implemented here at Stage 3.",
+  "defines": [
+    "SM context and PDU session lifecycle (create, update, release)",
+    "N4 user-plane session establishment and modification"
+  ],
+  "primaryNf": "SMF",
+  "entryPoints": [
+    {
+      "type": "sbi",
+      "method": "POST",
+      "path": "/nsmf-pdusession/v1/sm-contexts",
+      "operationId": "PostSmContexts",
+      "consumer": "AMF",
+      "description": "AMF creates an SM context \u2014 start of PDU session establishment on SMF."
+    },
+    {
+      "type": "sbi",
+      "method": "POST",
+      "path": "/nsmf-pdusession/v1/pdu-sessions",
+      "operationId": "PostPduSessions",
+      "consumer": "SMF",
+      "description": "PDU session resource creation (alternative deployment patterns)."
+    },
+    {
+      "type": "procedure",
+      "name": "PDU Session Establishment",
+      "refSpec": "23.502",
+      "trigger": "Stage-2 procedure \u2014 when SMF must request session policy from PCF"
+    }
+  ],
+  "e2eFlowSteps": [
+    {
+      "order": 2,
+      "actors": [
+        "AMF",
+        "SMF"
+      ],
+      "action": "AMF invokes Nsmf_PDUSession PostSmContexts (Create SM Context)",
+      "in502": true,
+      "operationId": "PostSmContexts"
+    },
+    {
+      "order": 3,
+      "actors": [
+        "SMF",
+        "NRF"
+      ],
+      "action": "SMF discovers PCF (Npcf_SMPolicyControl)",
+      "in502": false,
+      "refSpec": "29.510"
+    },
+    {
+      "order": 4,
+      "actors": [
+        "SMF",
+        "PCF"
+      ],
+      "action": "SMF sends CreateSMPolicy with SmPolicyContextData",
+      "in502": false,
+      "refSpec": "29.512",
+      "operationId": "CreateSMPolicy"
+    },
+    {
+      "order": 5,
+      "actors": [
+        "PCF",
+        "SMF"
+      ],
+      "action": "PCF returns SmPolicyDecision",
+      "in502": false,
+      "refSpec": "29.512"
+    }
+  ],
+  "layerHints": {
+    "architectureTs": "23.502",
+    "serviceTs": "29.502",
+    "operations": [
+      {
+        "operationId": "PostSmContexts",
+        "explorerUrl": "/?q=PostSmContexts",
+        "description": "AMF creates an SM context \u2014 start of PDU session establishment on SMF."
+      },
+      {
+        "operationId": "PostPduSessions",
+        "explorerUrl": "/?q=PostPduSessions",
+        "description": "PDU session resource creation (alternative deployment patterns)."
+      },
+      {
+        "operationId": "PDU Session Establishment",
+        "explorerUrl": "/?q=PDU Session Establishment",
+        "description": ""
+      }
+    ]
+  },
+  "storyUrl": "/specs/29.502",
+  "platformUrl": "/specs?ts=29.502",
+  "stitchAnchor": "29.512"
+}

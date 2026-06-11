@@ -1,0 +1,97 @@
+{
+  "tsNumber": "29.513",
+  "title": "Policy and Charging Control signalling flows; Stage 3",
+  "tagline": "SM Policy Association \u2014 signalling diagrams for session policy",
+  "summary": "TS 29.513 provides Stage-3 signalling flow diagrams for Policy and Charging Control, including SM Policy Association Establishment and Modification. In the 29.512 story, it complements the SBI API spec with message-sequence views of the same SMF\u2013PCF interactions.",
+  "whyItMatters": "29.512 defines the REST API contract; 29.513 shows the signalling choreography. Together they explain both the wire format and the ordered exchange during PDU session establishment.",
+  "defines": [
+    "SM Policy Association Establishment signalling flow",
+    "SM Policy Association Modification (SMF-initiated and PCF-initiated)"
+  ],
+  "primaryNf": "",
+  "entryPoints": [
+    {
+      "type": "procedure",
+      "name": "SM Policy Association Establishment",
+      "clause": "5.2.1",
+      "description": "Signalling flow when SMF creates an SM Policy Association with PCF."
+    },
+    {
+      "type": "procedure",
+      "name": "SM Policy Association Modification initiated by the PCF",
+      "clause": "5.2.2.2",
+      "description": "PCF-initiated policy update via SmPolicyUpdateNotification."
+    },
+    {
+      "type": "sbi",
+      "name": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "description": "Stage-3 SBI operation corresponding to establishment flow."
+    }
+  ],
+  "e2eFlowSteps": [
+    {
+      "order": 1,
+      "actors": [
+        "UE",
+        "RAN",
+        "AMF"
+      ],
+      "action": "PDU session establishment requested",
+      "refSpec": "23.502"
+    },
+    {
+      "order": 2,
+      "actors": [
+        "AMF",
+        "SMF"
+      ],
+      "action": "AMF invokes SMF for PDU session",
+      "refSpec": "29.502"
+    },
+    {
+      "order": 4,
+      "actors": [
+        "SMF",
+        "PCF"
+      ],
+      "action": "SM Policy Association Establishment \u2014 CreateSMPolicy",
+      "inSpec": true,
+      "refSpec": "29.512"
+    },
+    {
+      "order": 6,
+      "actors": [
+        "PCF",
+        "SMF"
+      ],
+      "action": "SmPolicyDecision returned \u2014 association established",
+      "inSpec": true,
+      "refSpec": "29.512"
+    }
+  ],
+  "layerHints": {
+    "architectureTs": "23.502",
+    "serviceTs": "29.513",
+    "operations": [
+      {
+        "operationId": "SM Policy Association Establishment",
+        "explorerUrl": "/?q=SM Policy Association Establishment",
+        "description": "Signalling flow when SMF creates an SM Policy Association with PCF."
+      },
+      {
+        "operationId": "SM Policy Association Modification initiated by the PCF",
+        "explorerUrl": "/?q=SM Policy Association Modification initiated by the PCF",
+        "description": "PCF-initiated policy update via SmPolicyUpdateNotification."
+      },
+      {
+        "operationId": "CreateSMPolicy",
+        "explorerUrl": "/?q=CreateSMPolicy",
+        "description": "Stage-3 SBI operation corresponding to establishment flow."
+      }
+    ]
+  },
+  "storyUrl": "/specs/29.513",
+  "platformUrl": "/specs?ts=29.513",
+  "stitchAnchor": "29.512"
+}

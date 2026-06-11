@@ -1,0 +1,94 @@
+{
+  "tsNumber": "23.503",
+  "title": "Policy and charging control framework for the 5G System (5GS)",
+  "tagline": "Stage-2 policy framework \u2014 what SmPolicyDecision represents",
+  "summary": "TS 23.503 defines the policy and charging control framework at Stage 2, including session management policy, PCC rules, and QoS. For the 29.512 story, it explains the policy concepts that SmPolicyContextData and SmPolicyDecision encode at the SBI layer.",
+  "whyItMatters": "29.512 is the API surface; 23.503 is the conceptual model. Understanding PCC rules, QoS data, and policy triggers from Stage 2 makes the 512 data models meaningful rather than opaque JSON schemas.",
+  "defines": [
+    "Session management policy and PCC rule framework",
+    "Policy control triggers and decision semantics"
+  ],
+  "primaryNf": "",
+  "entryPoints": [
+    {
+      "type": "procedure",
+      "name": "Session management policy control",
+      "clause": "4",
+      "description": "Framework for SMF\u2013PCF session policy interaction."
+    },
+    {
+      "type": "sbi",
+      "name": "SmPolicyDecision",
+      "refSpec": "29.512",
+      "description": "Stage-3 encoding of policy decisions from this framework."
+    },
+    {
+      "type": "procedure",
+      "name": "PDU Session Establishment",
+      "refSpec": "23.502",
+      "description": "Procedure where session policy is applied."
+    }
+  ],
+  "e2eFlowSteps": [
+    {
+      "order": 3,
+      "actors": [
+        "SMF"
+      ],
+      "action": "SMF determines session requires policy control",
+      "inSpec": true
+    },
+    {
+      "order": 4,
+      "actors": [
+        "SMF",
+        "PCF"
+      ],
+      "action": "SMF sends policy context \u2014 PCF evaluates framework rules",
+      "inSpec": true,
+      "refSpec": "29.512"
+    },
+    {
+      "order": 5,
+      "actors": [
+        "PCF"
+      ],
+      "action": "PCF evaluates policy (subscription, slice, DNN rules)",
+      "inSpec": true
+    },
+    {
+      "order": 6,
+      "actors": [
+        "PCF",
+        "SMF"
+      ],
+      "action": "PCF returns SmPolicyDecision with PCC and QoS",
+      "inSpec": true,
+      "refSpec": "29.512"
+    }
+  ],
+  "layerHints": {
+    "architectureTs": "23.502",
+    "serviceTs": "23.503",
+    "operations": [
+      {
+        "operationId": "Session management policy control",
+        "explorerUrl": "/?q=Session management policy control",
+        "description": "Framework for SMF\u2013PCF session policy interaction."
+      },
+      {
+        "operationId": "SmPolicyDecision",
+        "explorerUrl": "/?q=SmPolicyDecision",
+        "description": "Stage-3 encoding of policy decisions from this framework."
+      },
+      {
+        "operationId": "PDU Session Establishment",
+        "explorerUrl": "/?q=PDU Session Establishment",
+        "description": "Procedure where session policy is applied."
+      }
+    ]
+  },
+  "storyUrl": "/specs/23.503",
+  "platformUrl": "/specs?ts=23.503",
+  "stitchAnchor": "29.512"
+}

@@ -34,21 +34,7 @@ jobs:
         run: python scripts/export_static_demo.py
 
       - name: Patch demo HTML for relative assets
-        run: |
-          python -c "
-          from pathlib import Path
-          for name in ('ladder.html', 'master-story.html'):
-              p = Path('docs') / name
-              if not p.exists():
-                  continue
-              t = p.read_text(encoding='utf-8')
-              t = t.replace('href=\"/static/', 'href=\"./static/')
-              t = t.replace('src=\"/static/', 'src=\"./static/')
-              t = t.replace('href=\"/', 'href=\"./')
-              if 'demo-loader.js' not in t:
-                  t = t.replace('<script src=\"./static/site-nav.js\">', '<script src=\"./static/demo-loader.js\"></script>\n  <script src=\"./static/site-nav.js\">')
-              p.write_text(t, encoding='utf-8')
-          "
+        run: python scripts/patch_docs_html.py
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

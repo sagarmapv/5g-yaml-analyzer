@@ -2,6 +2,7 @@
 (function () {
   const path = window.location.pathname || "";
   const isPages =
+    path.includes("/5g-yaml-analyzer/") ||
     path.includes("/5g-visualizer/") ||
     path.match(/\/[^/]+\/ladder\.html/) ||
     document.querySelector('meta[name="demo-mode"]');
@@ -27,19 +28,26 @@
     }
 
     let demoUrl = null;
-    const ladderMatch = url.match(/^\/api\/stories\/([^/]+)\/ladder/);
-    const hubMatch = url.match(/^\/api\/stories\/([^/?]+)\?view=hub/);
-    const storyHubMatch = url.match(/^\/api\/stories\/([^/?]+)$/);
+    const ladderMatch = url.match(/^\/api\/stories\/([^/?]+)\/ladder/);
+    const hubMatch = url.match(/^\/api\/stories\/([^/?]+)/);
     const opMatch = url.match(/^\/api\/operations\/([^/?]+)/);
+    const specPreviewMatch = url.match(/^\/api\/specs\/([^/?]+)\/preview/);
+    const topologyMatch = url.match(/^\/api\/topology/);
+    const nfsMatch = url.match(/^\/api\/nfs/);
 
     if (ladderMatch) {
       demoUrl = `${DEMO_BASE}/ladder-${ladderMatch[1]}.json`;
-    } else if (url.includes("view=hub") && hubMatch) {
+    } else if (hubMatch && url.includes("view=hub")) {
       demoUrl = `${DEMO_BASE}/stories-${hubMatch[1]}-hub.json`;
-    } else if (storyHubMatch && url.includes("view=hub")) {
-      demoUrl = `${DEMO_BASE}/stories-${storyHubMatch[1]}-hub.json`;
     } else if (opMatch) {
       demoUrl = `${DEMO_BASE}/operations/${decodeURIComponent(opMatch[1])}.json`;
+    } else if (specPreviewMatch) {
+      const ts = decodeURIComponent(specPreviewMatch[1]);
+      demoUrl = `${DEMO_BASE}/specs/${ts}-preview.json`;
+    } else if (topologyMatch) {
+      demoUrl = `${DEMO_BASE}/topology-core.json`;
+    } else if (nfsMatch) {
+      demoUrl = `${DEMO_BASE}/nf-catalog-summary.json`;
     }
 
     if (demoUrl) {

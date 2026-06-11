@@ -1,0 +1,36 @@
+{
+  "journey": "pdu-session-sm-policy",
+  "anchorSpec": "29.512",
+  "operations": [
+    {
+      "id": "PostSmContexts",
+      "method": "POST",
+      "path": "/sm-contexts",
+      "summary": "Create SM Context"
+    },
+    {
+      "id": "GetSmData",
+      "method": "GET",
+      "path": "/{supi}/sm-data",
+      "summary": "retrieve a UE's Session Management Subscription Data"
+    },
+    {
+      "id": "SearchNFInstances",
+      "method": "GET",
+      "path": "/nf-instances",
+      "summary": "Search a collection of NF Instances"
+    },
+    {
+      "id": "CreateSMPolicy",
+      "method": "POST",
+      "path": "/sm-policies",
+      "summary": "Create a new Individual SM Policy."
+    },
+    {
+      "id": "UpdateSmContext",
+      "method": "POST",
+      "path": "/sm-contexts/{smContextRef}/modify",
+      "summary": "Update SM Context"
+    }
+  ]
+}
