@@ -69,6 +69,8 @@ def export_demo() -> None:
 
     ladder = build_story_ladder(JOURNEY_STORY_ID)
     if ladder:
+        ladder = dict(ladder)
+        ladder["knowledgeUrl"] = f"./master-story.html?id={JOURNEY_STORY_ID}"
         _write_json(DATA_DIR / f"ladder-{JOURNEY_STORY_ID}.json", ladder)
 
     hub = build_master_story(JOURNEY_STORY_ID, view="hub")

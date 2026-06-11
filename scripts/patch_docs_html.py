@@ -30,7 +30,13 @@ def patch_html_for_pages(text: str) -> str:
     if 'name="demo-mode"' not in text:
         text = text.replace(
             '<meta name="viewport"',
-            '<meta name="demo-mode" content="true">\n  <meta name="viewport"',
+            '<meta name="demo-mode" content="true">\n  <meta name="demo-base" content="./demo/data">\n  <meta name="viewport"',
+            1,
+        )
+    elif 'name="demo-base"' not in text:
+        text = text.replace(
+            '<meta name="demo-mode" content="true">',
+            '<meta name="demo-mode" content="true">\n  <meta name="demo-base" content="./demo/data">',
             1,
         )
 

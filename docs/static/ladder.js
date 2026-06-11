@@ -10,6 +10,13 @@ function storyIdFromUrl() {
   return new URLSearchParams(window.location.search).get("id") || "pdu-session-sm-policy";
 }
 
+function knowledgeUrlForStory(id) {
+  if (document.querySelector('meta[name="demo-mode"]')) {
+    return `./master-story.html?id=${encodeURIComponent(id)}`;
+  }
+  return `/stories?id=${id}`;
+}
+
 function nfsFromUrl() {
   const raw = new URLSearchParams(window.location.search).get("nfs") || "";
   return raw
@@ -111,7 +118,7 @@ async function init() {
     ladderData = await res.json();
     document.title = `${ladderData.title} — Signaling Ladder`;
     document.getElementById("ladder-title").textContent = ladderData.title;
-    document.getElementById("ladder-knowledge-link").href = ladderData.knowledgeUrl || `/stories?id=${id}`;
+    document.getElementById("ladder-knowledge-link").href = knowledgeUrlForStory(id);
     render();
     bindHandlers();
   } catch (err) {
