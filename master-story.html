@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="demo-mode" content="true">
+  <meta name="demo-base" content="./demo/data">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master Story</title>
+  <link rel="stylesheet" href="./static/styles.css">
+  <link rel="stylesheet" href="./static/spec-story.css">
+  <link rel="stylesheet" href="./static/master-story.css">
+</head>
+<body class="master-story-page">
+  <header class="story-header">
+    <div>
+      <p class="breadcrumb"><a href="./index.html">Explorer</a> · <a href="./master-story.html?id=pdu-session-sm-policy">Specs platform</a> · <span>Master story</span></p>
+      <h1 id="master-title">Master Story</h1>
+      <p id="master-tagline" class="subtitle"></p>
+    </div>
+    <nav class="page-nav">
+      <a href="./index.html" class="nav-link" data-nav="explorer">Explorer</a>
+      <a href="./topology.html" class="nav-link" data-nav="topology">Topology</a>
+      <a href="./master-story.html?id=pdu-session-sm-policy" class="nav-link" data-nav="specs">Specs</a>
+      <a href="./master-story.html?id=pdu-session-sm-policy" class="nav-link active" data-nav="stories">Stories</a>
+      <a href="./ladder.html?id=pdu-session-sm-policy&amp;nfs=SMF,PCF" class="nav-link" data-nav="ladder">Ladder</a>
+    </nav>
+  </header>
+
+  <main class="master-main" id="master-main">
+    <p class="loading">Loading master story…</p>
+  </main>
+
+  <script src="./static/demo-loader.js"></script>
+  <script src="./static/site-nav.js"></script>
+  <script src="./static/flow-renderer.js"></script>
+  <script src="./static/master-story.js"></script>
+</body>
+</html>

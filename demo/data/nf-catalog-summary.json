@@ -1,0 +1,615 @@
+{
+  "catalogVersion": "1.0",
+  "references": [
+    {
+      "id": "5g-system-overview",
+      "url": "https://www.3gpp.org/technologies/5g-system-overview",
+      "role": "overview"
+    },
+    {
+      "id": "23.501",
+      "title": "System architecture for the 5G System",
+      "role": "normative"
+    },
+    {
+      "id": "23.502",
+      "title": "Procedures for the 5G System",
+      "role": "normative"
+    }
+  ],
+  "architecture": {
+    "sba": "Service-Based Architecture \u2014 NFs register/discover via NRF; HTTP/2 SBI (TS 23.501)",
+    "cups": "Control/User Plane Separation \u2014 UPF user plane; AMF/SMF control plane (TS 23.501)",
+    "deploymentDefault": "sa"
+  },
+  "procedureRoles": {
+    "pdu_session_establishment": {
+      "required": [
+        "UE",
+        "RAN",
+        "AMF",
+        "SMF",
+        "UPF"
+      ],
+      "common": [
+        "UDM",
+        "PCF",
+        "NRF",
+        "UDR"
+      ],
+      "optional": [
+        "CHF",
+        "NSSF",
+        "NWDAF",
+        "AF",
+        "NEF"
+      ]
+    },
+    "registration": {
+      "required": [
+        "UE",
+        "RAN",
+        "AMF",
+        "AUSF",
+        "UDM",
+        "NRF"
+      ],
+      "common": [
+        "NSSF",
+        "UDR",
+        "PCF"
+      ],
+      "optional": [
+        "SEPP",
+        "SCP"
+      ]
+    }
+  },
+  "interfaces": {
+    "N1": {
+      "endpoints": [
+        "UE",
+        "AMF"
+      ],
+      "protocol": "NAS",
+      "refSpec": "24.501"
+    },
+    "N2": {
+      "endpoints": [
+        "RAN",
+        "AMF"
+      ],
+      "protocol": "NG-AP",
+      "refSpec": "38.413"
+    },
+    "N3": {
+      "endpoints": [
+        "RAN",
+        "UPF"
+      ],
+      "protocol": "GTP-U",
+      "refSpec": "29.281"
+    },
+    "N4": {
+      "endpoints": [
+        "SMF",
+        "UPF"
+      ],
+      "protocol": "PFCP",
+      "refSpec": "29.244"
+    },
+    "N6": {
+      "endpoints": [
+        "UPF",
+        "DN"
+      ],
+      "protocol": "user traffic",
+      "refSpec": "23.501"
+    },
+    "N7": {
+      "endpoints": [
+        "SMF",
+        "PCF"
+      ],
+      "protocol": "SBI",
+      "refSpec": "29.512"
+    },
+    "N8": {
+      "endpoints": [
+        "AMF",
+        "UDM"
+      ],
+      "protocol": "SBI",
+      "refSpec": "29.503"
+    },
+    "N10": {
+      "endpoints": [
+        "SMF",
+        "UDM"
+      ],
+      "protocol": "SBI",
+      "refSpec": "29.503"
+    },
+    "N11": {
+      "endpoints": [
+        "AMF",
+        "SMF"
+      ],
+      "protocol": "SBI",
+      "refSpec": "29.502"
+    },
+    "Nnrf": {
+      "endpoints": [
+        "*",
+        "NRF"
+      ],
+      "protocol": "SBI",
+      "refSpec": "29.510"
+    }
+  },
+  "networkFunctions": [
+    {
+      "id": "DN",
+      "displayName": "Data Network",
+      "actorKind": "external",
+      "tier": "access",
+      "plane": "user",
+      "sbiCapable": false,
+      "e2eDefault": false,
+      "refSpec": "23.501",
+      "bankCoverage": {
+        "inCorpus": false,
+        "serviceCount": 0,
+        "sourceFiles": []
+      }
+    },
+    {
+      "id": "RAN",
+      "displayName": "NG-RAN (gNB)",
+      "actorKind": "access",
+      "tier": "access",
+      "plane": "access",
+      "sbiCapable": false,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "bankCoverage": {
+        "inCorpus": false,
+        "serviceCount": 0,
+        "sourceFiles": []
+      }
+    },
+    {
+      "id": "UE",
+      "displayName": "User Equipment",
+      "actorKind": "access",
+      "tier": "access",
+      "plane": "access",
+      "sbiCapable": false,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "bankCoverage": {
+        "inCorpus": false,
+        "serviceCount": 0,
+        "sourceFiles": []
+      }
+    },
+    {
+      "id": "AMF",
+      "displayName": "Access and Mobility Management Function",
+      "actorKind": "nf",
+      "tier": "core_control",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "services": [
+        "Namf_Communication",
+        "Namf_EventExposure"
+      ],
+      "interfaces": {
+        "served": [
+          "N1",
+          "N2",
+          "N8",
+          "N11",
+          "N12"
+        ]
+      },
+      "procedures": [
+        "registration",
+        "pdu_session",
+        "service_request",
+        "handover"
+      ],
+      "bankCoverage": {
+        "inCorpus": true,
+        "serviceCount": 6,
+        "sourceFiles": [
+          "TS29518_Namf_Communication.yaml",
+          "TS29518_Namf_EventExposure.yaml",
+          "TS29518_Namf_Location.yaml",
+          "TS29518_Namf_MBSBroadcast.yaml",
+          "TS29518_Namf_MBSCommunication.yaml",
+          "TS29518_Namf_MT.yaml"
+        ]
+      }
+    },
+    {
+      "id": "AUSF",
+      "displayName": "Authentication Server Function",
+      "actorKind": "nf",
+      "tier": "core_control",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "procedures": [
+        "registration"
+      ],
+      "bankCoverage": {
+        "inCorpus": true,
+        "serviceCount": 3,
+        "sourceFiles": [
+          "TS29509_Nausf_SoRProtection.yaml",
+          "TS29509_Nausf_UEAuthentication.yaml",
+          "TS29509_Nausf_UPUProtection.yaml"
+        ]
+      }
+    },
+    {
+      "id": "NRF",
+      "displayName": "Network Repository Function",
+      "actorKind": "nf",
+      "tier": "core_control",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "services": [
+        "Nnrf_NFDiscovery",
+        "Nnrf_NFManagement"
+      ],
+      "interfaces": {
+        "served": [
+          "Nnrf"
+        ]
+      },
+      "procedures": [
+        "registration",
+        "pdu_session_establishment"
+      ],
+      "bankCoverage": {
+        "inCorpus": true,
+        "serviceCount": 4,
+        "sourceFiles": [
+          "TS29510_Nnrf_AccessToken.yaml",
+          "TS29510_Nnrf_Bootstrapping.yaml",
+          "TS29510_Nnrf_NFDiscovery.yaml",
+          "TS29510_Nnrf_NFManagement.yaml"
+        ]
+      }
+    },
+    {
+      "id": "NSSF",
+      "displayName": "Network Slice Selection Function",
+      "actorKind": "nf",
+      "tier": "core_control",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "procedures": [
+        "registration",
+        "pdu_session_establishment"
+      ],
+      "bankCoverage": {
+        "inCorpus": true,
+        "serviceCount": 3,
+        "sourceFiles": [
+          "TS29522_SliceParamProvision.yaml",
+          "TS29531_Nnssf_NSSAIAvailability.yaml",
+          "TS29531_Nnssf_NSSelection.yaml"
+        ]
+      }
+    },
+    {
+      "id": "PCF",
+      "displayName": "Policy Control Function",
+      "actorKind": "nf",
+      "tier": "core_control",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "services": [
+        "Npcf_SMPolicyControl"
+      ],
+      "interfaces": {
+        "served": [
+          "N7"
+        ]
+      },
+      "procedures": [
+        "pdu_session_establishment"
+      ],
+      "bankCoverage": {
+        "inCorpus": true,
+        "serviceCount": 10,
+        "sourceFiles": [
+          "TS29507_Npcf_AMPolicyControl.yaml",
+          "TS29512_Npcf_SMPolicyControl.yaml",
+          "TS29514_Npcf_PolicyAuthorization.yaml",
+          "TS29523_Npcf_EventExposure.yaml",
+          "TS29525_Npcf_UEPolicyControl.yaml",
+          "TS29534_Npcf_AMPolicyAuthorization.yaml",
+          "TS29537_Npcf_MBSPolicyAuthorization.yaml",
+          "TS29537_Npcf_MBSPolicyControl.yaml",
+          "TS29543_Npcf_PDTQPolicyControl.yaml",
+          "TS29554_Npcf_BDTPolicyControl.yaml"
+        ]
+      }
+    },
+    {
+      "id": "SMF",
+      "displayName": "Session Management Function",
+      "actorKind": "nf",
+      "tier": "core_control",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "services": [
+        "Nsmf_PDUSession"
+      ],
+      "interfaces": {
+        "served": [
+          "N4",
+          "N7",
+          "N10",
+          "N11"
+        ]
+      },
+      "procedures": [
+        "pdu_session_establishment",
+        "service_request",
+        "handover"
+      ],
+      "bankCoverage": {
+        "inCorpus": true,
+        "serviceCount": 3,
+        "sourceFiles": [
+          "TS29502_Nsmf_PDUSession.yaml",
+          "TS29508_Nsmf_EventExposure.yaml",
+          "TS29542_Nsmf_NIDD.yaml"
+        ]
+      }
+    },
+    {
+      "id": "UDM",
+      "displayName": "Unified Data Management",
+      "actorKind": "nf",
+      "tier": "core_control",
+      "plane": "data",
+      "sbiCapable": true,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "services": [
+        "Nudm_SDM",
+        "Nudm_UECM",
+        "Nudm_EE"
+      ],
+      "interfaces": {
+        "served": [
+          "N8",
+          "N10",
+          "N13"
+        ]
+      },
+      "procedures": [
+        "registration",
+        "pdu_session_establishment"
+      ],
+      "bankCoverage": {
+        "inCorpus": true,
+        "serviceCount": 10,
+        "sourceFiles": [
+          "TS29503_Nudm_EE.yaml",
+          "TS29503_Nudm_MT.yaml",
+          "TS29503_Nudm_NIDDAU.yaml",
+          "TS29503_Nudm_PP.yaml",
+          "TS29503_Nudm_RSDS.yaml",
+          "TS29503_Nudm_SDM.yaml",
+          "TS29503_Nudm_SSAU.yaml",
+          "TS29503_Nudm_UEAU.yaml",
+          "TS29503_Nudm_UECM.yaml",
+          "TS29503_Nudm_UEID.yaml"
+        ]
+      }
+    },
+    {
+      "id": "UPF",
+      "displayName": "User Plane Function",
+      "actorKind": "nf",
+      "tier": "user_plane",
+      "plane": "user",
+      "sbiCapable": false,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "interfaces": {
+        "served": [
+          "N3",
+          "N4",
+          "N6",
+          "N9"
+        ]
+      },
+      "procedures": [
+        "pdu_session_establishment"
+      ],
+      "bankCoverage": {
+        "inCorpus": true,
+        "serviceCount": 3,
+        "sourceFiles": [
+          "TS29564_Nupf_EventExposure.yaml",
+          "TS29564_Nupf_GetPrivateUEIPaddr.yaml",
+          "TS29564_Nupf_GetUEPrivateIPaddrAndIdentifiers.yaml"
+        ]
+      }
+    },
+    {
+      "id": "UDR",
+      "displayName": "Unified Data Repository",
+      "actorKind": "nf",
+      "tier": "data",
+      "plane": "data",
+      "sbiCapable": true,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "services": [
+        "Nudr_DR"
+      ],
+      "procedures": [
+        "pdu_session_establishment",
+        "registration"
+      ],
+      "bankCoverage": {
+        "inCorpus": true,
+        "serviceCount": 6,
+        "sourceFiles": [
+          "TS29504_Nudr_DR.yaml",
+          "TS29504_Nudr_GroupIDmap.yaml",
+          "TS29505_Subscription_Data.yaml",
+          "TS29519_Application_Data.yaml",
+          "TS29519_Exposure_Data.yaml",
+          "TS29519_Policy_Data.yaml"
+        ]
+      }
+    },
+    {
+      "id": "CHF",
+      "displayName": "Charging Function",
+      "actorKind": "nf",
+      "tier": "charging",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": false,
+      "refSpec": "32.240",
+      "procedures": [
+        "pdu_session_establishment"
+      ],
+      "bankCoverage": {
+        "inCorpus": true,
+        "serviceCount": 3,
+        "sourceFiles": [
+          "TS29594_Nchf_SpendingLimitControl.yaml",
+          "TS32291_Nchf_ConvergedCharging.yaml",
+          "TS32291_Nchf_OfflineOnlyCharging.yaml"
+        ]
+      }
+    },
+    {
+      "id": "AF",
+      "displayName": "Application Function",
+      "actorKind": "external",
+      "tier": "exposure",
+      "plane": "control",
+      "sbiCapable": false,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "bankCoverage": {
+        "inCorpus": false,
+        "serviceCount": 0,
+        "sourceFiles": []
+      }
+    },
+    {
+      "id": "NEF",
+      "displayName": "Network Exposure Function",
+      "actorKind": "nf",
+      "tier": "exposure",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "procedures": [
+        "pdu_session_establishment"
+      ],
+      "bankCoverage": {
+        "inCorpus": true,
+        "serviceCount": 11,
+        "sourceFiles": [
+          "TS29256_Nnef_Authentication.yaml",
+          "TS29522_AMInfluence.yaml",
+          "TS29541_Nnef_SMContext.yaml",
+          "TS29541_Nnef_SMService.yaml",
+          "TS29551_Nnef_PFDmanagement.yaml",
+          "TS29591_Nnef_DNAIMapping.yaml",
+          "TS29591_Nnef_EASDeployment.yaml",
+          "TS29591_Nnef_ECSAddress.yaml",
+          "TS29591_Nnef_EventExposure.yaml",
+          "TS29591_Nnef_TrafficInfluenceData.yaml",
+          "TS29591_Nnef_UEId.yaml"
+        ]
+      }
+    },
+    {
+      "id": "NWDAF",
+      "displayName": "Network Data Analytics Function",
+      "actorKind": "nf",
+      "tier": "analytics",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": false,
+      "refSpec": "23.501",
+      "bankCoverage": {
+        "inCorpus": true,
+        "serviceCount": 8,
+        "sourceFiles": [
+          "TS29520_Nnwdaf_AnalyticsInfo.yaml",
+          "TS29520_Nnwdaf_DataManagement.yaml",
+          "TS29520_Nnwdaf_EventsSubscription.yaml",
+          "TS29520_Nnwdaf_MLModelMonitor.yaml",
+          "TS29520_Nnwdaf_MLModelProvision.yaml",
+          "TS29520_Nnwdaf_MLModelTraining.yaml",
+          "TS29520_Nnwdaf_RoamingAnalytics.yaml",
+          "TS29520_Nnwdaf_RoamingData.yaml"
+        ]
+      }
+    },
+    {
+      "id": "SCP",
+      "displayName": "Service Communication Proxy",
+      "actorKind": "nf",
+      "tier": "security_roaming",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": false,
+      "refSpec": "23.501",
+      "bankCoverage": {
+        "inCorpus": false,
+        "serviceCount": 0,
+        "sourceFiles": []
+      }
+    },
+    {
+      "id": "SEPP",
+      "displayName": "Security Edge Protection Proxy",
+      "actorKind": "nf",
+      "tier": "security_roaming",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": false,
+      "refSpec": "23.501",
+      "bankCoverage": {
+        "inCorpus": true,
+        "serviceCount": 3,
+        "sourceFiles": [
+          "TS29573_JOSEProtectedMessageForwarding.yaml",
+          "TS29573_N32_Handshake.yaml",
+          "TS29573_SeppTelescopicFqdnMapping.yaml"
+        ]
+      }
+    }
+  ],
+  "count": 18
+}

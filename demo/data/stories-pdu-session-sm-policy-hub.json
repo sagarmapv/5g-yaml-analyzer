@@ -1,0 +1,549 @@
+{
+  "id": "pdu-session-sm-policy",
+  "title": "PDU Session Establishment with SM Policy",
+  "tagline": "From UE request to PCF decision \u2014 one journey across Stage 2 and Stage 3",
+  "summary": "This master story walks through PDU session establishment where the SMF must obtain session management policy from the PCF before user-plane rules can be applied. It stitches together Stage-2 procedures (TS 23.502), SMF and PCF Stage-3 SBIs (TS 29.502, 29.512), signalling flows (TS 29.513), and supporting architecture and framework specs.",
+  "whyItMatters": "Session policy is not an isolated API \u2014 it sits inside a live establishment procedure spanning UE, AMF, SMF, NRF, PCF, and UPF. The master journey shows when each spec applies and links into dedicated narratives for each network function and technical specification.",
+  "anchorSpec": "29.512",
+  "anchorStoryUrl": "/specs/29.512",
+  "anchorPlatformUrl": "/specs?ts=29.512&view=story",
+  "enrichedE2eFlow": {
+    "name": "PDU Session Establishment (SM Policy Association)",
+    "refSpecs": [
+      {
+        "ts": "23.502",
+        "role": "Stage-2 procedures"
+      },
+      {
+        "ts": "29.513",
+        "role": "Stage-3 call flows (not in YAML corpus)"
+      },
+      {
+        "ts": "29.502",
+        "role": "SMF PDU Session service"
+      }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "actors": [
+          "UE",
+          "RAN",
+          "AMF"
+        ],
+        "action": "UE requests PDU session establishment",
+        "in512": false,
+        "messageKind": "procedural",
+        "stitchRefs": [
+          {
+            "ts": "23.502",
+            "clause": "4.3.2",
+            "title": "",
+            "storyUrl": "/specs/23.502"
+          }
+        ],
+        "layerHint": {
+          "procedureTs": "23.502",
+          "nfs": [
+            "AMF"
+          ],
+          "serviceTs": "",
+          "operationId": ""
+        }
+      },
+      {
+        "order": 2,
+        "actors": [
+          "AMF",
+          "SMF"
+        ],
+        "action": "AMF invokes Nsmf_PDUSession CreateSMContext",
+        "in512": false,
+        "refSpec": "29.502",
+        "operationId": "PostSmContexts",
+        "messageKind": "sbi",
+        "layerHint": {
+          "procedureTs": "23.502",
+          "nfs": [
+            "AMF",
+            "SMF"
+          ],
+          "serviceTs": "29.502",
+          "operationId": "PostSmContexts"
+        }
+      },
+      {
+        "order": 3,
+        "actors": [
+          "SMF",
+          "NRF"
+        ],
+        "action": "SMF discovers PCF (Npcf_SMPolicyControl)",
+        "in512": false,
+        "refSpec": "29.510",
+        "operationId": "SearchNFInstances",
+        "messageKind": "sbi",
+        "layerHint": {
+          "procedureTs": "23.502",
+          "nfs": [
+            "SMF",
+            "NRF"
+          ],
+          "serviceTs": "29.510",
+          "operationId": "SearchNFInstances"
+        }
+      },
+      {
+        "order": 4,
+        "actors": [
+          "SMF",
+          "PCF"
+        ],
+        "action": "SMF sends CreateSMPolicy with SmPolicyContextData",
+        "in512": true,
+        "operationId": "CreateSMPolicy",
+        "messageKind": "sbi",
+        "stitchRefs": [
+          {
+            "ts": "29.512",
+            "clause": "6.1",
+            "title": "",
+            "storyUrl": "/specs/29.512"
+          },
+          {
+            "ts": "29.513",
+            "clause": "5.2.1",
+            "title": "",
+            "storyUrl": "/specs/29.513"
+          }
+        ],
+        "layerHint": {
+          "procedureTs": "23.502",
+          "nfs": [
+            "SMF",
+            "PCF"
+          ],
+          "serviceTs": "29.512",
+          "operationId": "CreateSMPolicy"
+        }
+      },
+      {
+        "order": 5,
+        "actors": [
+          "PCF",
+          "UDR"
+        ],
+        "action": "PCF evaluates policy (may read policy/subscription data)",
+        "in512": false,
+        "refSpec": "29.504",
+        "messageKind": "procedural",
+        "stitchRefs": [
+          {
+            "ts": "23.503",
+            "clause": "4",
+            "title": "",
+            "storyUrl": "/specs/23.503"
+          }
+        ],
+        "layerHint": {
+          "procedureTs": "23.503",
+          "nfs": [
+            "PCF",
+            "UDR"
+          ],
+          "serviceTs": "29.504",
+          "operationId": ""
+        }
+      },
+      {
+        "order": 6,
+        "actors": [
+          "PCF",
+          "SMF"
+        ],
+        "action": "PCF returns SmPolicyDecision (QoS, PCC rules, charging)",
+        "in512": true,
+        "operationId": "CreateSMPolicy",
+        "messageKind": "sbi",
+        "stitchRefs": [
+          {
+            "ts": "29.512",
+            "clause": "6.1",
+            "title": "",
+            "storyUrl": "/specs/29.512"
+          },
+          {
+            "ts": "29.513",
+            "clause": "5.2.1",
+            "title": "",
+            "storyUrl": "/specs/29.513"
+          }
+        ],
+        "layerHint": {
+          "procedureTs": "23.502",
+          "nfs": [
+            "PCF",
+            "SMF"
+          ],
+          "serviceTs": "29.512",
+          "operationId": "CreateSMPolicy"
+        }
+      },
+      {
+        "order": 7,
+        "actors": [
+          "SMF",
+          "UPF"
+        ],
+        "action": "SMF installs packet detection and QoS rules on UPF",
+        "in512": false,
+        "refSpec": "29.502",
+        "messageKind": "n4",
+        "layerHint": {
+          "procedureTs": "23.502",
+          "nfs": [
+            "SMF",
+            "UPF"
+          ],
+          "serviceTs": "29.502",
+          "operationId": ""
+        }
+      },
+      {
+        "order": 8,
+        "actors": [
+          "SMF",
+          "AMF"
+        ],
+        "action": "PDU session established \u2014 SMF responds to AMF",
+        "in512": false,
+        "messageKind": "procedural",
+        "stitchRefs": [
+          {
+            "ts": "23.502",
+            "clause": "4.3.2",
+            "title": "",
+            "storyUrl": "/specs/23.502"
+          }
+        ],
+        "layerHint": {
+          "procedureTs": "23.502",
+          "nfs": [
+            "SMF",
+            "AMF"
+          ],
+          "serviceTs": "",
+          "operationId": ""
+        }
+      },
+      {
+        "order": 9,
+        "actors": [
+          "PCF",
+          "SMF"
+        ],
+        "action": "Later: PCF may send SmPolicyUpdateNotification on policy change",
+        "in512": true,
+        "operationId": "SmPolicyUpdateNotification",
+        "messageKind": "sbi",
+        "stitchRefs": [
+          {
+            "ts": "29.513",
+            "clause": "5.2.2.2",
+            "title": "",
+            "storyUrl": "/specs/29.513"
+          }
+        ],
+        "layerHint": {
+          "procedureTs": "23.502",
+          "nfs": [
+            "PCF",
+            "SMF"
+          ],
+          "serviceTs": "29.512",
+          "operationId": "SmPolicyUpdateNotification"
+        }
+      }
+    ]
+  },
+  "nfLens": [
+    {
+      "nf": "PCF",
+      "primarySpec": "29.512",
+      "role": "Policy Control Function \u2014 decides session policy",
+      "inSpec": true,
+      "storyUrl": "/specs/29.512",
+      "platformUrl": "/specs?ts=29.512"
+    },
+    {
+      "nf": "SMF",
+      "primarySpec": "29.502",
+      "role": "Session Management Function \u2014 requests and applies session policy",
+      "inSpec": false,
+      "storyUrl": "/specs/29.502",
+      "platformUrl": "/specs?ts=29.502"
+    },
+    {
+      "nf": "UDM",
+      "primarySpec": "29.503",
+      "role": "Subscriber data; PCF may use policy subscription information",
+      "inSpec": false,
+      "storyUrl": "/specs/29.503",
+      "platformUrl": "/specs?ts=29.503"
+    },
+    {
+      "nf": "UDR",
+      "primarySpec": "29.504",
+      "role": "Policy data repository consumed by PCF",
+      "inSpec": false,
+      "storyUrl": "/specs/29.504",
+      "platformUrl": "/specs?ts=29.504"
+    },
+    {
+      "nf": "AF",
+      "primarySpec": "29.514",
+      "role": "Application Function \u2014 may influence session policy via Policy Authorization",
+      "inSpec": false,
+      "storyUrl": "/specs/29.514",
+      "platformUrl": "/specs?ts=29.514"
+    },
+    {
+      "nf": "NEF",
+      "primarySpec": "29.522",
+      "role": "Exposure of AF influence into the core",
+      "inSpec": false,
+      "storyUrl": "/specs/29.522",
+      "platformUrl": "/specs?ts=29.522"
+    },
+    {
+      "nf": "CHF",
+      "primarySpec": "32.291",
+      "role": "Charging \u2014 reuses 29.512 QoS/charging types",
+      "inSpec": false,
+      "storyUrl": "/specs/32.291",
+      "platformUrl": "/specs?ts=32.291"
+    },
+    {
+      "nf": "UPF",
+      "primarySpec": "29.564",
+      "role": "User plane \u2014 SMF installs rules derived from SmPolicyDecision",
+      "inSpec": false,
+      "storyUrl": "/specs/29.564",
+      "platformUrl": "/specs?ts=29.564"
+    },
+    {
+      "nf": "AMF",
+      "primarySpec": "29.518",
+      "role": "Access \u2014 triggers SM context; indirect to 512",
+      "inSpec": false,
+      "storyUrl": "/specs/29.518",
+      "platformUrl": "/specs?ts=29.518"
+    },
+    {
+      "nf": "NRF",
+      "primarySpec": "29.510",
+      "role": "NF discovery for PCF",
+      "inSpec": false,
+      "storyUrl": "/specs/29.510",
+      "platformUrl": "/specs?ts=29.510"
+    },
+    {
+      "nf": "BSF",
+      "primarySpec": "29.521",
+      "role": "PCF binding lookup for roaming/slice/DNN",
+      "inSpec": false,
+      "storyUrl": "/specs/29.521",
+      "platformUrl": "/specs?ts=29.521"
+    }
+  ],
+  "nfInFlow": [
+    {
+      "nf": "AMF",
+      "primarySpec": "29.518",
+      "role": "Access \u2014 triggers SM context; indirect to 512",
+      "inSpec": false,
+      "storyUrl": "/specs/29.518",
+      "platformUrl": "/specs?ts=29.518",
+      "inFlow": true,
+      "flowOrder": 0
+    },
+    {
+      "nf": "SMF",
+      "primarySpec": "29.502",
+      "role": "Session Management Function \u2014 requests and applies session policy",
+      "inSpec": false,
+      "storyUrl": "/specs/29.502",
+      "platformUrl": "/specs?ts=29.502",
+      "inFlow": true,
+      "flowOrder": 1
+    },
+    {
+      "nf": "NRF",
+      "primarySpec": "29.510",
+      "role": "NF discovery for PCF",
+      "inSpec": false,
+      "storyUrl": "/specs/29.510",
+      "platformUrl": "/specs?ts=29.510",
+      "inFlow": true,
+      "flowOrder": 2
+    },
+    {
+      "nf": "PCF",
+      "primarySpec": "29.512",
+      "role": "Policy Control Function \u2014 decides session policy",
+      "inSpec": true,
+      "storyUrl": "/specs/29.512",
+      "platformUrl": "/specs?ts=29.512",
+      "inFlow": true,
+      "flowOrder": 3
+    },
+    {
+      "nf": "UDR",
+      "primarySpec": "29.504",
+      "role": "Policy data repository consumed by PCF",
+      "inSpec": false,
+      "storyUrl": "/specs/29.504",
+      "platformUrl": "/specs?ts=29.504",
+      "inFlow": true,
+      "flowOrder": 4
+    },
+    {
+      "nf": "UPF",
+      "primarySpec": "29.564",
+      "role": "User plane \u2014 SMF installs rules derived from SmPolicyDecision",
+      "inSpec": false,
+      "storyUrl": "/specs/29.564",
+      "platformUrl": "/specs?ts=29.564",
+      "inFlow": true,
+      "flowOrder": 5
+    }
+  ],
+  "nfEcosystem": [
+    {
+      "nf": "AF",
+      "primarySpec": "29.514",
+      "role": "Application Function \u2014 may influence session policy via Policy Authorization",
+      "inSpec": false,
+      "storyUrl": "/specs/29.514",
+      "platformUrl": "/specs?ts=29.514",
+      "inFlow": false,
+      "flowOrder": -1
+    },
+    {
+      "nf": "BSF",
+      "primarySpec": "29.521",
+      "role": "PCF binding lookup for roaming/slice/DNN",
+      "inSpec": false,
+      "storyUrl": "/specs/29.521",
+      "platformUrl": "/specs?ts=29.521",
+      "inFlow": false,
+      "flowOrder": -1
+    },
+    {
+      "nf": "CHF",
+      "primarySpec": "32.291",
+      "role": "Charging \u2014 reuses 29.512 QoS/charging types",
+      "inSpec": false,
+      "storyUrl": "/specs/32.291",
+      "platformUrl": "/specs?ts=32.291",
+      "inFlow": false,
+      "flowOrder": -1
+    },
+    {
+      "nf": "NEF",
+      "primarySpec": "29.522",
+      "role": "Exposure of AF influence into the core",
+      "inSpec": false,
+      "storyUrl": "/specs/29.522",
+      "platformUrl": "/specs?ts=29.522",
+      "inFlow": false,
+      "flowOrder": -1
+    },
+    {
+      "nf": "UDM",
+      "primarySpec": "29.503",
+      "role": "Subscriber data; PCF may use policy subscription information",
+      "inSpec": false,
+      "storyUrl": "/specs/29.503",
+      "platformUrl": "/specs?ts=29.503",
+      "inFlow": false,
+      "flowOrder": -1
+    }
+  ],
+  "flowNfOrder": [
+    "AMF",
+    "SMF",
+    "NRF",
+    "PCF",
+    "UDR",
+    "UPF"
+  ],
+  "ladderUrl": "/ladder?id=pdu-session-sm-policy",
+  "supportingSpecs": [
+    {
+      "ts": "23.502",
+      "title": "Procedures for the 5G System (5GS)",
+      "role": "Stage-2 procedures \u2014 when SMF requests session policy during PDU session",
+      "priority": "P0",
+      "storyUrl": "/specs/23.502",
+      "platformUrl": "/specs?ts=23.502"
+    },
+    {
+      "ts": "29.513",
+      "title": "Policy and Charging Control signalling flows; Stage 3",
+      "role": "Stage-3 signalling flows \u2014 SM Policy Association diagrams",
+      "priority": "P0",
+      "storyUrl": "/specs/29.513",
+      "platformUrl": "/specs?ts=29.513"
+    },
+    {
+      "ts": "23.501",
+      "title": "System architecture for the 5G System (5GS)",
+      "role": "5G architecture \u2014 PCF, SMF, UPF roles and reference points",
+      "priority": "P1",
+      "storyUrl": "/specs/23.501",
+      "platformUrl": "/specs?ts=23.501"
+    },
+    {
+      "ts": "23.503",
+      "title": "Policy and charging control framework for the 5G System (5GS)",
+      "role": "Policy and charging control framework (stage 2)",
+      "priority": "P1",
+      "storyUrl": "/specs/23.503",
+      "platformUrl": "/specs?ts=23.503"
+    },
+    {
+      "ts": "29.501",
+      "title": "Principles and Guidelines for Services Definition; Stage 3",
+      "role": "SBI principles \u2014 apiRoot, HTTP, service discovery conventions",
+      "priority": "P1",
+      "storyUrl": "/specs/29.501",
+      "platformUrl": "/specs?ts=29.501"
+    },
+    {
+      "ts": "29.502",
+      "title": "Session Management Services; Stage 3 (SMF SBI)",
+      "role": "SMF PDU Session service \u2014 triggers SM policy need",
+      "priority": "P1",
+      "storyUrl": "/specs/29.502",
+      "platformUrl": "/specs?ts=29.502"
+    },
+    {
+      "ts": "29.510",
+      "title": "Network Repository Services; Stage 3 (NRF SBI)",
+      "role": "NRF \u2014 discover PCF before CreateSMPolicy",
+      "priority": "P2",
+      "storyUrl": "/specs/29.510",
+      "platformUrl": "/specs?ts=29.510"
+    },
+    {
+      "ts": "29.514",
+      "title": "Policy Authorization Service; Stage 3",
+      "role": "Policy Authorization \u2014 AF influence on session policy",
+      "priority": "P2",
+      "storyUrl": "/specs/29.514",
+      "platformUrl": "/specs?ts=29.514"
+    }
+  ],
+  "view": "hub"
+}

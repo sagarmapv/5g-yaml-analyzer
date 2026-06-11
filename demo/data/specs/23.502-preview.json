@@ -1,0 +1,98 @@
+{
+  "tsNumber": "23.502",
+  "title": "Procedures for the 5G System (5GS)",
+  "tagline": "Stage-2 procedures \u2014 when SMF requests session policy",
+  "summary": "TS 23.502 defines the Stage-2 procedures for the 5G System. For the 29.512 story, the critical procedure is PDU Session Establishment (clause 4.3.2): it specifies when the SMF must contact the PCF for session management policy before the session can be fully established and user-plane rules applied.",
+  "whyItMatters": "29.512 tells you what the PCF API looks like; 23.502 tells you when SMF must call it during live network procedures. Without this spec, the policy call in the E2E flow has no procedural context.",
+  "defines": [
+    "PDU Session Establishment, Modification, and Release procedures",
+    "SMF behaviour during session lifecycle"
+  ],
+  "primaryNf": "",
+  "entryPoints": [
+    {
+      "type": "procedure",
+      "name": "PDU Session Establishment",
+      "clause": "4.3.2",
+      "description": "Primary procedure \u2014 SMF requests session management policy from PCF during establishment."
+    },
+    {
+      "type": "procedure",
+      "name": "PDU Session Modification",
+      "clause": "4.3.3",
+      "description": "Session changes may require updated SmPolicyDecision from PCF."
+    },
+    {
+      "type": "sbi",
+      "name": "SMF PDU Session SBI",
+      "refSpec": "29.502",
+      "description": "Stage-3 mapping of these procedures to Nsmf_PDUSession APIs."
+    }
+  ],
+  "e2eFlowSteps": [
+    {
+      "order": 1,
+      "actors": [
+        "UE",
+        "RAN",
+        "AMF"
+      ],
+      "action": "PDU Session Establishment Request",
+      "inSpec": true,
+      "refSpec": "23.502"
+    },
+    {
+      "order": 2,
+      "actors": [
+        "AMF",
+        "SMF"
+      ],
+      "action": "AMF selects SMF and requests PDU session establishment",
+      "inSpec": true,
+      "refSpec": "23.502"
+    },
+    {
+      "order": 3,
+      "actors": [
+        "SMF"
+      ],
+      "action": "SMF determines need for session management policy",
+      "inSpec": true,
+      "refSpec": "23.502"
+    },
+    {
+      "order": 4,
+      "actors": [
+        "SMF",
+        "PCF"
+      ],
+      "action": "SMF requests session management policy from PCF",
+      "inSpec": true,
+      "refSpec": "29.512"
+    }
+  ],
+  "layerHints": {
+    "architectureTs": "23.501",
+    "serviceTs": "23.502",
+    "operations": [
+      {
+        "operationId": "PDU Session Establishment",
+        "explorerUrl": "/?q=PDU Session Establishment",
+        "description": "Primary procedure \u2014 SMF requests session management policy from PCF during establishment."
+      },
+      {
+        "operationId": "PDU Session Modification",
+        "explorerUrl": "/?q=PDU Session Modification",
+        "description": "Session changes may require updated SmPolicyDecision from PCF."
+      },
+      {
+        "operationId": "SMF PDU Session SBI",
+        "explorerUrl": "/?q=SMF PDU Session SBI",
+        "description": "Stage-3 mapping of these procedures to Nsmf_PDUSession APIs."
+      }
+    ]
+  },
+  "storyUrl": "/specs/23.502",
+  "platformUrl": "/specs?ts=23.502",
+  "stitchAnchor": "29.512"
+}

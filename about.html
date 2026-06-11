@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="demo-mode" content="true">
+  <title>About — 5G Visualizer Demo</title>
+  <link rel="stylesheet" href="./static/styles.css">
+  <link rel="stylesheet" href="./static/demo-pages.css">
+</head>
+<body class="demo-showcase">
+  <nav class="demo-top-nav">
+    <a href="./index.html" class="demo-brand">5G Visualizer</a>
+    <a href="./about.html" class="active">About</a>
+    <a href="./master-story.html?id=pdu-session-sm-policy">Master story</a>
+    <a href="./ladder.html?id=pdu-session-sm-policy&amp;nfs=SMF,PCF">Ladder</a>
+    <a href="./topology.html">Topology</a>
+    <a href="./messages.html">Messages</a>
+    <a href="./nfs.html">NF catalog</a>
+  </nav>
+
+  <header class="showcase-header">
+    <h1>How this tool helps</h1>
+    <p>Two complementary views on the same 5G procedure — narrative context and signaling mechanics.</p>
+  </header>
+
+  <main class="showcase-main">
+    <article class="about-block">
+      <h2>Knowledge stream</h2>
+      <p>
+        Master stories stitch Stage-2 procedures (TS 23.502) with Stage-3 service definitions (TS 29.5xx).
+        Each step links to the spec clause that motivates it, with short previews so you can read without
+        opening a dozen PDFs at once.
+      </p>
+      <ul>
+        <li><a href="./master-story.html?id=pdu-session-sm-policy">PDU Session Establishment with SM Policy</a> — anchor TS 29.512</li>
+        <li>Inline spec previews for TS referenced in the journey</li>
+        <li>3-layer chain: procedure → NF role → SBI operation</li>
+      </ul>
+    </article>
+
+    <article class="about-block">
+      <h2>Technical stream</h2>
+      <p>
+        The ladder, topology, and message views answer “what is sent, between whom, and on which interface?”
+        Steps come from a curated flow graph, not hand-drawn diagrams.
+      </p>
+      <ul>
+        <li><a href="./ladder.html?id=pdu-session-sm-policy&amp;nfs=SMF,PCF">Signaling ladder</a> — filter by NF, expand JSON inline</li>
+        <li><a href="./topology.html">NF topology</a> — graph of SBI relationships from the YAML Bank</li>
+        <li><a href="./messages.html">Message envelopes</a> — representative request headers and bodies</li>
+        <li><a href="./nfs.html">NF catalog</a> — tiers, interfaces, and procedure roles</li>
+      </ul>
+    </article>
+
+    <article class="about-block">
+      <h2>Run the full platform locally</h2>
+      <p>GitHub Pages serves a baked snapshot. For live corpus search, spec detail, and PDF refresh:</p>
+      <pre style="background:#1a1d23;padding:14px;border-radius:6px;font-size:0.85rem;overflow:auto;color:#d4d8de">git clone https://github.com/sagarmapv/5g-yaml-analyzer.git
+cd 5g-yaml-analyzer
+pip install -r requirements.txt
+python scripts/build.py
+python -m backend.app
+# open http://127.0.0.1:5000</pre>
+    </article>
+
+    <article class="about-block">
+      <h2>Attribution</h2>
+      <p>
+        All product content is attributed to 3GPP technical specifications. External articles may inform
+        internal curation but are not shown in the UI.
+      </p>
+    </article>
+  </main>
+
+  <footer class="demo-footer">
+    <p><a href="./index.html">← Back to demo home</a></p>
+  </footer>
+</body>
+</html>

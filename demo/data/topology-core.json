@@ -1,0 +1,915 @@
+{
+  "nodes": [
+    {
+      "id": "AMF",
+      "label": "AMF",
+      "serviceCount": 6,
+      "isCore": true
+    },
+    {
+      "id": "AUSF",
+      "label": "AUSF",
+      "serviceCount": 3,
+      "isCore": true
+    },
+    {
+      "id": "BSF",
+      "label": "BSF",
+      "serviceCount": 2,
+      "isCore": true
+    },
+    {
+      "id": "CHF",
+      "label": "CHF",
+      "serviceCount": 3,
+      "isCore": true
+    },
+    {
+      "id": "EIR",
+      "label": "EIR",
+      "serviceCount": 1,
+      "isCore": true
+    },
+    {
+      "id": "GMLC",
+      "label": "GMLC",
+      "serviceCount": 1,
+      "isCore": true
+    },
+    {
+      "id": "HSS",
+      "label": "HSS",
+      "serviceCount": 9,
+      "isCore": true
+    },
+    {
+      "id": "LMF",
+      "label": "LMF",
+      "serviceCount": 2,
+      "isCore": true
+    },
+    {
+      "id": "NEF",
+      "label": "NEF",
+      "serviceCount": 11,
+      "isCore": true
+    },
+    {
+      "id": "NRF",
+      "label": "NRF",
+      "serviceCount": 4,
+      "isCore": true
+    },
+    {
+      "id": "NSSF",
+      "label": "NSSF",
+      "serviceCount": 3,
+      "isCore": true
+    },
+    {
+      "id": "NWDAF",
+      "label": "NWDAF",
+      "serviceCount": 8,
+      "isCore": true
+    },
+    {
+      "id": "PCF",
+      "label": "PCF",
+      "serviceCount": 10,
+      "isCore": true
+    },
+    {
+      "id": "SCP",
+      "label": "SCP",
+      "serviceCount": 0,
+      "isCore": true
+    },
+    {
+      "id": "SEPP",
+      "label": "SEPP",
+      "serviceCount": 6,
+      "isCore": true
+    },
+    {
+      "id": "SMF",
+      "label": "SMF",
+      "serviceCount": 3,
+      "isCore": true
+    },
+    {
+      "id": "SMSF",
+      "label": "SMSF",
+      "serviceCount": 1,
+      "isCore": true
+    },
+    {
+      "id": "UDM",
+      "label": "UDM",
+      "serviceCount": 10,
+      "isCore": true
+    },
+    {
+      "id": "UDR",
+      "label": "UDR",
+      "serviceCount": 6,
+      "isCore": true
+    },
+    {
+      "id": "UPF",
+      "label": "UPF",
+      "serviceCount": 3,
+      "isCore": true
+    }
+  ],
+  "edges": [
+    {
+      "from": "GMLC",
+      "to": "LMF",
+      "weight": 79,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29572_Nlmf_Location.yaml"
+      ]
+    },
+    {
+      "from": "AMF",
+      "to": "LMF",
+      "weight": 69,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29572_Nlmf_Location.yaml"
+      ]
+    },
+    {
+      "from": "NWDAF",
+      "to": "PCF",
+      "weight": 28,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29514_Npcf_PolicyAuthorization.yaml",
+        "TS29523_Npcf_EventExposure.yaml",
+        "TS29554_Npcf_BDTPolicyControl.yaml"
+      ]
+    },
+    {
+      "from": "CHF",
+      "to": "PCF",
+      "weight": 22,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29512_Npcf_SMPolicyControl.yaml"
+      ]
+    },
+    {
+      "from": "HSS",
+      "to": "UDM",
+      "weight": 22,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29503_Nudm_EE.yaml",
+        "TS29503_Nudm_SDM.yaml",
+        "TS29503_Nudm_UEAU.yaml"
+      ]
+    },
+    {
+      "from": "UDM",
+      "to": "LMF",
+      "weight": 21,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29572_Nlmf_Location.yaml"
+      ]
+    },
+    {
+      "from": "UDM",
+      "to": "NRF",
+      "weight": 20,
+      "signals": [
+        "sbi-path",
+        "schema-ref"
+      ],
+      "examples": [
+        "NRF",
+        "TS29510_Nnrf_NFManagement.yaml"
+      ]
+    },
+    {
+      "from": "BSF",
+      "to": "NRF",
+      "weight": 13,
+      "signals": [
+        "sbi-path",
+        "schema-ref"
+      ],
+      "examples": [
+        "NRF",
+        "TS29510_Nnrf_NFManagement.yaml"
+      ]
+    },
+    {
+      "from": "NEF",
+      "to": "NRF",
+      "weight": 13,
+      "signals": [
+        "sbi-path",
+        "schema-ref"
+      ],
+      "examples": [
+        "NRF",
+        "TS29510_Nnrf_NFManagement.yaml"
+      ]
+    },
+    {
+      "from": "NWDAF",
+      "to": "NRF",
+      "weight": 13,
+      "signals": [
+        "sbi-path",
+        "schema-ref"
+      ],
+      "examples": [
+        "NRF",
+        "TS29510_Nnrf_NFManagement.yaml"
+      ]
+    },
+    {
+      "from": "PCF",
+      "to": "NRF",
+      "weight": 13,
+      "signals": [
+        "sbi-path",
+        "schema-ref"
+      ],
+      "examples": [
+        "NRF",
+        "TS29510_Nnrf_NFManagement.yaml"
+      ]
+    },
+    {
+      "from": "PCF",
+      "to": "AMF",
+      "weight": 11,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29518_Namf_Communication.yaml",
+        "TS29518_Namf_EventExposure.yaml"
+      ]
+    },
+    {
+      "from": "UDM",
+      "to": "AUSF",
+      "weight": 11,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29509_Nausf_SoRProtection.yaml",
+        "TS29509_Nausf_UEAuthentication.yaml",
+        "TS29509_Nausf_UPUProtection.yaml"
+      ]
+    },
+    {
+      "from": "AMF",
+      "to": "NRF",
+      "weight": 10,
+      "signals": [
+        "sbi-path",
+        "schema-ref"
+      ],
+      "examples": [
+        "NRF",
+        "TS29510_Nnrf_NFManagement.yaml"
+      ]
+    },
+    {
+      "from": "PCF",
+      "to": "SMF",
+      "weight": 10,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29502_Nsmf_PDUSession.yaml",
+        "TS29508_Nsmf_EventExposure.yaml"
+      ]
+    },
+    {
+      "from": "AMF",
+      "to": "UDM",
+      "weight": 9,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29503_Nudm_EE.yaml",
+        "TS29503_Nudm_SDM.yaml",
+        "TS29503_Nudm_UECM.yaml"
+      ]
+    },
+    {
+      "from": "HSS",
+      "to": "NRF",
+      "weight": 9,
+      "signals": [
+        "sbi-path"
+      ],
+      "examples": [
+        "NRF"
+      ]
+    },
+    {
+      "from": "NWDAF",
+      "to": "LMF",
+      "weight": 9,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29572_Nlmf_Location.yaml"
+      ]
+    },
+    {
+      "from": "UDR",
+      "to": "NRF",
+      "weight": 9,
+      "signals": [
+        "sbi-path",
+        "schema-ref"
+      ],
+      "examples": [
+        "NRF",
+        "TS29510_Nnrf_NFManagement.yaml"
+      ]
+    },
+    {
+      "from": "NRF",
+      "to": "SEPP",
+      "weight": 8,
+      "signals": [
+        "schema-ref",
+        "sepp-proxy"
+      ],
+      "examples": [
+        "N32Purpose",
+        "SCP/SEPP error response",
+        "SEPP reference",
+        "TS29573_N32_Handshake.yaml"
+      ]
+    },
+    {
+      "from": "NRF",
+      "to": "UDM",
+      "weight": 8,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29503_Nudm_SDM.yaml",
+        "TS29503_Nudm_UECM.yaml"
+      ]
+    },
+    {
+      "from": "NSSF",
+      "to": "NRF",
+      "weight": 8,
+      "signals": [
+        "sbi-path",
+        "schema-ref"
+      ],
+      "examples": [
+        "NRF",
+        "TS29510_Nnrf_NFManagement.yaml"
+      ]
+    },
+    {
+      "from": "SMF",
+      "to": "NRF",
+      "weight": 8,
+      "signals": [
+        "sbi-path",
+        "schema-ref"
+      ],
+      "examples": [
+        "NRF",
+        "TS29510_Nnrf_NFManagement.yaml"
+      ]
+    },
+    {
+      "from": "SMF",
+      "to": "PCF",
+      "weight": 8,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29512_Npcf_SMPolicyControl.yaml",
+        "TS29514_Npcf_PolicyAuthorization.yaml",
+        "TS29554_Npcf_BDTPolicyControl.yaml"
+      ]
+    },
+    {
+      "from": "UDM",
+      "to": "AMF",
+      "weight": 8,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29518_Namf_EventExposure.yaml",
+        "TS29518_Namf_Location.yaml",
+        "TS29518_Namf_MT.yaml"
+      ]
+    },
+    {
+      "from": "AMF",
+      "to": "GMLC",
+      "weight": 6,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29515_Ngmlc_Location.yaml"
+      ]
+    },
+    {
+      "from": "AUSF",
+      "to": "UDM",
+      "weight": 6,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29503_Nudm_UEAU.yaml"
+      ]
+    },
+    {
+      "from": "NRF",
+      "to": "LMF",
+      "weight": 6,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29572_Nlmf_Location.yaml"
+      ]
+    },
+    {
+      "from": "NRF",
+      "to": "SCP",
+      "weight": 6,
+      "signals": [
+        "scp-proxy"
+      ],
+      "examples": [
+        "NRF SCP discovery scope",
+        "SCP error response",
+        "ScpInfo schema",
+        "scp-domain-routing-info",
+        "servedScpInfoList"
+      ]
+    },
+    {
+      "from": "AMF",
+      "to": "NSSF",
+      "weight": 5,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29531_Nnssf_NSSelection.yaml"
+      ]
+    },
+    {
+      "from": "NEF",
+      "to": "PCF",
+      "weight": 5,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29523_Npcf_EventExposure.yaml",
+        "TS29554_Npcf_BDTPolicyControl.yaml"
+      ]
+    },
+    {
+      "from": "NRF",
+      "to": "NWDAF",
+      "weight": 5,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29520_Nnwdaf_AnalyticsInfo.yaml",
+        "TS29520_Nnwdaf_EventsSubscription.yaml"
+      ]
+    },
+    {
+      "from": "PCF",
+      "to": "NSSF",
+      "weight": 5,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29531_Nnssf_NSSelection.yaml"
+      ]
+    },
+    {
+      "from": "SMF",
+      "to": "AMF",
+      "weight": 5,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29518_Namf_Communication.yaml",
+        "TS29518_Namf_EventExposure.yaml"
+      ]
+    },
+    {
+      "from": "SMF",
+      "to": "CHF",
+      "weight": 5,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS32291_Nchf_ConvergedCharging.yaml"
+      ]
+    },
+    {
+      "from": "AMF",
+      "to": "SMF",
+      "weight": 4,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29502_Nsmf_PDUSession.yaml"
+      ]
+    },
+    {
+      "from": "LMF",
+      "to": "GMLC",
+      "weight": 4,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29515_Ngmlc_Location.yaml"
+      ]
+    },
+    {
+      "from": "NRF",
+      "to": "AMF",
+      "weight": 4,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29518_Namf_Communication.yaml"
+      ]
+    },
+    {
+      "from": "NWDAF",
+      "to": "SMF",
+      "weight": 4,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29508_Nsmf_EventExposure.yaml"
+      ]
+    },
+    {
+      "from": "UDM",
+      "to": "PCF",
+      "weight": 4,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29514_Npcf_PolicyAuthorization.yaml"
+      ]
+    },
+    {
+      "from": "UPF",
+      "to": "PCF",
+      "weight": 4,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29512_Npcf_SMPolicyControl.yaml"
+      ]
+    },
+    {
+      "from": "AUSF",
+      "to": "NRF",
+      "weight": 3,
+      "signals": [
+        "sbi-path"
+      ],
+      "examples": [
+        "NRF"
+      ]
+    },
+    {
+      "from": "CHF",
+      "to": "NRF",
+      "weight": 3,
+      "signals": [
+        "sbi-path"
+      ],
+      "examples": [
+        "NRF"
+      ]
+    },
+    {
+      "from": "NEF",
+      "to": "LMF",
+      "weight": 3,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29572_Nlmf_Location.yaml"
+      ]
+    },
+    {
+      "from": "NWDAF",
+      "to": "NSSF",
+      "weight": 3,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29531_Nnssf_NSSelection.yaml"
+      ]
+    },
+    {
+      "from": "UDM",
+      "to": "NWDAF",
+      "weight": 3,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29520_Nnwdaf_AnalyticsInfo.yaml"
+      ]
+    },
+    {
+      "from": "UPF",
+      "to": "NRF",
+      "weight": 3,
+      "signals": [
+        "sbi-path"
+      ],
+      "examples": [
+        "NRF"
+      ]
+    },
+    {
+      "from": "AMF",
+      "to": "PCF",
+      "weight": 2,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29507_Npcf_AMPolicyControl.yaml"
+      ]
+    },
+    {
+      "from": "AMF",
+      "to": "SEPP",
+      "weight": 2,
+      "signals": [
+        "sepp-proxy"
+      ],
+      "examples": [
+        "SCP/SEPP error response",
+        "SEPP reference"
+      ]
+    },
+    {
+      "from": "CHF",
+      "to": "NWDAF",
+      "weight": 2,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29520_Nnwdaf_EventsSubscription.yaml"
+      ]
+    },
+    {
+      "from": "GMLC",
+      "to": "AMF",
+      "weight": 2,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29518_Namf_Location.yaml"
+      ]
+    },
+    {
+      "from": "HSS",
+      "to": "BSF",
+      "weight": 2,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29309_Nbsp_GBA.yaml"
+      ]
+    },
+    {
+      "from": "LMF",
+      "to": "AMF",
+      "weight": 2,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29518_Namf_EventExposure.yaml",
+        "TS29518_Namf_Location.yaml"
+      ]
+    },
+    {
+      "from": "NRF",
+      "to": "UPF",
+      "weight": 2,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29564_Nupf_EventExposure.yaml"
+      ]
+    },
+    {
+      "from": "NWDAF",
+      "to": "UDM",
+      "weight": 2,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29503_Nudm_SDM.yaml"
+      ]
+    },
+    {
+      "from": "PCF",
+      "to": "CHF",
+      "weight": 2,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS32291_Nchf_ConvergedCharging.yaml"
+      ]
+    },
+    {
+      "from": "SMF",
+      "to": "UDM",
+      "weight": 2,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29503_Nudm_PP.yaml"
+      ]
+    },
+    {
+      "from": "UDM",
+      "to": "HSS",
+      "weight": 2,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29562_Nhss_imsUEAU.yaml"
+      ]
+    },
+    {
+      "from": "AMF",
+      "to": "NWDAF",
+      "weight": 1,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29520_Nnwdaf_EventsSubscription.yaml"
+      ]
+    },
+    {
+      "from": "AMF",
+      "to": "SCP",
+      "weight": 1,
+      "signals": [
+        "scp-proxy"
+      ],
+      "examples": [
+        "SCP error response"
+      ]
+    },
+    {
+      "from": "EIR",
+      "to": "NRF",
+      "weight": 1,
+      "signals": [
+        "sbi-path"
+      ],
+      "examples": [
+        "NRF"
+      ]
+    },
+    {
+      "from": "GMLC",
+      "to": "NRF",
+      "weight": 1,
+      "signals": [
+        "sbi-path"
+      ],
+      "examples": [
+        "NRF"
+      ]
+    },
+    {
+      "from": "LMF",
+      "to": "NRF",
+      "weight": 1,
+      "signals": [
+        "sbi-path"
+      ],
+      "examples": [
+        "NRF"
+      ]
+    },
+    {
+      "from": "LMF",
+      "to": "UDM",
+      "weight": 1,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29503_Nudm_SDM.yaml"
+      ]
+    },
+    {
+      "from": "PCF",
+      "to": "NWDAF",
+      "weight": 1,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29520_Nnwdaf_EventsSubscription.yaml"
+      ]
+    },
+    {
+      "from": "SMF",
+      "to": "UPF",
+      "weight": 1,
+      "signals": [
+        "schema-ref"
+      ],
+      "examples": [
+        "TS29564_Nupf_EventExposure.yaml"
+      ]
+    },
+    {
+      "from": "SMSF",
+      "to": "NRF",
+      "weight": 1,
+      "signals": [
+        "sbi-path"
+      ],
+      "examples": [
+        "NRF"
+      ]
+    }
+  ],
+  "meta": {
+    "nodeCount": 20,
+    "edgeCount": 67,
+    "coreOnly": true,
+    "minWeight": 1
+  }
+}

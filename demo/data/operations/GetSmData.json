@@ -1,0 +1,168 @@
+{
+  "operationId": "GetSmData",
+  "method": "GET",
+  "path": "/{supi}/sm-data",
+  "summary": "retrieve a UE's Session Management Subscription Data",
+  "description": "",
+  "parameters": [
+    {
+      "name": "supi",
+      "in": "path",
+      "required": true,
+      "schemaRef": "supi"
+    },
+    {
+      "name": "supported-features",
+      "in": "query",
+      "required": false,
+      "schemaRef": "supportedFeatures"
+    },
+    {
+      "name": "single-nssai",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "dnn",
+      "in": "query",
+      "required": false,
+      "schemaRef": "dnn"
+    },
+    {
+      "name": "plmn-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "disaster-roaming-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "If-None-Match",
+      "in": "header",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "If-Modified-Since",
+      "in": "header",
+      "required": false,
+      "schemaRef": ""
+    }
+  ],
+  "requestHeaders": [
+    {
+      "name": "If-None-Match",
+      "in": "header",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "If-Modified-Since",
+      "in": "header",
+      "required": false,
+      "schemaRef": ""
+    }
+  ],
+  "pathParams": [
+    {
+      "name": "supi",
+      "in": "path",
+      "required": true,
+      "schemaRef": "supi"
+    }
+  ],
+  "queryParams": [
+    {
+      "name": "supported-features",
+      "in": "query",
+      "required": false,
+      "schemaRef": "supportedFeatures"
+    },
+    {
+      "name": "single-nssai",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "dnn",
+      "in": "query",
+      "required": false,
+      "schemaRef": "dnn"
+    },
+    {
+      "name": "plmn-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "disaster-roaming-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    }
+  ],
+  "request": null,
+  "sourceFile": "TS29503_Nudm_SDM.yaml",
+  "nf": "UDM",
+  "service": "Nudm_SDM",
+  "explorerUrl": "/?q=GetSmData",
+  "storyUrl": "/specs/29.503",
+  "view": "request",
+  "envelope": {
+    "operationId": "GetSmData",
+    "method": "GET",
+    "path": "/{supi}/sm-data",
+    "headers": {
+      "If-None-Match": {
+        "type": "string",
+        "required": false
+      },
+      "If-Modified-Since": {
+        "type": "string",
+        "required": false
+      },
+      "Content-Type": {
+        "type": "string",
+        "required": true,
+        "default": "application/json"
+      },
+      "Accept": {
+        "type": "string",
+        "required": false,
+        "default": "application/json"
+      },
+      "3gpp-Sbi-Message-Priority": {
+        "type": "integer",
+        "required": false
+      }
+    },
+    "body": {
+      "contentType": "application/json",
+      "schemaRef": "",
+      "json": {
+        "supi": "imsi-001010000000001",
+        "plmn-id": {
+          "mcc": "001",
+          "mnc": "01"
+        },
+        "dnn": "internet",
+        "single-nssai": {
+          "sst": 1,
+          "sd": "010203"
+        }
+      },
+      "schema": {
+        "type": "object",
+        "required": [],
+        "properties": {}
+      }
+    }
+  }
+}
