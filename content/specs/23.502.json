@@ -1,0 +1,171 @@
+{
+  "tsNumber": "23.502",
+  "title": "Procedures for the 5G System (5GS)",
+  "tagline": "Stage-2 procedures — when SMF requests session policy",
+  "summary": "TS 23.502 defines the Stage-2 procedures for the 5G System. For the 29.512 story, the critical procedure is PDU Session Establishment (clause 4.3.2): it specifies when the SMF must contact the PCF for session management policy before the session can be fully established and user-plane rules applied.",
+  "defines": [
+    "PDU Session Establishment, Modification, and Release procedures",
+    "SMF behaviour during session lifecycle",
+    "When session management policy is requested from PCF",
+    "Interaction points between AMF, SMF, PCF, and UPF at procedure level"
+  ],
+  "whyItMatters": "29.512 tells you what the PCF API looks like; 23.502 tells you when SMF must call it during live network procedures. Without this spec, the policy call in the E2E flow has no procedural context.",
+  "stitchAnchor": "29.512",
+  "entryPoints": [
+    {
+      "type": "procedure",
+      "name": "PDU Session Establishment",
+      "clause": "4.3.2",
+      "description": "Primary procedure — SMF requests session management policy from PCF during establishment."
+    },
+    {
+      "type": "procedure",
+      "name": "PDU Session Modification",
+      "clause": "4.3.3",
+      "description": "Session changes may require updated SmPolicyDecision from PCF."
+    },
+    {
+      "type": "sbi",
+      "name": "SMF PDU Session SBI",
+      "refSpec": "29.502",
+      "description": "Stage-3 mapping of these procedures to Nsmf_PDUSession APIs."
+    },
+    {
+      "type": "sbi",
+      "name": "SM Policy Control",
+      "refSpec": "29.512",
+      "description": "Stage-3 SBI for CreateSMPolicy / SmPolicyDecision."
+    }
+  ],
+  "elements": [
+    {
+      "nf": "UE",
+      "role": "Requests PDU session",
+      "inSpec": false
+    },
+    {
+      "nf": "AMF",
+      "role": "Access — forwards session request to SMF",
+      "inSpec": false,
+      "primarySpec": "29.518"
+    },
+    {
+      "nf": "SMF",
+      "role": "Runs PDU session procedure; requests policy from PCF",
+      "inSpec": false,
+      "primarySpec": "29.502"
+    },
+    {
+      "nf": "PCF",
+      "role": "Returns session management policy decision",
+      "inSpec": false,
+      "primarySpec": "29.512"
+    },
+    {
+      "nf": "UPF",
+      "role": "Receives forwarding rules after policy is applied",
+      "inSpec": false,
+      "primarySpec": "29.564"
+    }
+  ],
+  "interactions": [
+    {
+      "from": "UE",
+      "to": "AMF",
+      "via": "PDU Session Establishment Request",
+      "description": "Procedure start"
+    },
+    {
+      "from": "AMF",
+      "to": "SMF",
+      "via": "Nsmf_PDUSession",
+      "refSpec": "29.502",
+      "description": "Create SM Context"
+    },
+    {
+      "from": "SMF",
+      "to": "PCF",
+      "via": "Session management policy",
+      "refSpec": "29.512",
+      "description": "Policy request during establishment (clause 4.3.2)"
+    },
+    {
+      "from": "SMF",
+      "to": "UPF",
+      "via": "N4",
+      "refSpec": "29.502",
+      "description": "User-plane rules after SmPolicyDecision"
+    }
+  ],
+  "e2eFlow": {
+    "name": "PDU Session Establishment (Stage-2 procedure view)",
+    "refSpecs": [
+      { "ts": "29.502", "role": "SMF SBI (Stage 3)" },
+      { "ts": "29.512", "role": "Session policy (Stage 3)" },
+      { "ts": "29.513", "role": "Signalling flows (Stage 3)" }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "actors": ["UE", "RAN", "AMF"],
+        "action": "PDU Session Establishment Request",
+        "inSpec": true,
+        "refSpec": "23.502"
+      },
+      {
+        "order": 2,
+        "actors": ["AMF", "SMF"],
+        "action": "AMF selects SMF and requests PDU session establishment",
+        "inSpec": true,
+        "refSpec": "23.502"
+      },
+      {
+        "order": 3,
+        "actors": ["SMF"],
+        "action": "SMF determines need for session management policy",
+        "inSpec": true,
+        "refSpec": "23.502"
+      },
+      {
+        "order": 4,
+        "actors": ["SMF", "PCF"],
+        "action": "SMF requests session management policy from PCF",
+        "inSpec": true,
+        "refSpec": "29.512"
+      },
+      {
+        "order": 5,
+        "actors": ["PCF", "SMF"],
+        "action": "PCF provides session management policy (SmPolicyDecision)",
+        "inSpec": true,
+        "refSpec": "29.512"
+      },
+      {
+        "order": 6,
+        "actors": ["SMF", "UPF"],
+        "action": "SMF establishes user-plane resources with applied policy",
+        "inSpec": true,
+        "refSpec": "23.502"
+      },
+      {
+        "order": 7,
+        "actors": ["SMF", "AMF"],
+        "action": "PDU Session Establishment Accept",
+        "inSpec": true,
+        "refSpec": "23.502"
+      }
+    ]
+  },
+  "highlightClauses": ["4.3.2", "4.3.2.1", "4.3.3"],
+  "relatedSpecs": [
+    { "ts": "29.502", "role": "SMF PDU Session SBI" },
+    { "ts": "29.512", "role": "Session Management Policy Control" },
+    { "ts": "29.513", "role": "Policy signalling flows" },
+    { "ts": "23.501", "role": "5G architecture reference" }
+  ],
+  "relatedStory": [
+    { "ts": "29.502", "role": "SMF PDU Session APIs (Stage 3)" },
+    { "ts": "29.512", "role": "CreateSMPolicy / SmPolicyDecision" },
+    { "ts": "29.513", "role": "SM Policy Association diagrams" }
+  ]
+}

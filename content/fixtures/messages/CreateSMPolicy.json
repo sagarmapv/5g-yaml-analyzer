@@ -1,0 +1,11 @@
+{
+  "supi": "imsi-001010000000001",
+  "pduSessionId": 5,
+  "dnn": "internet",
+  "notificationUri": "https://smf.example.com/npcf-smpolicycontrol/v1/notification",
+  "ipv4Address": "10.45.0.12",
+  "sliceInfo": { "sst": 1, "sd": "010203" },
+  "subsDefQos": { "5qi": 9, "arp": { "priorityLevel": 8, "preemptCap": "NOT_PREEMPT", "preemptVuln": "PREEMPTABLE" } },
+  "online": true,
+  "offline": true
+}

@@ -1,0 +1,110 @@
+{
+  "tsNumber": "29.514",
+  "title": "Policy Authorization Service; Stage 3",
+  "tagline": "AF influence on session policy via Policy Authorization",
+  "summary": "TS 29.514 defines the Npcf_PolicyAuthorization service where an Application Function (AF) can influence session management policy. In the broader 29.512 story, AF sessions may affect PCC rules and QoS that appear in SmPolicyDecision.",
+  "defines": [
+    "Application Session Context establishment (PostAppSessions)",
+    "AF-provided service information and media components",
+    "PCF use of AF input when deriving session policy",
+    "Events subscription for application session changes"
+  ],
+  "whyItMatters": "Not every PDU session is AF-neutral. When an application requests specific QoS or routing, Policy Authorization is how that influence reaches the PCF — and ultimately shapes what SMF receives in SmPolicyDecision.",
+  "stitchAnchor": "29.512",
+  "primaryNf": "AF",
+  "entryPoints": [
+    {
+      "type": "sbi",
+      "method": "POST",
+      "path": "/npcf-policyauthorization/v1/app-sessions",
+      "operationId": "PostAppSessions",
+      "consumer": "AF",
+      "description": "AF creates application session context influencing policy."
+    },
+    {
+      "type": "sbi",
+      "name": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "description": "PCF may incorporate AF session info into SmPolicyDecision."
+    },
+    {
+      "type": "procedure",
+      "name": "PDU Session Establishment",
+      "refSpec": "23.502",
+      "description": "Session procedure where influenced policy is applied."
+    }
+  ],
+  "elements": [
+    { "nf": "AF", "role": "Application Function — requests policy influence", "inSpec": true, "primarySpec": "29.514" },
+    { "nf": "PCF", "role": "Merges AF input into session policy", "inSpec": false, "primarySpec": "29.512" },
+    { "nf": "SMF", "role": "Receives SmPolicyDecision with AF-derived rules", "inSpec": false, "primarySpec": "29.502" },
+    { "nf": "NEF", "role": "May expose AF to core in some deployments", "inSpec": false, "primarySpec": "29.522" }
+  ],
+  "interactions": [
+    {
+      "from": "AF",
+      "to": "PCF",
+      "via": "PostAppSessions",
+      "description": "Application session context for policy authorization"
+    },
+    {
+      "from": "PCF",
+      "to": "SMF",
+      "via": "SmPolicyDecision",
+      "refSpec": "29.512",
+      "description": "Session policy may reflect AF-requested QoS and routing"
+    },
+    {
+      "from": "SMF",
+      "to": "UPF",
+      "via": "N4 rules",
+      "refSpec": "29.502",
+      "description": "Enforcement of AF-influenced PCC rules"
+    }
+  ],
+  "e2eFlow": {
+    "name": "PDU Session with AF policy influence",
+    "refSpecs": [
+      { "ts": "29.512", "role": "Session policy SBI" },
+      { "ts": "23.502", "role": "Procedures" }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "actors": ["AF", "PCF"],
+        "action": "AF may establish application session context (optional, parallel path)",
+        "inSpec": true,
+        "operationId": "PostAppSessions"
+      },
+      {
+        "order": 4,
+        "actors": ["SMF", "PCF"],
+        "action": "SMF CreateSMPolicy — PCF considers AF session if present",
+        "refSpec": "29.512"
+      },
+      {
+        "order": 6,
+        "actors": ["PCF", "SMF"],
+        "action": "SmPolicyDecision includes AF-influenced PCC/QoS",
+        "inSpec": true,
+        "refSpec": "29.512"
+      },
+      {
+        "order": 7,
+        "actors": ["SMF", "UPF"],
+        "action": "SMF installs influenced rules on UPF",
+        "refSpec": "29.502"
+      }
+    ]
+  },
+  "relatedSpecs": [
+    { "ts": "29.512", "role": "Session Management Policy Control" },
+    { "ts": "29.522", "role": "NEF exposure of AF" },
+    { "ts": "23.503", "role": "Policy framework" }
+  ],
+  "relatedStory": [
+    { "ts": "29.512", "role": "SmPolicyDecision output" },
+    { "ts": "29.502", "role": "SMF enforcement on UPF" },
+    { "ts": "23.502", "role": "PDU session establishment" }
+  ]
+}

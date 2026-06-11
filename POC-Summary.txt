@@ -1,0 +1,28 @@
+5G SBI YAML Analyzer - POC Summary
+===================================
+
+Problem
+-------
+3GPP 5G Service-Based Interface (SBI) specifications are published as large
+OpenAPI YAML files. Navigating NF → Service → Operation relationships manually
+is slow and error-prone for engineers and integrators.
+
+Solution
+--------
+A lightweight pipeline converts YAML specs into structured Bank JSON and a web
+viewer with search, operation details, and curl template generation.
+
+Pipeline
+--------
+Yaml-Files/5GC_APIs  →  Parsed-JSON  →  Bank/  →  index.json  →  Web UI + REST API
+
+Future Roadmap
+--------------
+- MCP-compatible REST search API (foundation in /api/search, /api/bank)
+- LLM/RAG for natural-language SBI queries
+- Multi-agent orchestration (viewer, data, search agents)
+
+Run
+---
+python scripts/build.py
+python -m backend.app

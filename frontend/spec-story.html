@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spec Story</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="stylesheet" href="/static/spec-story.css">
+  <script src="/static/vendor/vis-network.min.js"></script>
+</head>
+<body class="spec-story-page">
+  <header class="story-header">
+    <div>
+      <p class="breadcrumb"><a href="/">Explorer</a> · <a href="/specs" id="bc-platform">Specs platform</a> · <span id="bc-ts">…</span></p>
+      <h1 id="story-title">Spec Story</h1>
+      <p id="story-tagline" class="subtitle"></p>
+    </div>
+    <nav class="page-nav">
+      <a href="/" class="nav-link" data-nav="explorer">Explorer</a>
+      <a href="/topology" class="nav-link" data-nav="topology">Topology</a>
+      <a href="/specs" class="nav-link" data-nav="specs">Specs</a>
+      <a href="/stories" class="nav-link" data-nav="stories">Stories</a>
+      <a href="/ladder" class="nav-link" data-nav="ladder">Ladder</a>
+    </nav>
+  </header>
+
+  <div id="version-banner" class="version-banner hidden"></div>
+
+  <div class="story-layout">
+    <aside class="story-toc" id="story-toc" aria-label="Section navigation">
+      <h2 class="toc-title">On this page</h2>
+      <nav class="toc-nav">
+        <a href="#sec-overview" class="toc-link">Overview</a>
+        <a href="#sec-entry" class="toc-link">1. Entry points</a>
+        <a href="#sec-elements" class="toc-link">2. Elements</a>
+        <a href="#sec-interactions" class="toc-link">3. Interactions</a>
+        <a href="#sec-gaps" class="toc-link">Story stitch</a>
+        <a href="#sec-flow" class="toc-link">4. Call flow</a>
+        <a href="#sec-operations" class="toc-link">API operations</a>
+        <a href="#sec-refs" class="toc-link">References</a>
+        <a href="#sec-clauses" class="toc-link">PDF clauses</a>
+      </nav>
+    </aside>
+
+    <div class="story-scroll">
+      <main class="story-main" id="story-main">
+        <p class="loading">Loading spec story…</p>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/site-nav.js"></script>
+  <script src="/static/flow-renderer.js"></script>
+  <script src="/static/spec-story.js"></script>
+</body>
+</html>

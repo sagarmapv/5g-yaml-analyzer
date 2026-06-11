@@ -1,0 +1,118 @@
+{
+  "tsNumber": "29.519",
+  "title": "Usage of the Unified Data Repository Service for Policy Data; Stage 3",
+  "tagline": "29.519 — how PCF reads policy data from UDR",
+  "summary": "TS 29.519 specifies how NFs — especially PCF — access policy data stored in UDR via Nudr_DataRepository. It complements 29.504 (the UDR service definition) with consumer-side URI patterns, data set names, and procedures for session management policy data reads during SmPolicyDecision.",
+  "defines": [
+    "Policy data set naming and URI structure for UDR reads",
+    "ReadSessionManagementPolicyData usage by PCF",
+    "Session management policy data model access",
+    "Relationship between 29.504 UDR API and PCF policy evaluation"
+  ],
+  "whyItMatters": "29.512 references PCF reading policy data at step 5. TS 29.519 is the glue spec that explains exactly how that read is performed on UDR — the reason behind the PCF→UDR interaction in the establishment ladder.",
+  "stitchAnchor": "29.512",
+  "primaryNf": "PCF",
+  "entryPoints": [
+    {
+      "type": "sbi",
+      "method": "GET",
+      "operationId": "ReadSessionManagementPolicyData",
+      "consumer": "PCF",
+      "refSpec": "29.504",
+      "description": "PCF reads SM policy data per 29.519 data set conventions."
+    },
+    {
+      "type": "sbi",
+      "method": "GET",
+      "operationId": "ReadPolicyData",
+      "consumer": "PCF",
+      "description": "Broader policy data read from UDR."
+    },
+    {
+      "type": "procedure",
+      "name": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "description": "SMF request that triggers PCF policy evaluation including UDR read."
+    }
+  ],
+  "elements": [
+    {
+      "nf": "PCF",
+      "role": "Primary consumer of UDR policy data for SmPolicyDecision",
+      "inSpec": true,
+      "primarySpec": "29.512"
+    },
+    {
+      "nf": "UDR",
+      "role": "Policy data producer — Nudr_DataRepository",
+      "inSpec": false,
+      "primarySpec": "29.504"
+    },
+    {
+      "nf": "SMF",
+      "role": "Waits for policy decision after CreateSMPolicy",
+      "inSpec": false,
+      "primarySpec": "29.502"
+    }
+  ],
+  "interactions": [
+    {
+      "from": "PCF",
+      "to": "UDR",
+      "via": "ReadSessionManagementPolicyData",
+      "refSpec": "29.504",
+      "description": "Policy data read per 29.519 usage spec"
+    },
+    {
+      "from": "SMF",
+      "to": "PCF",
+      "via": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "response": "SmPolicyDecision"
+    }
+  ],
+  "e2eFlow": {
+    "name": "PDU Session Establishment (UDR policy data usage)",
+    "refSpecs": [
+      { "ts": "29.512", "role": "CreateSMPolicy" },
+      { "ts": "29.504", "role": "UDR service API" },
+      { "ts": "23.503", "role": "Policy framework" }
+    ],
+    "steps": [
+      {
+        "order": 4,
+        "actors": ["SMF", "PCF"],
+        "action": "SMF sends CreateSMPolicy",
+        "inSpec": false,
+        "refSpec": "29.512",
+        "operationId": "CreateSMPolicy"
+      },
+      {
+        "order": 5,
+        "actors": ["PCF", "UDR"],
+        "action": "PCF reads session management policy data from UDR (29.519 usage)",
+        "inSpec": true,
+        "operationId": "ReadSessionManagementPolicyData"
+      },
+      {
+        "order": 6,
+        "actors": ["PCF", "SMF"],
+        "action": "PCF returns SmPolicyDecision",
+        "inSpec": false,
+        "refSpec": "29.512"
+      }
+    ]
+  },
+  "relatedSpecs": [
+    { "ts": "29.504", "role": "UDR Data Repository API" },
+    { "ts": "29.512", "role": "SmPolicyDecision" },
+    { "ts": "29.503", "role": "UDM subscriber data" },
+    { "ts": "23.503", "role": "Policy control framework" }
+  ],
+  "relatedStory": [
+    { "ts": "29.512", "role": "Step 5 in anchor flow" },
+    { "ts": "29.504", "role": "UDR producer spec" },
+    { "ts": "23.503", "role": "Stage-2 policy framework" }
+  ],
+  "highlightClauses": ["5.1", "5.2.3", "5.2.4"]
+}

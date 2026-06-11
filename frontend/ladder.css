@@ -1,0 +1,227 @@
+body.ladder-page {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg-dark);
+  color: var(--text-light);
+  font-family: var(--font-sans);
+}
+
+.ladder-main {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 24px 48px;
+  overflow-x: auto;
+}
+
+.ladder-intro {
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(74, 158, 255, 0.06);
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.ladder-actor-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ladder-actor-chip {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(74, 158, 255, 0.45);
+  background: rgba(74, 158, 255, 0.08);
+  color: #9cdcfe;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ladder-actor-chip--active {
+  border-color: var(--gold);
+  background: rgba(240, 192, 64, 0.15);
+  color: var(--gold);
+}
+
+.ladder-actor-chip--clear {
+  border-color: var(--border);
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.ladder-static {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(0, 0, 0, 0.25);
+  padding: 16px 12px;
+  min-width: 720px;
+}
+
+.ladder-header-row,
+.ladder-message-row {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.ladder-track {
+  display: grid;
+  grid-template-columns: repeat(var(--peer-count, 9), minmax(64px, 1fr));
+  gap: 2px;
+  position: relative;
+  min-height: 52px;
+  align-items: center;
+}
+
+.ladder-track--head {
+  min-height: auto;
+  margin-bottom: 8px;
+}
+
+.ladder-lifeline-head {
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  padding: 4px 2px 8px;
+  border-bottom: 2px solid var(--border);
+}
+
+.ladder-lifeline-head--selected {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+.ladder-lifeline-sub {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.ladder-lifeline-col {
+  position: relative;
+  min-height: 48px;
+  pointer-events: none;
+}
+
+.ladder-lifeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-left: 1px dashed rgba(140, 150, 160, 0.4);
+  transform: translateX(-50%);
+}
+
+.ladder-message-block {
+  margin-bottom: 6px;
+  transition: opacity 0.15s ease;
+}
+
+.ladder-message-block--dim {
+  opacity: 0.38;
+}
+
+.ladder-message-block--on {
+  opacity: 1;
+}
+
+.ladder-msg {
+  grid-column: var(--col-start, 1) / var(--col-end, 3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 10px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(74, 158, 255, 0.45);
+  background: rgba(74, 158, 255, 0.12);
+  color: #e6edf3;
+  font-size: 0.74rem;
+  cursor: pointer;
+  z-index: 2;
+  width: 100%;
+}
+
+.ladder-msg--dimmed {
+  opacity: 0.55;
+}
+
+.ladder-msg--anchor {
+  border-color: rgba(126, 231, 135, 0.55);
+  background: rgba(126, 231, 135, 0.12);
+}
+
+.ladder-msg--procedural {
+  border-color: rgba(140, 150, 160, 0.45);
+  background: rgba(40, 44, 50, 0.9);
+  color: var(--text-muted);
+}
+
+.ladder-hop-endpoints {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.ladder-inline-expand {
+  grid-column: 2 / -1;
+  margin: 4px 0 8px 42px;
+}
+
+.ladder-inline-expand-inner {
+  padding: 12px 14px;
+  border: 1px solid rgba(74, 158, 255, 0.35);
+  border-radius: var(--radius);
+  background: rgba(20, 28, 40, 0.95);
+}
+
+.ladder-inline-detail--procedural p {
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+}
+
+.ladder-prop-type {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}
+
+.ladder-prop-list {
+  margin-top: 6px;
+}
+
+.ladder-if-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--accent);
+  border: 1px solid rgba(74, 158, 255, 0.35);
+  background: rgba(74, 158, 255, 0.08);
+}
+
+.ladder-json-block {
+  margin: 6px 0 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}

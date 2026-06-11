@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="demo-mode" content="true">
+  <title>5G Visualizer — Static Demo</title>
+  <link rel="stylesheet" href="./static/styles.css">
+  <style>
+    body { max-width: 720px; margin: 40px auto; padding: 0 20px; font-family: system-ui, sans-serif; }
+    h1 { font-size: 1.5rem; }
+    .demo-links a { display: block; margin: 12px 0; font-size: 1.1rem; }
+    .note { color: #666; font-size: 0.9rem; margin-top: 24px; }
+  </style>
+</head>
+<body>
+  <h1>5G Signaling Visualizer</h1>
+  <p>Static preview of the Knowledge + Ladder streams. Clone the repo and run <code>python scripts/build.py</code> + <code>python -m backend.app</code> for the full Bank explorer.</p>
+  <div class="demo-links">
+    <a href="./ladder.html?id=pdu-session-sm-policy&amp;nfs=SMF,PCF">Signaling ladder — PDU session + SM policy</a>
+    <a href="./master-story.html?id=pdu-session-sm-policy">Master story hub</a>
+  </div>
+  <p class="note">Content aligned to 3GPP TS 23.501 / 23.502 / 29.512. No third-party branding.</p>
+</body>
+</html>

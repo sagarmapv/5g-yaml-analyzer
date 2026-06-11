@@ -1,0 +1,514 @@
+{
+  "operationId": "CreateSMPolicy",
+  "method": "POST",
+  "path": "/sm-policies",
+  "summary": "Create a new Individual SM Policy.",
+  "description": "",
+  "parameters": [],
+  "requestHeaders": [],
+  "pathParams": [],
+  "queryParams": [],
+  "request": {
+    "contentType": "application/json",
+    "schemaRef": "SmPolicyContextData",
+    "requiredProperties": [
+      "supi",
+      "pduSessionId",
+      "pduSessionType",
+      "dnn",
+      "notificationUri",
+      "sliceInfo"
+    ],
+    "properties": [
+      {
+        "name": "accNetChId",
+        "type": "AccNetChId",
+        "required": false
+      },
+      {
+        "name": "chargEntityAddr",
+        "type": "AccNetChargingAddress",
+        "required": false
+      },
+      {
+        "name": "gpsi",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "supi",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "invalidSupi",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "interGrpIds",
+        "type": "array",
+        "required": false
+      },
+      {
+        "name": "pduSessionId",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "name": "pduSessionType",
+        "type": "",
+        "required": true
+      },
+      {
+        "name": "chargingcharacteristics",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "dnn",
+        "type": "ueReqDnn",
+        "required": true
+      },
+      {
+        "name": "dnnSelMode",
+        "type": "",
+        "required": false
+      },
+      {
+        "name": "notificationUri",
+        "type": "tscNotifUri",
+        "required": true
+      },
+      {
+        "name": "accessType",
+        "type": "active",
+        "required": false
+      },
+      {
+        "name": "ratType",
+        "type": "ratType",
+        "required": false
+      },
+      {
+        "name": "addAccessInfo",
+        "type": "AdditionalAccessInfo",
+        "required": false
+      },
+      {
+        "name": "servingNetwork",
+        "type": "servingNetwork",
+        "required": false
+      },
+      {
+        "name": "userLocationInfo",
+        "type": "userLocationInfo",
+        "required": false
+      },
+      {
+        "name": "ueTimeZone",
+        "type": "ueTimeZone",
+        "required": false
+      },
+      {
+        "name": "pei",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ipv4Address",
+        "type": "sgsnIpv4Addr",
+        "required": false
+      },
+      {
+        "name": "ipv6AddressPrefix",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ipDomain",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "subsSessAmbr",
+        "type": "authSessAmbr",
+        "required": false
+      },
+      {
+        "name": "authProfIndex",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "subsDefQos",
+        "type": "object",
+        "required": false
+      },
+      {
+        "name": "vplmnQos",
+        "type": "object",
+        "required": false
+      },
+      {
+        "name": "numOfPackFilter",
+        "type": "integer",
+        "required": false
+      },
+      {
+        "name": "online",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "offline",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "3gppPsDataOffStatus",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "refQosIndication",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "traceReq",
+        "type": "object",
+        "required": false
+      },
+      {
+        "name": "sliceInfo",
+        "type": "object",
+        "required": true
+      },
+      {
+        "name": "altSliceInfo",
+        "type": "sliceInfo",
+        "required": false
+      },
+      {
+        "name": "qosFlowUsage",
+        "type": "QosFlowUsage",
+        "required": false
+      },
+      {
+        "name": "servNfId",
+        "type": "ServingNfIdentity",
+        "required": false
+      },
+      {
+        "name": "suppFeat",
+        "type": "suppFeat",
+        "required": false
+      },
+      {
+        "name": "smfId",
+        "type": "nwdafInstanceId",
+        "required": false
+      },
+      {
+        "name": "recoveryTime",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "maPduInd",
+        "type": "MaPduIndication",
+        "required": false
+      },
+      {
+        "name": "atsssCapab",
+        "type": "AtsssCapability",
+        "required": false
+      },
+      {
+        "name": "ipv4FrameRouteList",
+        "type": "array",
+        "required": false
+      },
+      {
+        "name": "ipv6FrameRouteList",
+        "type": "array",
+        "required": false
+      },
+      {
+        "name": "satBackhaulCategory",
+        "type": "satBackhaulCategory",
+        "required": false
+      },
+      {
+        "name": "pcfUeInfo",
+        "type": "object",
+        "required": false
+      },
+      {
+        "name": "pvsInfo",
+        "type": "array",
+        "required": false
+      },
+      {
+        "name": "onboardInd",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "nwdafDatas",
+        "type": "array",
+        "required": false
+      },
+      {
+        "name": "urspEnfInfo",
+        "type": "UePolicyContainer",
+        "required": false
+      },
+      {
+        "name": "sscMode",
+        "type": "sscMode",
+        "required": false
+      },
+      {
+        "name": "ueReqDnn",
+        "type": "ueReqDnn",
+        "required": false
+      },
+      {
+        "name": "redundantPduSessionInfo",
+        "type": "redundantPduSessionInfo",
+        "required": false
+      },
+      {
+        "name": "hrsboInd",
+        "type": "boolean",
+        "required": false
+      }
+    ]
+  },
+  "sourceFile": "TS29512_Npcf_SMPolicyControl.yaml",
+  "nf": "PCF",
+  "service": "Npcf_SMPolicyControl API",
+  "explorerUrl": "/?q=CreateSMPolicy",
+  "storyUrl": "/specs/29.512",
+  "view": "request",
+  "envelope": {
+    "operationId": "CreateSMPolicy",
+    "method": "POST",
+    "path": "/sm-policies",
+    "headers": {
+      "Content-Type": {
+        "type": "string",
+        "required": true,
+        "default": "application/json"
+      },
+      "Accept": {
+        "type": "string",
+        "required": false,
+        "default": "application/json"
+      },
+      "3gpp-Sbi-Message-Priority": {
+        "type": "integer",
+        "required": false
+      }
+    },
+    "body": {
+      "contentType": "application/json",
+      "schemaRef": "SmPolicyContextData",
+      "json": {
+        "supi": "imsi-001010000000001",
+        "pduSessionId": 5,
+        "dnn": "internet",
+        "notificationUri": "https://smf.example.com/npcf-smpolicycontrol/v1/notification",
+        "ipv4Address": "10.45.0.12",
+        "sliceInfo": {
+          "sst": 1,
+          "sd": "010203"
+        },
+        "subsDefQos": {
+          "5qi": 9,
+          "arp": {
+            "priorityLevel": 8,
+            "preemptCap": "NOT_PREEMPT",
+            "preemptVuln": "PREEMPTABLE"
+          }
+        },
+        "online": true,
+        "offline": true
+      },
+      "schema": {
+        "type": "object",
+        "required": [
+          "supi",
+          "pduSessionId",
+          "pduSessionType",
+          "dnn",
+          "notificationUri",
+          "sliceInfo"
+        ],
+        "properties": {
+          "accNetChId": {
+            "type": "AccNetChId"
+          },
+          "chargEntityAddr": {
+            "type": "AccNetChargingAddress"
+          },
+          "gpsi": {
+            "type": "string"
+          },
+          "supi": {
+            "type": "string"
+          },
+          "invalidSupi": {
+            "type": "boolean"
+          },
+          "interGrpIds": {
+            "type": "array"
+          },
+          "pduSessionId": {
+            "type": "integer"
+          },
+          "pduSessionType": {
+            "type": "string"
+          },
+          "chargingcharacteristics": {
+            "type": "string"
+          },
+          "dnn": {
+            "type": "ueReqDnn"
+          },
+          "dnnSelMode": {
+            "type": "string"
+          },
+          "notificationUri": {
+            "type": "tscNotifUri"
+          },
+          "accessType": {
+            "type": "active"
+          },
+          "ratType": {
+            "type": "ratType"
+          },
+          "addAccessInfo": {
+            "type": "AdditionalAccessInfo"
+          },
+          "servingNetwork": {
+            "type": "servingNetwork"
+          },
+          "userLocationInfo": {
+            "type": "userLocationInfo"
+          },
+          "ueTimeZone": {
+            "type": "ueTimeZone"
+          },
+          "pei": {
+            "type": "string"
+          },
+          "ipv4Address": {
+            "type": "sgsnIpv4Addr"
+          },
+          "ipv6AddressPrefix": {
+            "type": "string"
+          },
+          "ipDomain": {
+            "type": "string"
+          },
+          "subsSessAmbr": {
+            "type": "authSessAmbr"
+          },
+          "authProfIndex": {
+            "type": "string"
+          },
+          "subsDefQos": {
+            "type": "object"
+          },
+          "vplmnQos": {
+            "type": "object"
+          },
+          "numOfPackFilter": {
+            "type": "integer"
+          },
+          "online": {
+            "type": "boolean"
+          },
+          "offline": {
+            "type": "boolean"
+          },
+          "3gppPsDataOffStatus": {
+            "type": "boolean"
+          },
+          "refQosIndication": {
+            "type": "boolean"
+          },
+          "traceReq": {
+            "type": "object"
+          },
+          "sliceInfo": {
+            "type": "object"
+          },
+          "altSliceInfo": {
+            "type": "sliceInfo"
+          },
+          "qosFlowUsage": {
+            "type": "QosFlowUsage"
+          },
+          "servNfId": {
+            "type": "ServingNfIdentity"
+          },
+          "suppFeat": {
+            "type": "suppFeat"
+          },
+          "smfId": {
+            "type": "nwdafInstanceId"
+          },
+          "recoveryTime": {
+            "type": "string"
+          },
+          "maPduInd": {
+            "type": "MaPduIndication"
+          },
+          "atsssCapab": {
+            "type": "AtsssCapability"
+          },
+          "ipv4FrameRouteList": {
+            "type": "array"
+          },
+          "ipv6FrameRouteList": {
+            "type": "array"
+          },
+          "satBackhaulCategory": {
+            "type": "satBackhaulCategory"
+          },
+          "pcfUeInfo": {
+            "type": "object"
+          },
+          "pvsInfo": {
+            "type": "array"
+          },
+          "onboardInd": {
+            "type": "boolean"
+          },
+          "nwdafDatas": {
+            "type": "array"
+          },
+          "urspEnfInfo": {
+            "type": "UePolicyContainer"
+          },
+          "sscMode": {
+            "type": "sscMode"
+          },
+          "ueReqDnn": {
+            "type": "ueReqDnn"
+          },
+          "redundantPduSessionInfo": {
+            "type": "redundantPduSessionInfo"
+          },
+          "hrsboInd": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

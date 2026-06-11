@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5G SBI YAML Analyzer</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <aside id="sidebar">
+    <header class="sidebar-header">
+      <h1>5G SBI</h1>
+      <p class="subtitle">YAML Analyzer</p>
+      <nav class="page-nav">
+        <a href="/" class="nav-link" data-nav="explorer">Explorer</a>
+        <a href="/topology" class="nav-link" data-nav="topology">Topology</a>
+        <a href="/specs" class="nav-link" data-nav="specs">Specs</a>
+        <a href="/stories" class="nav-link" data-nav="stories">Stories</a>
+        <a href="/ladder" class="nav-link" data-nav="ladder">Ladder</a>
+      </nav>
+    </header>
+
+    <div class="toolbar">
+      <input type="search" id="search-input" placeholder="Search NF, TS spec, service, YAML..." autocomplete="off">
+      <div class="toolbar-actions">
+        <button type="button" id="expand-all-btn" title="Expand all">Expand</button>
+        <button type="button" id="collapse-all-btn" title="Collapse all">Collapse</button>
+        <button type="button" id="rebuild-btn" title="Rebuild index from YAMLs">Rebuild</button>
+      </div>
+    </div>
+
+    <div id="search-results" class="search-results hidden"></div>
+    <div id="file-list" class="file-list">
+      <p class="placeholder">Loading index...</p>
+    </div>
+
+    <footer class="sidebar-footer">
+      <span id="health-status">—</span>
+    </footer>
+  </aside>
+
+  <main id="viewer">
+    <section class="pane left">
+      <div class="pane-header">
+        <h2>Raw YAML</h2>
+        <span id="yaml-filename" class="filename"></span>
+      </div>
+      <div id="yaml-display" class="pane-content">
+        <p class="placeholder">Select a service to view YAML</p>
+      </div>
+    </section>
+
+    <section class="pane right">
+      <div class="pane-header">
+        <div>
+          <h2>Operations</h2>
+          <p id="service-description" class="service-description hidden"></p>
+          <a id="spec-story-link" class="spec-story-banner hidden" href="/specs?ts=29.512&view=story">Specs platform →</a>
+        </div>
+        <span id="operation-count" class="filename"></span>
+      </div>
+      <div id="json-display" class="pane-content">
+        <p class="placeholder">Select a service to view operations</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="/static/site-nav.js"></script>
+  <script src="/static/message-detail.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+{
+  "tsNumber": "29.522",
+  "title": "Network Exposure Function Services; Stage 3 (NEF SBI)",
+  "tagline": "NEF — expose AF session influence into the 5GC",
+  "summary": "TS 29.522 defines Nnef services that allow Application Functions to influence core behaviour — including session and policy-related exposure. In the 29.512 journey, AF influence on session policy typically flows AF → PCF (29.514 Policy Authorization) with NEF as the controlled exposure path for external applications.",
+  "defines": [
+    "Nnef_PFDManagement — Packet Flow Description management",
+    "Nnef_TrafficInfluence — traffic routing influence",
+    "Nnef_EventExposure — event subscription for external consumers",
+    "AF exposure into PCF/SMF policy paths"
+  ],
+  "whyItMatters": "Application-driven QoS and traffic influence enters the core through NEF and Policy Authorization, which can change what PCF puts in SmPolicyDecision. NEF is the exposure gate between the internet and session policy.",
+  "stitchAnchor": "29.512",
+  "primaryNf": "NEF",
+  "entryPoints": [
+    {
+      "type": "procedure",
+      "name": "Policy Authorization",
+      "refSpec": "29.514",
+      "consumer": "AF",
+      "description": "AF session influence that may affect SM policy."
+    },
+    {
+      "type": "sbi",
+      "name": "Nnef_TrafficInfluence",
+      "consumer": "AF",
+      "description": "Expose traffic influence toward SMF/PCF path."
+    },
+    {
+      "type": "sbi",
+      "name": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "description": "Resulting session policy SMF requests from PCF."
+    }
+  ],
+  "elements": [
+    {
+      "nf": "NEF",
+      "role": "Network Exposure Function — AF entry to the core",
+      "inSpec": true,
+      "primarySpec": "29.522"
+    },
+    {
+      "nf": "AF",
+      "role": "Application Function — may influence session policy",
+      "inSpec": false,
+      "primarySpec": "29.514"
+    },
+    {
+      "nf": "PCF",
+      "role": "Receives policy authorization; outputs SmPolicyDecision",
+      "inSpec": false,
+      "primarySpec": "29.512"
+    },
+    {
+      "nf": "SMF",
+      "role": "Applies SmPolicyDecision from PCF",
+      "inSpec": false,
+      "primarySpec": "29.502"
+    }
+  ],
+  "interactions": [
+    {
+      "from": "AF",
+      "to": "PCF",
+      "via": "Npcf_PolicyAuthorization",
+      "refSpec": "29.514",
+      "description": "Application session may influence SM policy"
+    },
+    {
+      "from": "SMF",
+      "to": "PCF",
+      "via": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "description": "Session policy after AF influence processed"
+    }
+  ],
+  "e2eFlow": {
+    "name": "PDU Session Establishment (NEF / AF influence)",
+    "refSpecs": [
+      { "ts": "29.514", "role": "Policy Authorization" },
+      { "ts": "29.512", "role": "SmPolicyDecision" },
+      { "ts": "23.503", "role": "Policy framework" }
+    ],
+    "steps": [
+      {
+        "order": 4,
+        "actors": ["SMF", "PCF"],
+        "action": "SMF sends CreateSMPolicy",
+        "inSpec": false,
+        "refSpec": "29.512",
+        "operationId": "CreateSMPolicy"
+      },
+      {
+        "order": 5,
+        "actors": ["PCF", "UDR"],
+        "action": "PCF evaluates policy (may include prior AF influence via 29.514)",
+        "inSpec": false,
+        "refSpec": "29.504"
+      },
+      {
+        "order": 6,
+        "actors": ["PCF", "SMF"],
+        "action": "SmPolicyDecision returned",
+        "inSpec": false,
+        "refSpec": "29.512"
+      }
+    ]
+  },
+  "relatedSpecs": [
+    { "ts": "29.514", "role": "Policy Authorization — AF to PCF" },
+    { "ts": "29.512", "role": "Session Management Policy Control" },
+    { "ts": "29.502", "role": "SMF enforcement" },
+    { "ts": "23.503", "role": "Policy and charging framework" }
+  ],
+  "relatedStory": [
+    { "ts": "29.514", "role": "AF influence on session policy" },
+    { "ts": "29.512", "role": "CreateSMPolicy" },
+    { "ts": "23.503", "role": "Policy framework" }
+  ],
+  "highlightClauses": ["4.1", "5.2", "5.3"]
+}

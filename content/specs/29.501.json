@@ -1,0 +1,109 @@
+{
+  "tsNumber": "29.501",
+  "title": "Principles and Guidelines for Services Definition; Stage 3",
+  "tagline": "SBI foundations — apiRoot, HTTP, and service discovery",
+  "summary": "TS 29.501 defines the principles for 5G Service-Based Interface design: apiRoot URIs, HTTP usage, versioning, and NF service discovery patterns. Every SBI call in the 29.512 story — including CreateSMPolicy — follows conventions established here.",
+  "defines": [
+    "apiRoot and resource URI structure",
+    "HTTP methods, status codes, and content types for SBI",
+    "NF service registration and discovery patterns",
+    "Common design rules for Stage-3 API specs"
+  ],
+  "whyItMatters": "When SMF calls POST /npcf-smpolicycontrol/v1/sm-policies, the path shape, headers, and discovery flow all trace back to 29.501. This spec is the shared grammar for every Stage-3 SBI in the stitch.",
+  "stitchAnchor": "29.512",
+  "entryPoints": [
+    {
+      "type": "procedure",
+      "name": "SBI architecture principles",
+      "clause": "5",
+      "description": "How NF services are exposed and consumed."
+    },
+    {
+      "type": "procedure",
+      "name": "NF service discovery",
+      "description": "Patterns used before calling Npcf_SMPolicyControl."
+    },
+    {
+      "type": "sbi",
+      "name": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "description": "Example SBI operation following 29.501 conventions."
+    },
+    {
+      "type": "discovery",
+      "name": "NRF discovery",
+      "refSpec": "29.510",
+      "description": "Nnrf_NFDiscovery service for finding PCF."
+    }
+  ],
+  "elements": [
+    { "nf": "SMF", "role": "SBI consumer — calls PCF and NRF", "inSpec": false, "primarySpec": "29.502" },
+    { "nf": "PCF", "role": "SBI producer — Npcf_SMPolicyControl", "inSpec": false, "primarySpec": "29.512" },
+    { "nf": "NRF", "role": "Service registry and discovery", "inSpec": false, "primarySpec": "29.510" }
+  ],
+  "interactions": [
+    {
+      "from": "SMF",
+      "to": "NRF",
+      "via": "Nnrf_NFDiscovery",
+      "refSpec": "29.510",
+      "description": "Discover PCF apiRoot before policy call"
+    },
+    {
+      "from": "SMF",
+      "to": "PCF",
+      "via": "HTTP POST sm-policies",
+      "refSpec": "29.512",
+      "description": "SBI request following 29.501 URI and HTTP rules"
+    }
+  ],
+  "e2eFlow": {
+    "name": "PDU Session Establishment (SBI principles view)",
+    "refSpecs": [
+      { "ts": "29.512", "role": "Policy SBI" },
+      { "ts": "29.510", "role": "NRF discovery" }
+    ],
+    "steps": [
+      {
+        "order": 2,
+        "actors": ["AMF", "SMF"],
+        "action": "AMF calls SMF via Nsmf_PDUSession (29.501 URI rules)",
+        "inSpec": true,
+        "refSpec": "29.502"
+      },
+      {
+        "order": 3,
+        "actors": ["SMF", "NRF"],
+        "action": "SMF discovers PCF service instance",
+        "inSpec": true,
+        "refSpec": "29.510"
+      },
+      {
+        "order": 4,
+        "actors": ["SMF", "PCF"],
+        "action": "SMF POST to PCF apiRoot — CreateSMPolicy",
+        "inSpec": true,
+        "refSpec": "29.512"
+      },
+      {
+        "order": 6,
+        "actors": ["PCF", "SMF"],
+        "action": "HTTP 201 with SmPolicyDecision response body",
+        "inSpec": true,
+        "refSpec": "29.512"
+      }
+    ]
+  },
+  "highlightClauses": ["5", "6", "6.1"],
+  "relatedSpecs": [
+    { "ts": "29.512", "role": "Session policy service definition" },
+    { "ts": "29.510", "role": "NRF services" },
+    { "ts": "29.502", "role": "SMF PDU Session service" },
+    { "ts": "23.501", "role": "5G architecture" }
+  ],
+  "relatedStory": [
+    { "ts": "29.512", "role": "CreateSMPolicy on PCF" },
+    { "ts": "29.510", "role": "NF discovery before policy call" },
+    { "ts": "29.502", "role": "SMF as SBI consumer" }
+  ]
+}

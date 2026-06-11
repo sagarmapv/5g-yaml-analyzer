@@ -1,0 +1,14 @@
+{
+  "pei": "imei-001010000000001",
+  "servingNfId": "smf-instance-001",
+  "anType": "3GPP_ACCESS",
+  "ratType": "NR",
+  "presenceInLadn": "IN_AREA",
+  "ueLocation": {
+    "nrLocation": {
+      "tai": { "plmnId": { "mcc": "001", "mnc": "01" }, "tac": "000001" },
+      "ncgi": { "plmnId": { "mcc": "001", "mnc": "01" }, "nrCellId": "000000001" }
+    }
+  },
+  "upCnxState": "ACTIVATED"
+}

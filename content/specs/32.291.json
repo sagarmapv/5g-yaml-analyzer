@@ -1,0 +1,121 @@
+{
+  "tsNumber": "32.291",
+  "title": "5G Charging; Stage 3 (CHF SBI)",
+  "tagline": "CHF — charging that reuses session policy types from 29.512",
+  "summary": "TS 32.291 defines charging services on the CHF, including converged online/offline charging. It reuses QoS, charging, and session policy-related data types defined in TS 29.512. In the PDU session journey, charging rules in SmPolicyDecision connect session policy on PCF to what CHF meters on the user plane.",
+  "defines": [
+    "Nchf_ConvergedCharging — online and offline charging",
+    "Charging data types shared with 29.512 SmPolicyDecision",
+    "CHF as charging consumer of session and QoS information",
+    "Integration with SMF session charging triggers"
+  ],
+  "whyItMatters": "Session policy is not only QoS — SmPolicyDecision can carry charging rules. 32.291 explains how those rules become charging behaviour on CHF, linking the 29.512 policy vocabulary to billing.",
+  "stitchAnchor": "29.512",
+  "primaryNf": "CHF",
+  "entryPoints": [
+    {
+      "type": "procedure",
+      "name": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "description": "SmPolicyDecision may include charging rules and QoS for CHF."
+    },
+    {
+      "type": "sbi",
+      "name": "Nchf_ConvergedCharging",
+      "consumer": "SMF",
+      "description": "SMF reports charging events using 29.512-aligned types."
+    },
+    {
+      "type": "procedure",
+      "name": "PDU Session Establishment",
+      "refSpec": "23.502",
+      "description": "Stage-2 charging activation alongside session setup."
+    }
+  ],
+  "elements": [
+    {
+      "nf": "CHF",
+      "role": "Charging Function — converged charging",
+      "inSpec": true,
+      "primarySpec": "32.291"
+    },
+    {
+      "nf": "SMF",
+      "role": "Session owner — applies charging from SmPolicyDecision",
+      "inSpec": false,
+      "primarySpec": "29.502"
+    },
+    {
+      "nf": "PCF",
+      "role": "Provides charging rules in SmPolicyDecision",
+      "inSpec": false,
+      "primarySpec": "29.512"
+    },
+    {
+      "nf": "UPF",
+      "role": "Usage reporting toward charging",
+      "inSpec": false,
+      "primarySpec": "29.564"
+    }
+  ],
+  "interactions": [
+    {
+      "from": "SMF",
+      "to": "PCF",
+      "via": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "response": "SmPolicyDecision",
+      "description": "Charging rules in policy decision"
+    },
+    {
+      "from": "SMF",
+      "to": "CHF",
+      "via": "Nchf_ConvergedCharging",
+      "description": "Charging session aligned with PDU session"
+    }
+  ],
+  "e2eFlow": {
+    "name": "PDU Session Establishment (CHF view)",
+    "refSpecs": [
+      { "ts": "29.512", "role": "Charging rules in SmPolicyDecision" },
+      { "ts": "29.502", "role": "SMF session" },
+      { "ts": "23.503", "role": "Charging framework" }
+    ],
+    "steps": [
+      {
+        "order": 4,
+        "actors": ["SMF", "PCF"],
+        "action": "SMF requests session policy",
+        "inSpec": false,
+        "refSpec": "29.512",
+        "operationId": "CreateSMPolicy"
+      },
+      {
+        "order": 6,
+        "actors": ["PCF", "SMF"],
+        "action": "SmPolicyDecision includes charging and QoS rules",
+        "inSpec": false,
+        "refSpec": "29.512"
+      },
+      {
+        "order": 7,
+        "actors": ["SMF", "UPF"],
+        "action": "SMF enforces policy including charging-related usage reporting",
+        "inSpec": false,
+        "refSpec": "29.502"
+      }
+    ]
+  },
+  "relatedSpecs": [
+    { "ts": "29.512", "role": "Shared charging/QoS types" },
+    { "ts": "29.502", "role": "SMF PDU session and charging triggers" },
+    { "ts": "23.503", "role": "Policy and charging control framework" },
+    { "ts": "23.502", "role": "PDU session procedures" }
+  ],
+  "relatedStory": [
+    { "ts": "29.512", "role": "SmPolicyDecision charging rules" },
+    { "ts": "29.502", "role": "SMF charging integration" },
+    { "ts": "23.503", "role": "Charging framework" }
+  ],
+  "highlightClauses": ["4.1", "5.2", "5.3"]
+}

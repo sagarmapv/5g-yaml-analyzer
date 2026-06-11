@@ -1,0 +1,56 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Namf_Communication",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {"url": "https://amf.example.org/namf-comm/v1"}
+  ],
+  "paths": {
+    "/ue-contexts/{ueContextId}": {
+      "get": {
+        "operationId": "GetUeContext",
+        "summary": "Get UE context",
+        "parameters": [
+          {"name": "ueContextId", "in": "path", "required": true},
+          {"name": "fields", "in": "query", "required": false}
+        ],
+        "responses": {
+          "200": {"description": "UE context returned"},
+          "404": {"description": "Not found"}
+        }
+      },
+      "put": {
+        "operationId": "UpdateUeContext",
+        "summary": "Update UE context",
+        "parameters": [
+          {"name": "ueContextId", "in": "path", "required": true}
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["supi"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {"description": "Updated"},
+          "400": {"description": "Bad request"}
+        }
+      }
+    },
+    "/registrations": {
+      "post": {
+        "operationId": "RegistrationRequest",
+        "summary": "UE registration",
+        "responses": {
+          "201": {"description": "Created"}
+        }
+      }
+    }
+  }
+}

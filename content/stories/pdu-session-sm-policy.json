@@ -1,0 +1,10 @@
+{
+  "id": "pdu-session-sm-policy",
+  "title": "PDU Session Establishment with SM Policy",
+  "tagline": "From UE request to PCF decision — one journey across Stage 2 and Stage 3",
+  "anchorSpec": "29.512",
+  "flowId": "pdu-session-establishment",
+  "stitchManifest": "stitch-29.512.json",
+  "summary": "This master story walks through PDU session establishment where the SMF must obtain session management policy from the PCF before user-plane rules can be applied. It stitches together Stage-2 procedures (TS 23.502), SMF and PCF Stage-3 SBIs (TS 29.502, 29.512), signalling flows (TS 29.513), and supporting architecture and framework specs.",
+  "whyItMatters": "Session policy is not an isolated API — it sits inside a live establishment procedure spanning UE, AMF, SMF, NRF, PCF, and UPF. The master journey shows when each spec applies and links into dedicated narratives for each network function and technical specification."
+}

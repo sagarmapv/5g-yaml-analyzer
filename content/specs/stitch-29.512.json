@@ -1,0 +1,101 @@
+{
+  "anchor": "29.512",
+  "stitchSpecs": [
+    {
+      "ts": "23.502",
+      "priority": "P0",
+      "role": "Stage-2 procedures — when SMF requests session policy during PDU session",
+      "relatedStory": [
+        { "ts": "29.502", "role": "SMF PDU Session APIs (Stage 3)" },
+        { "ts": "29.512", "role": "CreateSMPolicy on PCF" },
+        { "ts": "29.513", "role": "SM Policy Association flows" }
+      ]
+    },
+    {
+      "ts": "29.513",
+      "priority": "P0",
+      "role": "Stage-3 signalling flows — SM Policy Association diagrams",
+      "relatedStory": [
+        { "ts": "29.512", "role": "CreateSMPolicy SBI" },
+        { "ts": "23.502", "role": "PDU session procedures" },
+        { "ts": "29.502", "role": "SMF PDU Session" }
+      ]
+    },
+    {
+      "ts": "23.501",
+      "priority": "P1",
+      "role": "5G architecture — PCF, SMF, UPF roles and reference points",
+      "relatedStory": [
+        { "ts": "23.502", "role": "5GS procedures" },
+        { "ts": "29.512", "role": "Session policy SBI" },
+        { "ts": "29.501", "role": "SBI Stage 3 principles" }
+      ]
+    },
+    {
+      "ts": "23.503",
+      "priority": "P1",
+      "role": "Policy and charging control framework (stage 2)",
+      "relatedStory": [
+        { "ts": "29.512", "role": "SmPolicyDecision model" },
+        { "ts": "23.502", "role": "PDU session procedures" },
+        { "ts": "29.513", "role": "Signalling flows" }
+      ]
+    },
+    {
+      "ts": "29.501",
+      "priority": "P1",
+      "role": "SBI principles — apiRoot, HTTP, service discovery conventions",
+      "relatedStory": [
+        { "ts": "29.512", "role": "Policy SBI example" },
+        { "ts": "29.510", "role": "NRF discovery" },
+        { "ts": "29.502", "role": "SMF SBI consumer" }
+      ]
+    },
+    {
+      "ts": "29.502",
+      "priority": "P1",
+      "role": "SMF PDU Session service — triggers SM policy need",
+      "primaryNf": "SMF",
+      "relatedStory": [
+        { "ts": "23.502", "role": "When SMF requests session policy (PDU session procedures)" },
+        { "ts": "29.512", "role": "Session Management Policy Control on PCF" },
+        { "ts": "29.513", "role": "SM Policy Association signalling flows" }
+      ]
+    },
+    {
+      "ts": "29.510",
+      "priority": "P2",
+      "role": "NRF — discover PCF before CreateSMPolicy",
+      "primaryNf": "NRF",
+      "relatedStory": [
+        { "ts": "29.512", "role": "CreateSMPolicy target" },
+        { "ts": "29.501", "role": "Discovery principles" },
+        { "ts": "29.502", "role": "SMF as consumer" }
+      ]
+    },
+    {
+      "ts": "29.514",
+      "priority": "P2",
+      "role": "Policy Authorization — AF influence on session policy",
+      "primaryNf": "AF",
+      "relatedStory": [
+        { "ts": "29.512", "role": "SmPolicyDecision" },
+        { "ts": "29.502", "role": "SMF enforcement" },
+        { "ts": "23.503", "role": "Policy framework" }
+      ]
+    }
+  ],
+  "stepStitch": [
+    { "order": 1, "spec": "23.502", "clause": "4.3.2", "search": ["PDU Session Establishment"] },
+    { "order": 2, "spec": "29.502", "clause": "", "search": ["CreateSMContext", "Nsmf_PDUSession"] },
+    { "order": 3, "spec": "29.510", "clause": "", "search": ["NF discovery"] },
+    { "order": 4, "spec": "29.512", "clause": "6.1", "search": ["CreateSMPolicy", "sm-policies"] },
+    { "order": 4, "spec": "29.513", "clause": "5.2.1", "search": ["SM Policy Association Establishment"] },
+    { "order": 5, "spec": "23.503", "clause": "4", "search": ["Policy Control"] },
+    { "order": 6, "spec": "29.512", "clause": "6.1", "search": ["SmPolicyDecision"] },
+    { "order": 6, "spec": "29.513", "clause": "5.2.1", "search": ["SM Policy Association Establishment"] },
+    { "order": 7, "spec": "29.502", "clause": "", "search": ["UPF", "N4"] },
+    { "order": 8, "spec": "23.502", "clause": "4.3.2", "search": ["PDU Session Establishment"] },
+    { "order": 9, "spec": "29.513", "clause": "5.2.2.2", "search": ["SM Policy Association Modification initiated by the PCF"] }
+  ]
+}

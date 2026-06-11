@@ -1,0 +1,10 @@
+{
+  "supi": "imsi-001010000000001",
+  "pei": "imei-001010000000001",
+  "pduSessionId": 5,
+  "dnn": "internet",
+  "sNssai": { "sst": 1, "sd": "010203" },
+  "servingNetwork": { "mcc": "001", "mnc": "01" },
+  "n1SmMsg": { "contentId": "n1-sm-msg" },
+  "anType": "3GPP_ACCESS"
+}

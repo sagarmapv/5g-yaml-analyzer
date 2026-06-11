@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signaling Ladder</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="stylesheet" href="/static/spec-story.css">
+  <link rel="stylesheet" href="/static/master-story.css">
+  <link rel="stylesheet" href="/static/ladder.css">
+</head>
+<body class="ladder-page">
+  <header class="story-header">
+    <div>
+      <p class="breadcrumb">
+        <a href="/">Explorer</a> ·
+        <a href="/stories">Stories</a> ·
+        <a id="ladder-knowledge-link" href="/stories">Knowledge</a> ·
+        <span>Signaling ladder</span>
+      </p>
+      <h1 id="ladder-title">Signaling Ladder</h1>
+      <p class="subtitle">Technical stream — static sequence diagram with multi-NF focus</p>
+    </div>
+    <nav class="page-nav">
+      <a href="/" class="nav-link" data-nav="explorer">Explorer</a>
+      <a href="/topology" class="nav-link" data-nav="topology">Topology</a>
+      <a href="/specs" class="nav-link" data-nav="specs">Specs</a>
+      <a href="/stories" class="nav-link" data-nav="stories">Stories</a>
+      <a href="/ladder" class="nav-link active" data-nav="ladder">Ladder</a>
+    </nav>
+  </header>
+
+  <main class="ladder-main" id="ladder-main">
+    <section class="ladder-intro">
+      <p>Select one or more network functions to highlight hops between them. Click a message to expand request headers and body inline. All steps stay visible in establishment order.</p>
+    </section>
+    <div id="ladder-host">
+      <p class="loading">Loading signaling ladder…</p>
+    </div>
+  </main>
+
+  <script src="/static/site-nav.js"></script>
+  <script src="/static/flow-renderer.js"></script>
+  <script src="/static/message-detail.js"></script>
+  <script src="/static/ladder-renderer.js"></script>
+  <script src="/static/ladder.js"></script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+{
+  "tsNumber": "29.502",
+  "title": "Session Management Services; Stage 3 (SMF SBI)",
+  "tagline": "SMF PDU Session — the service that triggers session policy",
+  "summary": "TS 29.502 defines the Nsmf_PDUSession service on the SMF. It is the Stage-3 SBI for creating and managing PDU sessions, SM contexts, and user-plane resources. In the 29.512 story, SMF runs these procedures first — then calls PCF for session management policy before applying rules to the UPF.",
+  "defines": [
+    "SM context and PDU session lifecycle (create, update, release)",
+    "N4 user-plane session establishment and modification",
+    "SMF service operations consumed by AMF and internal SMF logic",
+    "Triggers that lead to Npcf_SMPolicyControl (TS 29.512)"
+  ],
+  "whyItMatters": "Without 29.502, there is no SBI contract for how AMF hands a PDU session to SMF or how SMF programs the UPF. The 512 policy call sits inside the PDU session establishment procedure defined in TS 23.502 and implemented here at Stage 3.",
+  "stitchAnchor": "29.512",
+  "primaryNf": "SMF",
+  "entryPoints": [
+    {
+      "type": "sbi",
+      "method": "POST",
+      "path": "/nsmf-pdusession/v1/sm-contexts",
+      "operationId": "PostSmContexts",
+      "consumer": "AMF",
+      "description": "AMF creates an SM context — start of PDU session establishment on SMF."
+    },
+    {
+      "type": "sbi",
+      "method": "POST",
+      "path": "/nsmf-pdusession/v1/pdu-sessions",
+      "operationId": "PostPduSessions",
+      "consumer": "SMF",
+      "description": "PDU session resource creation (alternative deployment patterns)."
+    },
+    {
+      "type": "procedure",
+      "name": "PDU Session Establishment",
+      "refSpec": "23.502",
+      "trigger": "Stage-2 procedure — when SMF must request session policy from PCF"
+    },
+    {
+      "type": "sbi",
+      "method": "POST",
+      "path": "/npcf-smpolicycontrol/v1/sm-policies",
+      "operationId": "CreateSMPolicy",
+      "consumer": "SMF",
+      "refSpec": "29.512",
+      "description": "SMF requests session management policy from PCF (defined in TS 29.512)."
+    },
+    {
+      "type": "procedure",
+      "name": "N4 session establishment",
+      "description": "SMF configures UPF after receiving SmPolicyDecision from PCF."
+    }
+  ],
+  "elements": [
+    {
+      "nf": "SMF",
+      "role": "Session Management Function — owns Nsmf_PDUSession",
+      "inSpec": true,
+      "primarySpec": "29.502"
+    },
+    {
+      "nf": "AMF",
+      "role": "Invokes CreateSMContext to start PDU session on SMF",
+      "inSpec": false,
+      "primarySpec": "29.518"
+    },
+    {
+      "nf": "UPF",
+      "role": "User plane — SMF installs rules after policy decision",
+      "inSpec": false,
+      "primarySpec": "29.564"
+    },
+    {
+      "nf": "PCF",
+      "role": "Provides SmPolicyDecision via TS 29.512",
+      "inSpec": false,
+      "primarySpec": "29.512"
+    },
+    {
+      "nf": "NRF",
+      "role": "SMF discovers PCF before policy call",
+      "inSpec": false,
+      "primarySpec": "29.510"
+    }
+  ],
+  "interactions": [
+    {
+      "from": "AMF",
+      "to": "SMF",
+      "via": "PostSmContexts",
+      "description": "PDU session establishment request"
+    },
+    {
+      "from": "SMF",
+      "to": "PCF",
+      "via": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "payload": "SmPolicyContextData",
+      "response": "SmPolicyDecision"
+    },
+    {
+      "from": "SMF",
+      "to": "UPF",
+      "via": "N4 session rules",
+      "description": "Enforcement of PCC/QoS from applied SmPolicyDecision"
+    },
+    {
+      "from": "SMF",
+      "to": "NRF",
+      "via": "NF discovery",
+      "refSpec": "29.510",
+      "description": "Discover PCF for Npcf_SMPolicyControl"
+    }
+  ],
+  "e2eFlow": {
+    "name": "PDU Session Establishment (SMF view)",
+    "refSpecs": [
+      { "ts": "23.502", "role": "Stage-2 procedures" },
+      { "ts": "29.512", "role": "Session policy on PCF" },
+      { "ts": "29.513", "role": "Signalling flow diagrams" }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "actors": ["UE", "RAN", "AMF"],
+        "action": "UE requests PDU session establishment",
+        "in502": false,
+        "refSpec": "23.502"
+      },
+      {
+        "order": 2,
+        "actors": ["AMF", "SMF"],
+        "action": "AMF invokes Nsmf_PDUSession PostSmContexts (Create SM Context)",
+        "in502": true,
+        "operationId": "PostSmContexts"
+      },
+      {
+        "order": 3,
+        "actors": ["SMF", "NRF"],
+        "action": "SMF discovers PCF (Npcf_SMPolicyControl)",
+        "in502": false,
+        "refSpec": "29.510"
+      },
+      {
+        "order": 4,
+        "actors": ["SMF", "PCF"],
+        "action": "SMF sends CreateSMPolicy with SmPolicyContextData",
+        "in502": false,
+        "refSpec": "29.512",
+        "operationId": "CreateSMPolicy"
+      },
+      {
+        "order": 5,
+        "actors": ["PCF", "SMF"],
+        "action": "PCF returns SmPolicyDecision",
+        "in502": false,
+        "refSpec": "29.512"
+      },
+      {
+        "order": 6,
+        "actors": ["SMF", "UPF"],
+        "action": "SMF establishes N4 session and installs packet detection / QoS rules",
+        "in502": true
+      },
+      {
+        "order": 7,
+        "actors": ["SMF", "AMF"],
+        "action": "PDU session established — SMF responds to AMF",
+        "in502": true
+      }
+    ]
+  },
+  "relatedSpecs": [
+    { "ts": "23.502", "role": "When SMF requests session policy (procedures)" },
+    { "ts": "29.512", "role": "Session Management Policy Control on PCF" },
+    { "ts": "29.513", "role": "SM Policy signalling flows" },
+    { "ts": "29.510", "role": "NRF — PCF discovery" }
+  ],
+  "relatedStory": [
+    { "ts": "23.502", "role": "PDU session procedures (Stage 2)" },
+    { "ts": "29.512", "role": "CreateSMPolicy on PCF" },
+    { "ts": "29.513", "role": "SM Policy Association flows" }
+  ]
+}

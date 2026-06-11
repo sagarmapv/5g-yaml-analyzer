@@ -1,0 +1,6 @@
+{
+  "supi": "imsi-001010000000001",
+  "plmn-id": { "mcc": "001", "mnc": "01" },
+  "dnn": "internet",
+  "single-nssai": { "sst": 1, "sd": "010203" }
+}

@@ -1,0 +1,257 @@
+{
+  "catalogVersion": "1.0",
+  "references": [
+    {
+      "id": "5g-system-overview",
+      "url": "https://www.3gpp.org/technologies/5g-system-overview",
+      "role": "overview"
+    },
+    { "id": "23.501", "title": "System architecture for the 5G System", "role": "normative" },
+    { "id": "23.502", "title": "Procedures for the 5G System", "role": "normative" }
+  ],
+  "architecture": {
+    "sba": "Service-Based Architecture — NFs register/discover via NRF; HTTP/2 SBI (TS 23.501)",
+    "cups": "Control/User Plane Separation — UPF user plane; AMF/SMF control plane (TS 23.501)",
+    "deploymentDefault": "sa"
+  },
+  "interfaces": {
+    "N1": { "endpoints": ["UE", "AMF"], "protocol": "NAS", "refSpec": "24.501" },
+    "N2": { "endpoints": ["RAN", "AMF"], "protocol": "NG-AP", "refSpec": "38.413" },
+    "N3": { "endpoints": ["RAN", "UPF"], "protocol": "GTP-U", "refSpec": "29.281" },
+    "N4": { "endpoints": ["SMF", "UPF"], "protocol": "PFCP", "refSpec": "29.244" },
+    "N6": { "endpoints": ["UPF", "DN"], "protocol": "user traffic", "refSpec": "23.501" },
+    "N7": { "endpoints": ["SMF", "PCF"], "protocol": "SBI", "refSpec": "29.512" },
+    "N8": { "endpoints": ["AMF", "UDM"], "protocol": "SBI", "refSpec": "29.503" },
+    "N10": { "endpoints": ["SMF", "UDM"], "protocol": "SBI", "refSpec": "29.503" },
+    "N11": { "endpoints": ["AMF", "SMF"], "protocol": "SBI", "refSpec": "29.502" },
+    "Nnrf": { "endpoints": ["*", "NRF"], "protocol": "SBI", "refSpec": "29.510" }
+  },
+  "procedureRoles": {
+    "pdu_session_establishment": {
+      "required": ["UE", "RAN", "AMF", "SMF", "UPF"],
+      "common": ["UDM", "PCF", "NRF", "UDR"],
+      "optional": ["CHF", "NSSF", "NWDAF", "AF", "NEF"]
+    },
+    "registration": {
+      "required": ["UE", "RAN", "AMF", "AUSF", "UDM", "NRF"],
+      "common": ["NSSF", "UDR", "PCF"],
+      "optional": ["SEPP", "SCP"]
+    }
+  },
+  "tierOrder": [
+    "access",
+    "core_control",
+    "user_plane",
+    "data",
+    "charging",
+    "exposure",
+    "analytics",
+    "security_roaming",
+    "extended"
+  ],
+  "networkFunctions": [
+    {
+      "id": "UE",
+      "displayName": "User Equipment",
+      "actorKind": "access",
+      "tier": "access",
+      "plane": "access",
+      "sbiCapable": false,
+      "e2eDefault": true,
+      "refSpec": "23.501"
+    },
+    {
+      "id": "RAN",
+      "displayName": "NG-RAN (gNB)",
+      "actorKind": "access",
+      "tier": "access",
+      "plane": "access",
+      "sbiCapable": false,
+      "e2eDefault": true,
+      "refSpec": "23.501"
+    },
+    {
+      "id": "AMF",
+      "displayName": "Access and Mobility Management Function",
+      "actorKind": "nf",
+      "tier": "core_control",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "services": ["Namf_Communication", "Namf_EventExposure"],
+      "interfaces": { "served": ["N1", "N2", "N8", "N11", "N12"] },
+      "procedures": ["registration", "pdu_session", "service_request", "handover"]
+    },
+    {
+      "id": "SMF",
+      "displayName": "Session Management Function",
+      "actorKind": "nf",
+      "tier": "core_control",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "services": ["Nsmf_PDUSession"],
+      "interfaces": { "served": ["N4", "N7", "N10", "N11"] },
+      "procedures": ["pdu_session_establishment", "service_request", "handover"]
+    },
+    {
+      "id": "UPF",
+      "displayName": "User Plane Function",
+      "actorKind": "nf",
+      "tier": "user_plane",
+      "plane": "user",
+      "sbiCapable": false,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "interfaces": { "served": ["N3", "N4", "N6", "N9"] },
+      "procedures": ["pdu_session_establishment"]
+    },
+    {
+      "id": "UDM",
+      "displayName": "Unified Data Management",
+      "actorKind": "nf",
+      "tier": "core_control",
+      "plane": "data",
+      "sbiCapable": true,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "services": ["Nudm_SDM", "Nudm_UECM", "Nudm_EE"],
+      "interfaces": { "served": ["N8", "N10", "N13"] },
+      "procedures": ["registration", "pdu_session_establishment"]
+    },
+    {
+      "id": "UDR",
+      "displayName": "Unified Data Repository",
+      "actorKind": "nf",
+      "tier": "data",
+      "plane": "data",
+      "sbiCapable": true,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "services": ["Nudr_DR"],
+      "procedures": ["pdu_session_establishment", "registration"]
+    },
+    {
+      "id": "PCF",
+      "displayName": "Policy Control Function",
+      "actorKind": "nf",
+      "tier": "core_control",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "services": ["Npcf_SMPolicyControl"],
+      "interfaces": { "served": ["N7"] },
+      "procedures": ["pdu_session_establishment"]
+    },
+    {
+      "id": "NRF",
+      "displayName": "Network Repository Function",
+      "actorKind": "nf",
+      "tier": "core_control",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "services": ["Nnrf_NFDiscovery", "Nnrf_NFManagement"],
+      "interfaces": { "served": ["Nnrf"] },
+      "procedures": ["registration", "pdu_session_establishment"]
+    },
+    {
+      "id": "NEF",
+      "displayName": "Network Exposure Function",
+      "actorKind": "nf",
+      "tier": "exposure",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "procedures": ["pdu_session_establishment"]
+    },
+    {
+      "id": "NSSF",
+      "displayName": "Network Slice Selection Function",
+      "actorKind": "nf",
+      "tier": "core_control",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "procedures": ["registration", "pdu_session_establishment"]
+    },
+    {
+      "id": "AUSF",
+      "displayName": "Authentication Server Function",
+      "actorKind": "nf",
+      "tier": "core_control",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": true,
+      "refSpec": "23.501",
+      "procedures": ["registration"]
+    },
+    {
+      "id": "AF",
+      "displayName": "Application Function",
+      "actorKind": "external",
+      "tier": "exposure",
+      "plane": "control",
+      "sbiCapable": false,
+      "e2eDefault": true,
+      "refSpec": "23.501"
+    },
+    {
+      "id": "DN",
+      "displayName": "Data Network",
+      "actorKind": "external",
+      "tier": "access",
+      "plane": "user",
+      "sbiCapable": false,
+      "e2eDefault": false,
+      "refSpec": "23.501"
+    },
+    {
+      "id": "CHF",
+      "displayName": "Charging Function",
+      "actorKind": "nf",
+      "tier": "charging",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": false,
+      "refSpec": "32.240",
+      "procedures": ["pdu_session_establishment"]
+    },
+    {
+      "id": "SEPP",
+      "displayName": "Security Edge Protection Proxy",
+      "actorKind": "nf",
+      "tier": "security_roaming",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": false,
+      "refSpec": "23.501"
+    },
+    {
+      "id": "SCP",
+      "displayName": "Service Communication Proxy",
+      "actorKind": "nf",
+      "tier": "security_roaming",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": false,
+      "refSpec": "23.501"
+    },
+    {
+      "id": "NWDAF",
+      "displayName": "Network Data Analytics Function",
+      "actorKind": "nf",
+      "tier": "analytics",
+      "plane": "control",
+      "sbiCapable": true,
+      "e2eDefault": false,
+      "refSpec": "23.501"
+    }
+  ]
+}

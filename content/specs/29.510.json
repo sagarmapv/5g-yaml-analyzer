@@ -1,0 +1,102 @@
+{
+  "tsNumber": "29.510",
+  "title": "Network Repository Services; Stage 3 (NRF SBI)",
+  "tagline": "NRF — discover PCF before CreateSMPolicy",
+  "summary": "TS 29.510 defines the Network Repository Function services including NF Management and NF Discovery. In the 29.512 story, SMF uses Nnrf_NFDiscovery to find a PCF instance offering Npcf_SMPolicyControl before sending CreateSMPolicy.",
+  "defines": [
+    "Nnrf_NFDiscovery — SearchNFInstances for target NF type",
+    "Nnrf_NFManagement — NF profile registration",
+    "NF profile and service discovery query parameters",
+    "apiRoot resolution for discovered NF services"
+  ],
+  "whyItMatters": "CreateSMPolicy requires a reachable PCF apiRoot. SMF cannot call session policy blindly — NRF discovery is the step that connects SBI principles (29.501) to the actual policy API (29.512).",
+  "stitchAnchor": "29.512",
+  "primaryNf": "NRF",
+  "entryPoints": [
+    {
+      "type": "sbi",
+      "method": "GET",
+      "path": "/nnrf-disc/v1/nf-instances",
+      "operationId": "SearchNFInstances",
+      "consumer": "SMF",
+      "description": "SMF searches for PCF instances offering Npcf_SMPolicyControl."
+    },
+    {
+      "type": "sbi",
+      "name": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "consumer": "SMF",
+      "description": "Policy call made after PCF is discovered."
+    },
+    {
+      "type": "procedure",
+      "name": "NF service discovery",
+      "refSpec": "29.501",
+      "description": "SBI discovery patterns from 29.501 applied via NRF."
+    }
+  ],
+  "elements": [
+    { "nf": "NRF", "role": "Network Repository — service registry", "inSpec": true, "primarySpec": "29.510" },
+    { "nf": "SMF", "role": "Discovers PCF before policy call", "inSpec": false, "primarySpec": "29.502" },
+    { "nf": "PCF", "role": "Discovered NF — Npcf_SMPolicyControl producer", "inSpec": false, "primarySpec": "29.512" }
+  ],
+  "interactions": [
+    {
+      "from": "SMF",
+      "to": "NRF",
+      "via": "SearchNFInstances",
+      "description": "Query for PCF with target-nf-type and service names"
+    },
+    {
+      "from": "SMF",
+      "to": "PCF",
+      "via": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "description": "After discovery — session policy request"
+    }
+  ],
+  "e2eFlow": {
+    "name": "PDU Session Establishment (NRF discovery view)",
+    "refSpecs": [
+      { "ts": "29.512", "role": "Policy after discovery" },
+      { "ts": "29.501", "role": "SBI principles" }
+    ],
+    "steps": [
+      {
+        "order": 2,
+        "actors": ["AMF", "SMF"],
+        "action": "PDU session establishment starts on SMF",
+        "refSpec": "29.502"
+      },
+      {
+        "order": 3,
+        "actors": ["SMF", "NRF"],
+        "action": "SMF calls SearchNFInstances to discover PCF",
+        "inSpec": true,
+        "operationId": "SearchNFInstances"
+      },
+      {
+        "order": 4,
+        "actors": ["SMF", "PCF"],
+        "action": "SMF sends CreateSMPolicy to discovered PCF apiRoot",
+        "refSpec": "29.512"
+      },
+      {
+        "order": 6,
+        "actors": ["PCF", "SMF"],
+        "action": "SmPolicyDecision returned",
+        "refSpec": "29.512"
+      }
+    ]
+  },
+  "relatedSpecs": [
+    { "ts": "29.512", "role": "Session policy — discovery target" },
+    { "ts": "29.501", "role": "SBI discovery principles" },
+    { "ts": "29.502", "role": "SMF as discovery consumer" }
+  ],
+  "relatedStory": [
+    { "ts": "29.512", "role": "CreateSMPolicy after PCF found" },
+    { "ts": "29.501", "role": "SBI URI and discovery conventions" },
+    { "ts": "29.502", "role": "SMF PDU session context" }
+  ]
+}

@@ -1,0 +1,261 @@
+{
+  "tsNumber": "29.512",
+  "tagline": "Session policy decisions that shape every PDU session",
+  "summary": "TS 29.512 defines the Session Management Policy Control Service on the PCF. The SMF is the primary consumer: it requests policy for each PDU session and applies QoS, charging, and traffic rules the PCF returns. This spec is the SBI contract for session-level policy — not radio, not registration, not user-plane forwarding.",
+  "defines": [
+    "SM Policy Association lifecycle (create, read, update, delete)",
+    "SmPolicyContextData and SmPolicyDecision data models",
+    "PCC rules, QoS data, charging rules, usage monitoring",
+    "PCF-initiated policy update notifications to SMF"
+  ],
+  "whyItMatters": "Every PDU session that needs differentiated QoS or charging passes through this service. SMF cannot fully establish or modify a session without policy input from PCF. Fifteen other API specs in the corpus reuse 29.512 schemas — it is a shared policy vocabulary for the core.",
+  "entryPoints": [
+    {
+      "type": "sbi",
+      "method": "POST",
+      "path": "/npcf-smpolicycontrol/v1/sm-policies",
+      "operationId": "CreateSMPolicy",
+      "consumer": "SMF",
+      "description": "Primary entry — SMF creates an Individual SM Policy association for a PDU session."
+    },
+    {
+      "type": "sbi",
+      "method": "POST",
+      "path": "/npcf-smpolicycontrol/v1/sm-policies/{smPolicyId}/update",
+      "operationId": "UpdateSMPolicy",
+      "consumer": "SMF",
+      "description": "SMF reports session events or requests policy re-evaluation."
+    },
+    {
+      "type": "procedure",
+      "name": "PDU Session Establishment",
+      "refSpec": "23.502",
+      "trigger": "SMF needs session management policy before applying rules to UPF"
+    },
+    {
+      "type": "procedure",
+      "name": "PDU Session Modification",
+      "refSpec": "23.502",
+      "trigger": "Session changes require updated SmPolicyDecision"
+    },
+    {
+      "type": "callback",
+      "name": "SmPolicyUpdateNotification",
+      "direction": "PCF → SMF",
+      "description": "PCF pushes policy changes to SMF notificationUri when triggers fire."
+    },
+    {
+      "type": "discovery",
+      "name": "NRF PCF discovery",
+      "refSpec": "29.510",
+      "consumer": "SMF",
+      "description": "SMF discovers PCF instance before calling Npcf_SMPolicyControl."
+    },
+    {
+      "type": "discovery",
+      "name": "BSF PCF binding",
+      "refSpec": "29.521",
+      "description": "308 redirect on CreateSMPolicy may point to bound PCF for UE/S-NSSAI/DNN."
+    }
+  ],
+  "elements": [
+    {
+      "nf": "PCF",
+      "role": "Policy Control Function — decides session policy",
+      "inSpec": true,
+      "primarySpec": "29.512"
+    },
+    {
+      "nf": "SMF",
+      "role": "Session Management Function — requests and applies session policy",
+      "inSpec": false,
+      "primarySpec": "29.502"
+    },
+    {
+      "nf": "UDM",
+      "role": "Subscriber data; PCF may use policy subscription information",
+      "inSpec": false,
+      "primarySpec": "29.503"
+    },
+    {
+      "nf": "UDR",
+      "role": "Policy data repository consumed by PCF",
+      "inSpec": false,
+      "primarySpec": "29.504"
+    },
+    {
+      "nf": "AF",
+      "role": "Application Function — may influence session policy via Policy Authorization",
+      "inSpec": false,
+      "primarySpec": "29.514"
+    },
+    {
+      "nf": "NEF",
+      "role": "Exposure of AF influence into the core",
+      "inSpec": false,
+      "primarySpec": "29.522"
+    },
+    {
+      "nf": "CHF",
+      "role": "Charging — reuses 29.512 QoS/charging types",
+      "inSpec": false,
+      "primarySpec": "32.291"
+    },
+    {
+      "nf": "UPF",
+      "role": "User plane — SMF installs rules derived from SmPolicyDecision",
+      "inSpec": false,
+      "primarySpec": "29.564"
+    },
+    {
+      "nf": "AMF",
+      "role": "Access — triggers SM context; indirect to 512",
+      "inSpec": false,
+      "primarySpec": "29.518"
+    },
+    {
+      "nf": "NRF",
+      "role": "NF discovery for PCF",
+      "inSpec": false,
+      "primarySpec": "29.510"
+    },
+    {
+      "nf": "BSF",
+      "role": "PCF binding lookup for roaming/slice/DNN",
+      "inSpec": false,
+      "primarySpec": "29.521"
+    }
+  ],
+  "interactions": [
+    {
+      "from": "SMF",
+      "to": "PCF",
+      "via": "CreateSMPolicy",
+      "payload": "SmPolicyContextData",
+      "response": "SmPolicyDecision"
+    },
+    {
+      "from": "SMF",
+      "to": "PCF",
+      "via": "UpdateSMPolicy",
+      "description": "Session event or UE location update triggers policy refresh"
+    },
+    {
+      "from": "PCF",
+      "to": "SMF",
+      "via": "SmPolicyUpdateNotification",
+      "description": "Async policy push on PCF-side trigger"
+    },
+    {
+      "from": "PCF",
+      "to": "UDR",
+      "via": "Policy data read",
+      "refSpec": "29.519",
+      "description": "Subscriber and slice policy data (other TS)"
+    },
+    {
+      "from": "AF",
+      "to": "PCF",
+      "via": "Npcf_PolicyAuthorization",
+      "refSpec": "29.514",
+      "description": "Application session may influence SM policy"
+    },
+    {
+      "from": "SMF",
+      "to": "UPF",
+      "via": "N4 session rules",
+      "refSpec": "29.502",
+      "description": "Enforcement of PCC/QoS from applied decision"
+    }
+  ],
+  "e2eFlow": {
+    "name": "PDU Session Establishment (SM Policy Association)",
+    "refSpecs": [
+      { "ts": "23.502", "role": "Stage-2 procedures" },
+      { "ts": "29.513", "role": "Stage-3 call flows (not in YAML corpus)" },
+      { "ts": "29.502", "role": "SMF PDU Session service" }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "actors": ["UE", "RAN", "AMF"],
+        "action": "UE requests PDU session establishment",
+        "in512": false,
+        "messageKind": "procedural"
+      },
+      {
+        "order": 2,
+        "actors": ["AMF", "SMF"],
+        "action": "AMF invokes Nsmf_PDUSession CreateSMContext",
+        "in512": false,
+        "refSpec": "29.502",
+        "operationId": "PostSmContexts",
+        "messageKind": "sbi"
+      },
+      {
+        "order": 3,
+        "actors": ["SMF", "NRF"],
+        "action": "SMF discovers PCF (Npcf_SMPolicyControl)",
+        "in512": false,
+        "refSpec": "29.510",
+        "operationId": "SearchNFInstances",
+        "messageKind": "sbi"
+      },
+      {
+        "order": 4,
+        "actors": ["SMF", "PCF"],
+        "action": "SMF sends CreateSMPolicy with SmPolicyContextData",
+        "in512": true,
+        "operationId": "CreateSMPolicy",
+        "messageKind": "sbi"
+      },
+      {
+        "order": 5,
+        "actors": ["PCF", "UDR"],
+        "action": "PCF evaluates policy (may read policy/subscription data)",
+        "in512": false,
+        "refSpec": "29.504",
+        "messageKind": "procedural"
+      },
+      {
+        "order": 6,
+        "actors": ["PCF", "SMF"],
+        "action": "PCF returns SmPolicyDecision (QoS, PCC rules, charging)",
+        "in512": true,
+        "operationId": "CreateSMPolicy",
+        "messageKind": "sbi"
+      },
+      {
+        "order": 7,
+        "actors": ["SMF", "UPF"],
+        "action": "SMF installs packet detection and QoS rules on UPF",
+        "in512": false,
+        "refSpec": "29.502",
+        "messageKind": "n4"
+      },
+      {
+        "order": 8,
+        "actors": ["SMF", "AMF"],
+        "action": "PDU session established — SMF responds to AMF",
+        "in512": false,
+        "messageKind": "procedural"
+      },
+      {
+        "order": 9,
+        "actors": ["PCF", "SMF"],
+        "action": "Later: PCF may send SmPolicyUpdateNotification on policy change",
+        "in512": true,
+        "operationId": "SmPolicyUpdateNotification",
+        "messageKind": "sbi"
+      }
+    ]
+  },
+  "relatedSpecs": [
+    { "ts": "23.502", "role": "5G procedures — when SMF calls PCF" },
+    { "ts": "29.502", "role": "SMF PDU Session — triggers policy need" },
+    { "ts": "29.501", "role": "SBI architecture — apiRoot, HTTP profiles" },
+    { "ts": "29.514", "role": "Policy Authorization — AF influence" },
+    { "ts": "29.507", "role": "AM Policy Control — sibling PCF service" },
+    { "ts": "29.513", "role": "Policy and charging control flows (diagrams)" }
+  ]
+}

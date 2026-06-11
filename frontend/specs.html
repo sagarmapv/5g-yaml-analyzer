@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5G Specs Platform</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="stylesheet" href="/static/specs.css">
+  <script src="/static/vendor/vis-network.min.js"></script>
+</head>
+<body class="specs-page">
+  <header class="specs-header">
+    <div>
+      <h1>5G Specs Platform</h1>
+      <p class="subtitle">One place for every 3GPP spec — catalog, map, story, and YAML links</p>
+    </div>
+    <nav class="page-nav">
+      <a href="/" class="nav-link" data-nav="explorer">Explorer</a>
+      <a href="/topology" class="nav-link" data-nav="topology">Topology</a>
+      <a href="/specs" class="nav-link" data-nav="specs">Specs</a>
+      <a href="/stories" class="nav-link" data-nav="stories">Stories</a>
+      <a href="/ladder" class="nav-link" data-nav="ladder">Ladder</a>
+    </nav>
+  </header>
+
+  <div id="context-bar" class="context-bar hidden">
+    <span class="context-label">Selected:</span>
+    <strong id="context-ts">—</strong>
+    <span id="context-title" class="context-title"></span>
+    <div class="context-actions">
+      <a id="ctx-map" href="#">Map</a>
+      <a id="ctx-story" href="#">Story</a>
+      <a id="ctx-explorer" href="#">Explorer</a>
+      <a id="ctx-topology" href="#">Topology</a>
+      <a id="ctx-archive" href="#" target="_blank" rel="noopener" class="hidden">3GPP</a>
+    </div>
+  </div>
+
+  <div class="platform-layout">
+    <aside class="catalog-panel" aria-label="Spec catalog">
+      <div class="catalog-toolbar">
+        <input type="search" id="catalog-search" placeholder="Search all specs…" autocomplete="off">
+        <select id="catalog-filter" aria-label="Filter specs">
+          <option value="all">All specs</option>
+          <option value="yaml">Has YAML</option>
+          <option value="story">Has story</option>
+          <option value="pdf">Has PDF</option>
+          <option value="stitch">512 stitch</option>
+          <option value="ref">Reference only</option>
+        </select>
+      </div>
+      <div id="catalog-meta" class="catalog-meta"></div>
+      <ul id="catalog-list" class="catalog-list">
+        <li class="catalog-placeholder">Loading catalog…</li>
+      </ul>
+    </aside>
+
+    <div class="platform-main">
+      <div class="platform-tabs" role="tablist">
+        <button type="button" class="platform-tab active" data-view="map" role="tab" aria-selected="true">Map</button>
+        <button type="button" class="platform-tab" data-view="story" role="tab" aria-selected="false">Story</button>
+      </div>
+
+      <div class="view-map view-panel active" id="view-map">
+        <div class="specs-toolbar">
+          <input type="search" id="search" placeholder="Narrow map tree…" autocomplete="off">
+          <label class="depth-label">
+            Depth
+            <select id="depth">
+              <option value="2">Spec → NF</option>
+              <option value="3" selected>Spec → NF → YAML</option>
+            </select>
+          </label>
+          <button type="button" id="fit-btn">Fit view</button>
+          <button type="button" id="refresh-btn">Refresh</button>
+          <span id="focus-chip" class="focus-chip hidden" title="Showing one spec only">
+            Focus: TS <span id="focus-label"></span>
+            <button type="button" id="clear-focus-btn" aria-label="Show all specs">×</button>
+          </span>
+          <span id="meta" class="meta"></span>
+        </div>
+        <div class="specs-canvas-wrap">
+          <div id="graph-status" class="graph-status">Loading…</div>
+          <div id="spec-graph"></div>
+        </div>
+      </div>
+
+      <div class="view-story view-panel" id="view-story" hidden>
+        <div id="story-frame-wrap" class="story-frame-wrap">
+          <p class="story-pick-hint">Select a spec from the catalog, or open the anchor story for TS 29.512.</p>
+          <iframe id="story-frame" class="story-frame hidden" title="Spec story"></iframe>
+        </div>
+      </div>
+
+      <footer id="detail-panel" class="detail-panel collapsed">
+        <button type="button" id="detail-toggle" class="detail-toggle">Detail ▲</button>
+        <div id="detail-content" class="detail-content">
+          <p class="placeholder">Click a YAML node (green) to preview</p>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="/static/site-nav.js"></script>
+  <script src="/static/specs.js"></script>
+</body>
+</html>

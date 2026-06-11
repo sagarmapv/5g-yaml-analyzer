@@ -1,0 +1,135 @@
+{
+  "tsNumber": "29.521",
+  "title": "Binding Support Management Services; Stage 3 (BSF SBI)",
+  "tagline": "BSF — find the right PCF for UE, slice, and DNN",
+  "summary": "TS 29.521 defines the Nbsf_Management service. In roaming and multi-PCF deployments, SMF may need the PCF instance bound to a UE/S-NSSAI/DNN before CreateSMPolicy. BSF stores and returns PCF bindings; a 308 redirect on CreateSMPolicy may also point to the bound PCF per 29.512 entry points.",
+  "defines": [
+    "Nbsf_Management — PCF binding registration and discovery",
+    "CreatePCFBinding — register PCF for UE context",
+    "GetPCFBindings — discover bound PCF instance",
+    "PCF binding info for slice/DNN/roaming scenarios"
+  ],
+  "whyItMatters": "NRF discovers any PCF offering Npcf_SMPolicyControl, but BSF resolves which PCF is bound to this UE and session. Without BSF in the story, multi-PCF and roaming policy paths are incomplete.",
+  "stitchAnchor": "29.512",
+  "primaryNf": "BSF",
+  "entryPoints": [
+    {
+      "type": "sbi",
+      "method": "GET",
+      "operationId": "GetPCFBindings",
+      "consumer": "SMF",
+      "description": "Discover PCF binding before or after NRF discovery."
+    },
+    {
+      "type": "sbi",
+      "method": "POST",
+      "operationId": "CreatePCFBinding",
+      "consumer": "PCF",
+      "description": "Register PCF binding for UE/S-NSSAI/DNN."
+    },
+    {
+      "type": "discovery",
+      "name": "NRF PCF discovery",
+      "refSpec": "29.510",
+      "description": "Alternative path when BSF binding not required."
+    },
+    {
+      "type": "sbi",
+      "name": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "description": "May receive 308 redirect to bound PCF apiRoot."
+    }
+  ],
+  "elements": [
+    {
+      "nf": "BSF",
+      "role": "Binding Support Function — PCF instance bindings",
+      "inSpec": true,
+      "primarySpec": "29.521"
+    },
+    {
+      "nf": "SMF",
+      "role": "May query BSF before CreateSMPolicy",
+      "inSpec": false,
+      "primarySpec": "29.502"
+    },
+    {
+      "nf": "PCF",
+      "role": "Registers binding; target of policy calls",
+      "inSpec": false,
+      "primarySpec": "29.512"
+    },
+    {
+      "nf": "NRF",
+      "role": "NF discovery when binding not used",
+      "inSpec": false,
+      "primarySpec": "29.510"
+    }
+  ],
+  "interactions": [
+    {
+      "from": "SMF",
+      "to": "BSF",
+      "via": "GetPCFBindings",
+      "description": "Resolve bound PCF for session"
+    },
+    {
+      "from": "SMF",
+      "to": "PCF",
+      "via": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "description": "Policy call to discovered or bound PCF"
+    },
+    {
+      "from": "SMF",
+      "to": "NRF",
+      "via": "SearchNFInstances",
+      "refSpec": "29.510",
+      "description": "Alternative discovery path"
+    }
+  ],
+  "e2eFlow": {
+    "name": "PDU Session Establishment (BSF view)",
+    "refSpecs": [
+      { "ts": "29.512", "role": "CreateSMPolicy" },
+      { "ts": "29.510", "role": "NRF discovery" },
+      { "ts": "29.502", "role": "SMF consumer" }
+    ],
+    "steps": [
+      {
+        "order": 2,
+        "actors": ["AMF", "SMF"],
+        "action": "SM context created — SMF selects policy path",
+        "inSpec": false,
+        "refSpec": "29.502"
+      },
+      {
+        "order": 3,
+        "actors": ["SMF", "NRF"],
+        "action": "SMF may discover PCF via NRF",
+        "inSpec": false,
+        "refSpec": "29.510",
+        "operationId": "SearchNFInstances"
+      },
+      {
+        "order": 4,
+        "actors": ["SMF", "PCF"],
+        "action": "SMF sends CreateSMPolicy (possibly via BSF-resolved PCF)",
+        "inSpec": false,
+        "refSpec": "29.512",
+        "operationId": "CreateSMPolicy"
+      }
+    ]
+  },
+  "relatedSpecs": [
+    { "ts": "29.512", "role": "Session policy — binding target" },
+    { "ts": "29.510", "role": "NRF discovery alternative" },
+    { "ts": "29.502", "role": "SMF as consumer" }
+  ],
+  "relatedStory": [
+    { "ts": "29.512", "role": "308 redirect and CreateSMPolicy" },
+    { "ts": "29.510", "role": "NRF vs BSF discovery" },
+    { "ts": "29.502", "role": "SMF PDU session" }
+  ],
+  "highlightClauses": ["5.1", "5.2", "5.2.1"]
+}

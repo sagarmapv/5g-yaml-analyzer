@@ -1,0 +1,119 @@
+{
+  "tsNumber": "29.513",
+  "title": "Policy and Charging Control signalling flows; Stage 3",
+  "tagline": "SM Policy Association — signalling diagrams for session policy",
+  "summary": "TS 29.513 provides Stage-3 signalling flow diagrams for Policy and Charging Control, including SM Policy Association Establishment and Modification. In the 29.512 story, it complements the SBI API spec with message-sequence views of the same SMF–PCF interactions.",
+  "defines": [
+    "SM Policy Association Establishment signalling flow",
+    "SM Policy Association Modification (SMF-initiated and PCF-initiated)",
+    "SM Policy Association Termination",
+    "Message-level view of Npcf_SMPolicyControl interactions"
+  ],
+  "whyItMatters": "29.512 defines the REST API contract; 29.513 shows the signalling choreography. Together they explain both the wire format and the ordered exchange during PDU session establishment.",
+  "stitchAnchor": "29.512",
+  "entryPoints": [
+    {
+      "type": "procedure",
+      "name": "SM Policy Association Establishment",
+      "clause": "5.2.1",
+      "description": "Signalling flow when SMF creates an SM Policy Association with PCF."
+    },
+    {
+      "type": "procedure",
+      "name": "SM Policy Association Modification initiated by the PCF",
+      "clause": "5.2.2.2",
+      "description": "PCF-initiated policy update via SmPolicyUpdateNotification."
+    },
+    {
+      "type": "sbi",
+      "name": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "description": "Stage-3 SBI operation corresponding to establishment flow."
+    },
+    {
+      "type": "procedure",
+      "name": "PDU Session Establishment",
+      "refSpec": "23.502",
+      "description": "Stage-2 procedure context for when establishment flow runs."
+    }
+  ],
+  "elements": [
+    { "nf": "SMF", "role": "Initiates SM Policy Association", "inSpec": false, "primarySpec": "29.502" },
+    { "nf": "PCF", "role": "Provides SmPolicyDecision in establishment flow", "inSpec": false, "primarySpec": "29.512" },
+    { "nf": "AMF", "role": "Indirect — triggers PDU session on SMF", "inSpec": false, "primarySpec": "29.518" }
+  ],
+  "interactions": [
+    {
+      "from": "SMF",
+      "to": "PCF",
+      "via": "SM Policy Association Establishment",
+      "refSpec": "29.512",
+      "description": "CreateSMPolicy / SmPolicyDecision exchange"
+    },
+    {
+      "from": "PCF",
+      "to": "SMF",
+      "via": "SM Policy Association Modification",
+      "description": "PCF-initiated update notification"
+    }
+  ],
+  "e2eFlow": {
+    "name": "PDU Session Establishment (signalling flow view)",
+    "refSpecs": [
+      { "ts": "29.512", "role": "SBI APIs" },
+      { "ts": "23.502", "role": "Stage-2 procedures" },
+      { "ts": "29.502", "role": "SMF PDU Session" }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "actors": ["UE", "RAN", "AMF"],
+        "action": "PDU session establishment requested",
+        "refSpec": "23.502"
+      },
+      {
+        "order": 2,
+        "actors": ["AMF", "SMF"],
+        "action": "AMF invokes SMF for PDU session",
+        "refSpec": "29.502"
+      },
+      {
+        "order": 4,
+        "actors": ["SMF", "PCF"],
+        "action": "SM Policy Association Establishment — CreateSMPolicy",
+        "inSpec": true,
+        "refSpec": "29.512"
+      },
+      {
+        "order": 6,
+        "actors": ["PCF", "SMF"],
+        "action": "SmPolicyDecision returned — association established",
+        "inSpec": true,
+        "refSpec": "29.512"
+      },
+      {
+        "order": 7,
+        "actors": ["SMF", "UPF"],
+        "action": "User-plane rules applied after policy decision",
+        "refSpec": "29.502"
+      },
+      {
+        "order": 9,
+        "actors": ["PCF", "SMF"],
+        "action": "SM Policy Association Modification initiated by PCF",
+        "inSpec": true
+      }
+    ]
+  },
+  "highlightClauses": ["5.2.1", "5.2.2.2", "5.2.3"],
+  "relatedSpecs": [
+    { "ts": "29.512", "role": "Session Management Policy Control SBI" },
+    { "ts": "29.502", "role": "SMF PDU Session" },
+    { "ts": "23.502", "role": "PDU session procedures" }
+  ],
+  "relatedStory": [
+    { "ts": "29.512", "role": "CreateSMPolicy API and data models" },
+    { "ts": "29.502", "role": "SMF triggers policy during session setup" },
+    { "ts": "23.502", "role": "When policy is requested (Stage 2)" }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "tsNumber": "23.501",
+  "title": "System architecture for the 5G System (5GS)",
+  "tagline": "5G architecture — where PCF, SMF, UPF, and NRF fit",
+  "summary": "TS 23.501 defines the overall 5G System architecture including network functions, service-based interfaces, and reference points. For the 29.512 story, it establishes the roles of PCF (policy), SMF (session management), UPF (user plane), and NRF (discovery) that the PDU session policy journey depends on.",
+  "defines": [
+    "5G Core network function roles and responsibilities",
+    "Service-based architecture and SBI principles",
+    "Reference points between SMF, PCF, AMF, and UPF",
+    "PDU session architecture and user-plane path"
+  ],
+  "whyItMatters": "Before diving into individual API specs, 23.501 answers which NF owns which concern. The SM policy call in 29.512 only makes sense once you know SMF manages sessions and PCF owns policy decisions.",
+  "stitchAnchor": "29.512",
+  "entryPoints": [
+    {
+      "type": "procedure",
+      "name": "5G System architecture",
+      "clause": "4",
+      "description": "Core architecture — NF roles and SBA overview."
+    },
+    {
+      "type": "procedure",
+      "name": "SMF and PCF roles",
+      "description": "Session management vs policy control separation."
+    },
+    {
+      "type": "sbi",
+      "name": "SBI overview",
+      "refSpec": "29.501",
+      "description": "Stage-3 SBI principles built on this architecture."
+    }
+  ],
+  "elements": [
+    { "nf": "PCF", "role": "Policy Control Function", "inSpec": false, "primarySpec": "29.512" },
+    { "nf": "SMF", "role": "Session Management Function", "inSpec": false, "primarySpec": "29.502" },
+    { "nf": "AMF", "role": "Access and Mobility Management", "inSpec": false, "primarySpec": "29.518" },
+    { "nf": "UPF", "role": "User Plane Function", "inSpec": false, "primarySpec": "29.564" },
+    { "nf": "NRF", "role": "NF Repository — service discovery", "inSpec": false, "primarySpec": "29.510" }
+  ],
+  "interactions": [
+    {
+      "from": "SMF",
+      "to": "PCF",
+      "via": "Npcf_SMPolicyControl (SBI)",
+      "refSpec": "29.512",
+      "description": "Session management policy"
+    },
+    {
+      "from": "SMF",
+      "to": "UPF",
+      "via": "N4",
+      "description": "User-plane session and forwarding rules"
+    },
+    {
+      "from": "SMF",
+      "to": "NRF",
+      "via": "Nnrf_NFDiscovery",
+      "refSpec": "29.510",
+      "description": "Discover PCF instance"
+    }
+  ],
+  "e2eFlow": {
+    "name": "PDU Session Establishment (architecture view)",
+    "refSpecs": [
+      { "ts": "23.502", "role": "Procedures" },
+      { "ts": "29.512", "role": "Session policy SBI" }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "actors": ["UE", "RAN", "AMF"],
+        "action": "PDU session request reaches AMF",
+        "inSpec": true
+      },
+      {
+        "order": 2,
+        "actors": ["AMF", "SMF"],
+        "action": "AMF selects SMF for PDU session",
+        "inSpec": true,
+        "refSpec": "29.502"
+      },
+      {
+        "order": 3,
+        "actors": ["SMF", "NRF"],
+        "action": "SMF discovers PCF via NRF",
+        "inSpec": true,
+        "refSpec": "29.510"
+      },
+      {
+        "order": 4,
+        "actors": ["SMF", "PCF"],
+        "action": "SMF requests session policy from PCF",
+        "inSpec": true,
+        "refSpec": "29.512"
+      },
+      {
+        "order": 7,
+        "actors": ["SMF", "UPF"],
+        "action": "SMF programs UPF with enforced policy",
+        "inSpec": true
+      }
+    ]
+  },
+  "highlightClauses": ["4.2", "4.3", "5.7"],
+  "relatedSpecs": [
+    { "ts": "23.502", "role": "5GS procedures" },
+    { "ts": "23.503", "role": "Policy and charging framework" },
+    { "ts": "29.501", "role": "SBI Stage 3" },
+    { "ts": "29.512", "role": "Session policy SBI" }
+  ],
+  "relatedStory": [
+    { "ts": "23.502", "role": "PDU session establishment procedure" },
+    { "ts": "29.512", "role": "Session Management Policy Control" },
+    { "ts": "29.502", "role": "SMF PDU Session SBI" }
+  ]
+}

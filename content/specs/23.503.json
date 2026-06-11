@@ -1,0 +1,109 @@
+{
+  "tsNumber": "23.503",
+  "title": "Policy and charging control framework for the 5G System (5GS)",
+  "tagline": "Stage-2 policy framework — what SmPolicyDecision represents",
+  "summary": "TS 23.503 defines the policy and charging control framework at Stage 2, including session management policy, PCC rules, and QoS. For the 29.512 story, it explains the policy concepts that SmPolicyContextData and SmPolicyDecision encode at the SBI layer.",
+  "defines": [
+    "Session management policy and PCC rule framework",
+    "Policy control triggers and decision semantics",
+    "QoS flow and charging characteristics at session level",
+    "Relationship between SMF session state and PCF policy"
+  ],
+  "whyItMatters": "29.512 is the API surface; 23.503 is the conceptual model. Understanding PCC rules, QoS data, and policy triggers from Stage 2 makes the 512 data models meaningful rather than opaque JSON schemas.",
+  "stitchAnchor": "29.512",
+  "entryPoints": [
+    {
+      "type": "procedure",
+      "name": "Session management policy control",
+      "clause": "4",
+      "description": "Framework for SMF–PCF session policy interaction."
+    },
+    {
+      "type": "sbi",
+      "name": "SmPolicyDecision",
+      "refSpec": "29.512",
+      "description": "Stage-3 encoding of policy decisions from this framework."
+    },
+    {
+      "type": "procedure",
+      "name": "PDU Session Establishment",
+      "refSpec": "23.502",
+      "description": "Procedure where session policy is applied."
+    }
+  ],
+  "elements": [
+    { "nf": "PCF", "role": "Policy decision point for session management", "inSpec": false, "primarySpec": "29.512" },
+    { "nf": "SMF", "role": "Policy enforcement point — applies PCC/QoS to UPF", "inSpec": false, "primarySpec": "29.502" },
+    { "nf": "CHF", "role": "Charging — may consume policy charging info", "inSpec": false, "primarySpec": "32.291" }
+  ],
+  "interactions": [
+    {
+      "from": "SMF",
+      "to": "PCF",
+      "via": "Session management policy request",
+      "refSpec": "29.512",
+      "description": "SmPolicyContextData carries session context for policy evaluation"
+    },
+    {
+      "from": "PCF",
+      "to": "SMF",
+      "via": "SmPolicyDecision",
+      "refSpec": "29.512",
+      "description": "PCC rules, QoS data, charging rules returned to SMF"
+    }
+  ],
+  "e2eFlow": {
+    "name": "PDU Session Establishment (policy framework view)",
+    "refSpecs": [
+      { "ts": "29.512", "role": "SBI policy service" },
+      { "ts": "23.502", "role": "Procedures" }
+    ],
+    "steps": [
+      {
+        "order": 3,
+        "actors": ["SMF"],
+        "action": "SMF determines session requires policy control",
+        "inSpec": true
+      },
+      {
+        "order": 4,
+        "actors": ["SMF", "PCF"],
+        "action": "SMF sends policy context — PCF evaluates framework rules",
+        "inSpec": true,
+        "refSpec": "29.512"
+      },
+      {
+        "order": 5,
+        "actors": ["PCF"],
+        "action": "PCF evaluates policy (subscription, slice, DNN rules)",
+        "inSpec": true
+      },
+      {
+        "order": 6,
+        "actors": ["PCF", "SMF"],
+        "action": "PCF returns SmPolicyDecision with PCC and QoS",
+        "inSpec": true,
+        "refSpec": "29.512"
+      },
+      {
+        "order": 7,
+        "actors": ["SMF", "UPF"],
+        "action": "SMF enforces PCC rules on user plane",
+        "inSpec": true,
+        "refSpec": "29.502"
+      }
+    ]
+  },
+  "highlightClauses": ["4", "4.1", "4.2"],
+  "relatedSpecs": [
+    { "ts": "29.512", "role": "Session Management Policy Control SBI" },
+    { "ts": "23.502", "role": "PDU session procedures" },
+    { "ts": "23.501", "role": "5G architecture" },
+    { "ts": "29.513", "role": "Signalling flows" }
+  ],
+  "relatedStory": [
+    { "ts": "29.512", "role": "SmPolicyDecision data model" },
+    { "ts": "23.502", "role": "When policy is requested during establishment" },
+    { "ts": "29.513", "role": "Signalling flow diagrams" }
+  ]
+}

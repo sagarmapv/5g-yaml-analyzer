@@ -1,0 +1,129 @@
+{
+  "tsNumber": "29.503",
+  "title": "Unified Data Management Services; Stage 3 (UDM SBI)",
+  "tagline": "UDM — subscriber data that informs session and policy context",
+  "summary": "TS 29.503 defines the Nudm services on the UDM. In the 29.512 PDU session journey, UDM is indirect: PCF may use subscriber and session-management subscription data when evaluating SmPolicyDecision. SMF does not call UDM for CreateSMPolicy — but session policy can depend on what UDM holds about the UE's subscriptions.",
+  "defines": [
+    "Nudm_SDM — Subscriber Data Management (session management subscription data)",
+    "Nudm_UECM — UE context management",
+    "Nudm_UEAU — UE authentication",
+    "Subscriber data models referenced across the core"
+  ],
+  "whyItMatters": "Session policy is not only slice and DNN — it can reflect subscriber-specific session management subscription data. Understanding 29.503 explains where that context lives before PCF reads policy rules from UDR (29.504/29.519) during step 5 of the establishment flow.",
+  "stitchAnchor": "29.512",
+  "primaryNf": "UDM",
+  "entryPoints": [
+    {
+      "type": "procedure",
+      "name": "PDU Session Establishment",
+      "refSpec": "23.502",
+      "description": "Stage-2 procedure — subscriber context may influence policy evaluation."
+    },
+    {
+      "type": "sbi",
+      "method": "GET",
+      "operationId": "GetSmData",
+      "consumer": "PCF/SMF",
+      "description": "Session management subscription data — relevant to SM policy context."
+    },
+    {
+      "type": "procedure",
+      "name": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "description": "PCF returns SmPolicyDecision — may use subscriber data indirectly."
+    }
+  ],
+  "elements": [
+    {
+      "nf": "UDM",
+      "role": "Unified Data Management — subscriber and subscription data",
+      "inSpec": true,
+      "primarySpec": "29.503"
+    },
+    {
+      "nf": "PCF",
+      "role": "Consumes policy-related subscriber context when deciding session policy",
+      "inSpec": false,
+      "primarySpec": "29.512"
+    },
+    {
+      "nf": "SMF",
+      "role": "PDU session owner — may use UDM data in broader procedures",
+      "inSpec": false,
+      "primarySpec": "29.502"
+    },
+    {
+      "nf": "UDR",
+      "role": "Policy data store — PCF reads rules after subscriber context",
+      "inSpec": false,
+      "primarySpec": "29.504"
+    }
+  ],
+  "interactions": [
+    {
+      "from": "PCF",
+      "to": "UDR",
+      "via": "Policy data read",
+      "refSpec": "29.519",
+      "description": "PCF evaluates policy using UDR policy data (step 5)"
+    },
+    {
+      "from": "SMF",
+      "to": "PCF",
+      "via": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "description": "Session policy request — UDM context may already inform PCF"
+    }
+  ],
+  "e2eFlow": {
+    "name": "PDU Session Establishment (UDM view)",
+    "refSpecs": [
+      { "ts": "23.502", "role": "Procedures" },
+      { "ts": "29.512", "role": "Session policy" },
+      { "ts": "29.504", "role": "Policy data on UDR" }
+    ],
+    "steps": [
+      {
+        "order": 2,
+        "actors": ["AMF", "SMF"],
+        "action": "PDU session context on SMF — UE identity known",
+        "inSpec": false,
+        "refSpec": "29.502"
+      },
+      {
+        "order": 4,
+        "actors": ["SMF", "PCF"],
+        "action": "SMF sends CreateSMPolicy",
+        "inSpec": false,
+        "refSpec": "29.512",
+        "operationId": "CreateSMPolicy"
+      },
+      {
+        "order": 5,
+        "actors": ["PCF", "UDR"],
+        "action": "PCF evaluates policy — may use subscriber and policy subscription data",
+        "inSpec": false,
+        "refSpec": "29.504"
+      },
+      {
+        "order": 6,
+        "actors": ["PCF", "SMF"],
+        "action": "SmPolicyDecision returned to SMF",
+        "inSpec": false,
+        "refSpec": "29.512"
+      }
+    ]
+  },
+  "relatedSpecs": [
+    { "ts": "29.512", "role": "Session policy on PCF" },
+    { "ts": "29.504", "role": "UDR policy data repository" },
+    { "ts": "29.519", "role": "UDR policy data usage" },
+    { "ts": "23.502", "role": "PDU session procedures" }
+  ],
+  "relatedStory": [
+    { "ts": "29.512", "role": "CreateSMPolicy consumer view" },
+    { "ts": "29.504", "role": "Policy data PCF reads" },
+    { "ts": "23.502", "role": "When subscriber context matters" }
+  ],
+  "highlightClauses": ["4.1", "5.2", "5.3"]
+}

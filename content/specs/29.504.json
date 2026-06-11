@@ -1,0 +1,124 @@
+{
+  "tsNumber": "29.504",
+  "title": "Unified Data Repository Services; Stage 3 (UDR SBI)",
+  "tagline": "UDR — policy data repository behind PCF decisions",
+  "summary": "TS 29.504 defines the Nudr_DataRepository service on the UDR. In the 29.512 story, PCF reads session management and policy data from UDR while evaluating CreateSMPolicy — step 5 of PDU session establishment. UDR is the persistent store; 29.519 describes how consumers access that data.",
+  "defines": [
+    "Nudr_DataRepository — policy and application data storage",
+    "ReadSessionManagementPolicyData — SM policy rules per UE/DNN/S-NSSAI",
+    "ReadPolicyData — broader policy data sets",
+    "Data repository resource model for 5GC policy"
+  ],
+  "whyItMatters": "SmPolicyDecision does not appear from nowhere — PCF loads rules and subscription policy from UDR. Without 29.504, step 5 (PCF evaluates policy) has no SBI contract for where policy data lives.",
+  "stitchAnchor": "29.512",
+  "primaryNf": "UDR",
+  "entryPoints": [
+    {
+      "type": "sbi",
+      "method": "GET",
+      "operationId": "ReadSessionManagementPolicyData",
+      "consumer": "PCF",
+      "description": "PCF reads SM policy data for the UE/session context."
+    },
+    {
+      "type": "sbi",
+      "method": "GET",
+      "operationId": "ReadPolicyData",
+      "consumer": "PCF",
+      "description": "Read policy data sets from the repository."
+    },
+    {
+      "type": "procedure",
+      "name": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "consumer": "SMF",
+      "description": "Triggers PCF evaluation that may read UDR first."
+    }
+  ],
+  "elements": [
+    {
+      "nf": "UDR",
+      "role": "Unified Data Repository — policy and application data",
+      "inSpec": true,
+      "primarySpec": "29.504"
+    },
+    {
+      "nf": "PCF",
+      "role": "Consumer of policy data during SmPolicyDecision",
+      "inSpec": false,
+      "primarySpec": "29.512"
+    },
+    {
+      "nf": "SMF",
+      "role": "Waits for SmPolicyDecision while PCF reads UDR",
+      "inSpec": false,
+      "primarySpec": "29.502"
+    },
+    {
+      "nf": "UDM",
+      "role": "Subscriber data — complementary to UDR policy store",
+      "inSpec": false,
+      "primarySpec": "29.503"
+    }
+  ],
+  "interactions": [
+    {
+      "from": "PCF",
+      "to": "UDR",
+      "via": "ReadSessionManagementPolicyData",
+      "description": "Load SM policy rules before returning SmPolicyDecision"
+    },
+    {
+      "from": "SMF",
+      "to": "PCF",
+      "via": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "payload": "SmPolicyContextData",
+      "response": "SmPolicyDecision"
+    }
+  ],
+  "e2eFlow": {
+    "name": "PDU Session Establishment (UDR view)",
+    "refSpecs": [
+      { "ts": "29.512", "role": "CreateSMPolicy" },
+      { "ts": "29.519", "role": "Policy data access patterns" },
+      { "ts": "23.503", "role": "Policy framework" }
+    ],
+    "steps": [
+      {
+        "order": 4,
+        "actors": ["SMF", "PCF"],
+        "action": "SMF sends CreateSMPolicy with SmPolicyContextData",
+        "inSpec": false,
+        "refSpec": "29.512",
+        "operationId": "CreateSMPolicy"
+      },
+      {
+        "order": 5,
+        "actors": ["PCF", "UDR"],
+        "action": "PCF reads session management policy data from UDR",
+        "inSpec": true,
+        "operationId": "ReadSessionManagementPolicyData"
+      },
+      {
+        "order": 6,
+        "actors": ["PCF", "SMF"],
+        "action": "PCF returns SmPolicyDecision after policy evaluation",
+        "inSpec": false,
+        "refSpec": "29.512"
+      }
+    ]
+  },
+  "relatedSpecs": [
+    { "ts": "29.512", "role": "SmPolicyDecision output" },
+    { "ts": "29.519", "role": "How PCF uses UDR for policy data" },
+    { "ts": "29.503", "role": "UDM subscriber data" },
+    { "ts": "23.503", "role": "Policy and charging framework" }
+  ],
+  "relatedStory": [
+    { "ts": "29.512", "role": "Step 5–6 policy association" },
+    { "ts": "29.519", "role": "Consumer API for policy data reads" },
+    { "ts": "23.503", "role": "Policy control framework" }
+  ],
+  "highlightClauses": ["5.1", "5.2.1", "5.2.2"]
+}

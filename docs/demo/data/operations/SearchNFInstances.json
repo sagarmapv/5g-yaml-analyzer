@@ -1,0 +1,2015 @@
+{
+  "operationId": "SearchNFInstances",
+  "method": "GET",
+  "path": "/nf-instances",
+  "summary": "Search a collection of NF Instances",
+  "description": "",
+  "parameters": [
+    {
+      "name": "Accept-Encoding",
+      "in": "header",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "target-nf-type",
+      "in": "query",
+      "required": true,
+      "schemaRef": "nfType"
+    },
+    {
+      "name": "requester-nf-type",
+      "in": "query",
+      "required": true,
+      "schemaRef": "nfType"
+    },
+    {
+      "name": "preferred-collocated-nf-types",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "requester-nf-instance-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": "nfInstanceId"
+    },
+    {
+      "name": "service-names",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "requester-nf-instance-fqdn",
+      "in": "query",
+      "required": false,
+      "schemaRef": "fqdn"
+    },
+    {
+      "name": "target-plmn-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "requester-plmn-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "target-nf-instance-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": "nfInstanceId"
+    },
+    {
+      "name": "target-nf-instance-id-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "target-nf-fqdn",
+      "in": "query",
+      "required": false,
+      "schemaRef": "fqdn"
+    },
+    {
+      "name": "hnrf-uri",
+      "in": "query",
+      "required": false,
+      "schemaRef": "nrfDiscApiUri"
+    },
+    {
+      "name": "snssais",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "additional-snssais",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "requester-snssais",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "plmn-specific-snssai-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "requester-plmn-specific-snssai-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "dnn",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ipv4-index",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ipv6-index",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "nsi-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "smf-serving-area",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "mbsmf-serving-area",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "tai",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "amf-region-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "amf-set-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "guami",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "supi",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ue-ipv4-address",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ip-domain",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ue-ipv6-prefix",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "pgw-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferred-pgw-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "pgw",
+      "in": "query",
+      "required": false,
+      "schemaRef": "fqdn"
+    },
+    {
+      "name": "pgw-ip",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "gpsi",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "external-group-identity",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "internal-group-identity",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "pfd-data",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "data-set",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "routing-indicator",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "group-id-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "dnai-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "pdu-session-types",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "event-id-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "nwdaf-event-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "upf-event-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "supported-features",
+      "in": "query",
+      "required": false,
+      "schemaRef": "supportedFeatures"
+    },
+    {
+      "name": "upf-iwk-eps-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "chf-supported-plmn",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferred-locality",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ext-preferred-locality",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "access-type",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "required-features",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "complex-query",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "max-payload-size",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "max-payload-size-ext",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "atsss-capability",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "upf-ue-ip-addr-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "client-type",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "lmf-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "an-node-type",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "rat-type",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferred-tai",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferred-nf-instances",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "If-None-Match",
+      "in": "header",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "target-snpn",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "requester-snpn-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "af-ee-data",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "w-agf-info",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "tngf-info",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "twif-info",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "upf-select-epdg-info",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "target-nf-set-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "target-nf-service-set-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": "nfServiceSetId"
+    },
+    {
+      "name": "nef-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "notification-type",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "n1-msg-class",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "n2-info-class",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "serving-scope",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "imsi",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ims-private-identity",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ims-public-identity",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "msisdn",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferred-api-versions",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "v2x-support-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "redundant-gtpu",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "redundant-transport",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ipups",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "sxa-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "scp-domain-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "address-domain",
+      "in": "query",
+      "required": false,
+      "schemaRef": "fqdn"
+    },
+    {
+      "name": "ipv4-addr",
+      "in": "query",
+      "required": false,
+      "schemaRef": "schema"
+    },
+    {
+      "name": "ipv6-prefix",
+      "in": "query",
+      "required": false,
+      "schemaRef": "schema"
+    },
+    {
+      "name": "served-nf-set-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": "schema"
+    },
+    {
+      "name": "remote-plmn-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "remote-snpn-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "data-forwarding",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferred-full-plmn",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "requester-features",
+      "in": "query",
+      "required": false,
+      "schemaRef": "supportedFeatures"
+    },
+    {
+      "name": "realm-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "storage-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "vsmf-support-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ismf-support-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "nrf-disc-uri",
+      "in": "query",
+      "required": false,
+      "schemaRef": "nrfDiscApiUri"
+    },
+    {
+      "name": "preferred-vendor-specific-features",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferred-vendor-specific-nf-features",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "required-pfcp-features",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "home-pub-key-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "prose-support-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "analytics-aggregation-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "serving-nf-set-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": "schema"
+    },
+    {
+      "name": "serving-nf-type",
+      "in": "query",
+      "required": false,
+      "schemaRef": "nfType"
+    },
+    {
+      "name": "ml-analytics-info-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "analytics-metadata-prov-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "nsacf-capability",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "mbs-session-id-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "area-session-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "gmlc-number",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "upf-n6-ip",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "tai-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "nf-tai-list-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferences-precedence",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "support-onboarding-capability",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "uas-nf-functionality-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "multi-mem-af-sess-qos-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "member-ue-sel-assist-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "v2x-capability",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "prose-capability",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "shared-data-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "target-hni",
+      "in": "query",
+      "required": false,
+      "schemaRef": "fqdn"
+    },
+    {
+      "name": "target-nw-resolution",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "exclude-nfinst-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "exclude-nfservinst-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "exclude-nfserviceset-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "exclude-nfset-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferred-analytics-delays",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "high-latency-com",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "nsac-sai",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "complete-profile",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "n32-purposes",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferred-features",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "remote-plmn-id-roaming",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "pru-tai",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "pru-support-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "af-data",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ml-accuracy-checking-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "analytics-accuracy-checking-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "a2x-support-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "a2x-capability",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ml-model-storage-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "data-storage-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "data-subscription-relocation-support-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ims-domain-name",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "media-capability-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "roaming-exchange-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ranging-sl-pos-support-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferred-up-positioning-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "complete-search-result",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ursp-delivery-eps-support-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    }
+  ],
+  "requestHeaders": [
+    {
+      "name": "Accept-Encoding",
+      "in": "header",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "If-None-Match",
+      "in": "header",
+      "required": false,
+      "schemaRef": ""
+    }
+  ],
+  "pathParams": [],
+  "queryParams": [
+    {
+      "name": "target-nf-type",
+      "in": "query",
+      "required": true,
+      "schemaRef": "nfType"
+    },
+    {
+      "name": "requester-nf-type",
+      "in": "query",
+      "required": true,
+      "schemaRef": "nfType"
+    },
+    {
+      "name": "preferred-collocated-nf-types",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "requester-nf-instance-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": "nfInstanceId"
+    },
+    {
+      "name": "service-names",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "requester-nf-instance-fqdn",
+      "in": "query",
+      "required": false,
+      "schemaRef": "fqdn"
+    },
+    {
+      "name": "target-plmn-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "requester-plmn-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "target-nf-instance-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": "nfInstanceId"
+    },
+    {
+      "name": "target-nf-instance-id-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "target-nf-fqdn",
+      "in": "query",
+      "required": false,
+      "schemaRef": "fqdn"
+    },
+    {
+      "name": "hnrf-uri",
+      "in": "query",
+      "required": false,
+      "schemaRef": "nrfDiscApiUri"
+    },
+    {
+      "name": "snssais",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "additional-snssais",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "requester-snssais",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "plmn-specific-snssai-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "requester-plmn-specific-snssai-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "dnn",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ipv4-index",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ipv6-index",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "nsi-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "smf-serving-area",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "mbsmf-serving-area",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "tai",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "amf-region-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "amf-set-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "guami",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "supi",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ue-ipv4-address",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ip-domain",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ue-ipv6-prefix",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "pgw-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferred-pgw-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "pgw",
+      "in": "query",
+      "required": false,
+      "schemaRef": "fqdn"
+    },
+    {
+      "name": "pgw-ip",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "gpsi",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "external-group-identity",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "internal-group-identity",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "pfd-data",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "data-set",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "routing-indicator",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "group-id-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "dnai-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "pdu-session-types",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "event-id-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "nwdaf-event-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "upf-event-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "supported-features",
+      "in": "query",
+      "required": false,
+      "schemaRef": "supportedFeatures"
+    },
+    {
+      "name": "upf-iwk-eps-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "chf-supported-plmn",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferred-locality",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ext-preferred-locality",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "access-type",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "required-features",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "complex-query",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "max-payload-size",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "max-payload-size-ext",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "atsss-capability",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "upf-ue-ip-addr-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "client-type",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "lmf-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "an-node-type",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "rat-type",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferred-tai",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferred-nf-instances",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "target-snpn",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "requester-snpn-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "af-ee-data",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "w-agf-info",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "tngf-info",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "twif-info",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "upf-select-epdg-info",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "target-nf-set-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "target-nf-service-set-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": "nfServiceSetId"
+    },
+    {
+      "name": "nef-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "notification-type",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "n1-msg-class",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "n2-info-class",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "serving-scope",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "imsi",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ims-private-identity",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ims-public-identity",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "msisdn",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferred-api-versions",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "v2x-support-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "redundant-gtpu",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "redundant-transport",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ipups",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "sxa-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "scp-domain-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "address-domain",
+      "in": "query",
+      "required": false,
+      "schemaRef": "fqdn"
+    },
+    {
+      "name": "ipv4-addr",
+      "in": "query",
+      "required": false,
+      "schemaRef": "schema"
+    },
+    {
+      "name": "ipv6-prefix",
+      "in": "query",
+      "required": false,
+      "schemaRef": "schema"
+    },
+    {
+      "name": "served-nf-set-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": "schema"
+    },
+    {
+      "name": "remote-plmn-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "remote-snpn-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "data-forwarding",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferred-full-plmn",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "requester-features",
+      "in": "query",
+      "required": false,
+      "schemaRef": "supportedFeatures"
+    },
+    {
+      "name": "realm-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "storage-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "vsmf-support-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ismf-support-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "nrf-disc-uri",
+      "in": "query",
+      "required": false,
+      "schemaRef": "nrfDiscApiUri"
+    },
+    {
+      "name": "preferred-vendor-specific-features",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferred-vendor-specific-nf-features",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "required-pfcp-features",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "home-pub-key-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "prose-support-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "analytics-aggregation-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "serving-nf-set-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": "schema"
+    },
+    {
+      "name": "serving-nf-type",
+      "in": "query",
+      "required": false,
+      "schemaRef": "nfType"
+    },
+    {
+      "name": "ml-analytics-info-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "analytics-metadata-prov-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "nsacf-capability",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "mbs-session-id-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "area-session-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "gmlc-number",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "upf-n6-ip",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "tai-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "nf-tai-list-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferences-precedence",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "support-onboarding-capability",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "uas-nf-functionality-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "multi-mem-af-sess-qos-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "member-ue-sel-assist-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "v2x-capability",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "prose-capability",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "shared-data-id",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "target-hni",
+      "in": "query",
+      "required": false,
+      "schemaRef": "fqdn"
+    },
+    {
+      "name": "target-nw-resolution",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "exclude-nfinst-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "exclude-nfservinst-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "exclude-nfserviceset-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "exclude-nfset-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferred-analytics-delays",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "high-latency-com",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "nsac-sai",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "complete-profile",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "n32-purposes",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferred-features",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "remote-plmn-id-roaming",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "pru-tai",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "pru-support-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "af-data",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ml-accuracy-checking-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "analytics-accuracy-checking-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "a2x-support-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "a2x-capability",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ml-model-storage-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "data-storage-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "data-subscription-relocation-support-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ims-domain-name",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "media-capability-list",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "roaming-exchange-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ranging-sl-pos-support-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "preferred-up-positioning-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "complete-search-result",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    },
+    {
+      "name": "ursp-delivery-eps-support-ind",
+      "in": "query",
+      "required": false,
+      "schemaRef": ""
+    }
+  ],
+  "request": null,
+  "sourceFile": "TS29510_Nnrf_NFDiscovery.yaml",
+  "nf": "NRF",
+  "service": "NRF NFDiscovery Service",
+  "explorerUrl": "/?q=SearchNFInstances",
+  "storyUrl": "/specs/29.510",
+  "view": "request",
+  "envelope": {
+    "operationId": "SearchNFInstances",
+    "method": "GET",
+    "path": "/nf-instances",
+    "headers": {
+      "Accept-Encoding": {
+        "type": "string",
+        "required": false
+      },
+      "If-None-Match": {
+        "type": "string",
+        "required": false
+      },
+      "Content-Type": {
+        "type": "string",
+        "required": true,
+        "default": "application/json"
+      },
+      "Accept": {
+        "type": "string",
+        "required": false,
+        "default": "application/json"
+      },
+      "3gpp-Sbi-Message-Priority": {
+        "type": "integer",
+        "required": false
+      }
+    },
+    "body": {
+      "contentType": "application/json",
+      "schemaRef": "",
+      "json": {
+        "target-nf-type": "PCF",
+        "requester-nf-type": "SMF",
+        "snssais": [
+          {
+            "sst": 1,
+            "sd": "010203"
+          }
+        ],
+        "dnn": "internet",
+        "supi": "imsi-001010000000001"
+      },
+      "schema": {
+        "type": "object",
+        "required": [],
+        "properties": {}
+      }
+    }
+  }
+}

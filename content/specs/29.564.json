@@ -1,0 +1,145 @@
+{
+  "tsNumber": "29.564",
+  "title": "User Plane Function Services; Stage 3 (UPF SBI)",
+  "tagline": "UPF — user plane where SMF enforces SmPolicyDecision",
+  "summary": "TS 29.564 defines SBI services exposed by the UPF, including event exposure and UE IP address queries. In the PDU session journey, the critical UPF role is user-plane enforcement: SMF programs packet detection, forwarding, and QoS rules on the UPF (primarily via the N4 interface defined in TS 29.502). The 29.564 REST APIs complement N4 for event subscription and exposure.",
+  "defines": [
+    "Nupf_EventExposure — subscribe to UPF events (usage, trends)",
+    "Nupf_GetUEPrivateIPaddrAndIdentifiers — UE IP lookup services",
+    "UPF as producer NF in service-based architecture",
+    "Event notification URIs provisioned via N4 or Subscribe"
+  ],
+  "whyItMatters": "SmPolicyDecision from PCF (29.512) becomes real traffic treatment only after SMF installs rules on the UPF. Without the UPF story, policy is abstract. N4 session establishment in 29.502 is the enforcement step; 29.564 documents the UPF's SBI surface for monitoring and exposure.",
+  "stitchAnchor": "29.512",
+  "primaryNf": "UPF",
+  "entryPoints": [
+    {
+      "type": "procedure",
+      "name": "N4 session establishment",
+      "refSpec": "29.502",
+      "consumer": "SMF",
+      "description": "SMF configures UPF session — PDRs, FARs, QERs from applied SmPolicyDecision."
+    },
+    {
+      "type": "sbi",
+      "method": "POST",
+      "path": "/nupf-ee/v1/subscriptions",
+      "operationId": "Subscribe",
+      "consumer": "NEF/AF/SMF",
+      "description": "Subscribe to UPF events (usage measures, trends)."
+    },
+    {
+      "type": "procedure",
+      "name": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "description": "PCC/QoS rules in SmPolicyDecision drive what SMF programs on UPF."
+    }
+  ],
+  "elements": [
+    {
+      "nf": "UPF",
+      "role": "User Plane Function — forwards traffic per SMF-installed rules",
+      "inSpec": true,
+      "primarySpec": "29.564"
+    },
+    {
+      "nf": "SMF",
+      "role": "Programs UPF via N4; primary consumer of session policy",
+      "inSpec": false,
+      "primarySpec": "29.502"
+    },
+    {
+      "nf": "PCF",
+      "role": "SmPolicyDecision source — QoS and PCC rules enforced on UPF",
+      "inSpec": false,
+      "primarySpec": "29.512"
+    },
+    {
+      "nf": "AMF",
+      "role": "Access — indirect; no direct UPF SBI in PDU establishment",
+      "inSpec": false,
+      "primarySpec": "29.518"
+    }
+  ],
+  "interactions": [
+    {
+      "from": "SMF",
+      "to": "PCF",
+      "via": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "response": "SmPolicyDecision",
+      "description": "Policy decision before user-plane programming"
+    },
+    {
+      "from": "SMF",
+      "to": "UPF",
+      "via": "N4 PFCP session",
+      "refSpec": "29.502",
+      "description": "Install packet detection, forwarding, and QoS enforcement rules"
+    },
+    {
+      "from": "Consumer",
+      "to": "UPF",
+      "via": "Nupf_EventExposure Subscribe",
+      "description": "Optional — monitor usage events after session is active"
+    }
+  ],
+  "e2eFlow": {
+    "name": "PDU Session Establishment (UPF view)",
+    "refSpecs": [
+      { "ts": "23.502", "role": "Stage-2 procedures" },
+      { "ts": "29.502", "role": "N4 and SMF PDU session" },
+      { "ts": "29.512", "role": "Policy rules to enforce" }
+    ],
+    "steps": [
+      {
+        "order": 2,
+        "actors": ["AMF", "SMF"],
+        "action": "PDU session context created on SMF",
+        "inSpec": false,
+        "refSpec": "29.502"
+      },
+      {
+        "order": 4,
+        "actors": ["SMF", "PCF"],
+        "action": "SMF receives SmPolicyDecision with PCC and QoS rules",
+        "inSpec": false,
+        "refSpec": "29.512",
+        "operationId": "CreateSMPolicy"
+      },
+      {
+        "order": 6,
+        "actors": ["PCF", "SMF"],
+        "action": "Policy decision complete — SMF maps rules to user-plane actions",
+        "inSpec": false,
+        "refSpec": "29.512"
+      },
+      {
+        "order": 7,
+        "actors": ["SMF", "UPF"],
+        "action": "SMF establishes N4 session and installs PDR/FAR/QER from policy",
+        "inSpec": false,
+        "refSpec": "29.502"
+      },
+      {
+        "order": 8,
+        "actors": ["SMF", "AMF"],
+        "action": "User plane ready — PDU session established toward UE",
+        "inSpec": false,
+        "refSpec": "29.502"
+      }
+    ]
+  },
+  "relatedSpecs": [
+    { "ts": "29.502", "role": "N4 user-plane session — SMF to UPF" },
+    { "ts": "29.512", "role": "SmPolicyDecision drives enforcement rules" },
+    { "ts": "23.502", "role": "PDU session establishment procedure" },
+    { "ts": "29.518", "role": "AMF — access-side trigger (indirect to UPF)" }
+  ],
+  "relatedStory": [
+    { "ts": "29.502", "role": "N4 session establishment after policy" },
+    { "ts": "29.512", "role": "PCC/QoS rules applied on UPF" },
+    { "ts": "23.502", "role": "User-plane resource setup in procedure" }
+  ],
+  "highlightClauses": ["4.1", "5", "5.2"]
+}

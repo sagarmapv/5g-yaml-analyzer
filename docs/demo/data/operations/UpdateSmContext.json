@@ -1,0 +1,599 @@
+{
+  "operationId": "UpdateSmContext",
+  "method": "POST",
+  "path": "/sm-contexts/{smContextRef}/modify",
+  "summary": "Update SM Context",
+  "description": "",
+  "parameters": [
+    {
+      "name": "smContextRef",
+      "in": "path",
+      "required": true,
+      "schemaRef": ""
+    }
+  ],
+  "requestHeaders": [],
+  "pathParams": [
+    {
+      "name": "smContextRef",
+      "in": "path",
+      "required": true,
+      "schemaRef": ""
+    }
+  ],
+  "queryParams": [],
+  "request": {
+    "contentType": "application/json",
+    "schemaRef": "SmContextUpdateData",
+    "requiredProperties": [],
+    "properties": [
+      {
+        "name": "pei",
+        "type": "pei",
+        "required": false
+      },
+      {
+        "name": "servingNfId",
+        "type": "pcfId",
+        "required": false
+      },
+      {
+        "name": "guami",
+        "type": "guami",
+        "required": false
+      },
+      {
+        "name": "servingNetwork",
+        "type": "servingNetwork",
+        "required": false
+      },
+      {
+        "name": "backupAmfInfo",
+        "type": "array",
+        "required": false
+      },
+      {
+        "name": "anType",
+        "type": "anType",
+        "required": false
+      },
+      {
+        "name": "additionalAnType",
+        "type": "anType",
+        "required": false
+      },
+      {
+        "name": "anTypeToReactivate",
+        "type": "anType",
+        "required": false
+      },
+      {
+        "name": "anTypeOfN1N2Info",
+        "type": "anType",
+        "required": false
+      },
+      {
+        "name": "ratType",
+        "type": "ratType",
+        "required": false
+      },
+      {
+        "name": "presenceInLadn",
+        "type": "presenceInLadn",
+        "required": false
+      },
+      {
+        "name": "ueLocation",
+        "type": "ueLocation",
+        "required": false
+      },
+      {
+        "name": "ueTimeZone",
+        "type": "ueTimeZone",
+        "required": false
+      },
+      {
+        "name": "addUeLocation",
+        "type": "ueLocation",
+        "required": false
+      },
+      {
+        "name": "upCnxState",
+        "type": "UpCnxState",
+        "required": false
+      },
+      {
+        "name": "hoState",
+        "type": "HoState",
+        "required": false
+      },
+      {
+        "name": "toBeSwitched",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "failedToBeSwitched",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "n1SmMsg",
+        "type": "moData",
+        "required": false
+      },
+      {
+        "name": "n2SmInfo",
+        "type": "moData",
+        "required": false
+      },
+      {
+        "name": "n2SmInfoType",
+        "type": "N2SmInfoType",
+        "required": false
+      },
+      {
+        "name": "targetId",
+        "type": "targetId",
+        "required": false
+      },
+      {
+        "name": "targetServingNfId",
+        "type": "pcfId",
+        "required": false
+      },
+      {
+        "name": "smContextStatusUri",
+        "type": "smfUri",
+        "required": false
+      },
+      {
+        "name": "dataForwarding",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "n9ForwardingTunnel",
+        "type": "TunnelInfo",
+        "required": false
+      },
+      {
+        "name": "n9DlForwardingTnlList",
+        "type": "array",
+        "required": false
+      },
+      {
+        "name": "n9UlForwardingTnlList",
+        "type": "array",
+        "required": false
+      },
+      {
+        "name": "n9DlForwardingTunnel",
+        "type": "TunnelInfo",
+        "required": false
+      },
+      {
+        "name": "n9InactivityTimer",
+        "type": "backOffTimer",
+        "required": false
+      },
+      {
+        "name": "epsBearerSetup",
+        "type": "array",
+        "required": false
+      },
+      {
+        "name": "revokeEbiList",
+        "type": "array",
+        "required": false
+      },
+      {
+        "name": "release",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "cause",
+        "type": "Cause",
+        "required": false
+      },
+      {
+        "name": "ngApCause",
+        "type": "ngApCause",
+        "required": false
+      },
+      {
+        "name": "5gMmCauseValue",
+        "type": "retryAfter",
+        "required": false
+      },
+      {
+        "name": "sNssai",
+        "type": "sNssai",
+        "required": false
+      },
+      {
+        "name": "traceData",
+        "type": "traceData",
+        "required": false
+      },
+      {
+        "name": "epsInterworkingInd",
+        "type": "EpsInterworkingIndication",
+        "required": false
+      },
+      {
+        "name": "anTypeCanBeChanged",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "n2SmInfoExt1",
+        "type": "moData",
+        "required": false
+      },
+      {
+        "name": "n2SmInfoTypeExt1",
+        "type": "N2SmInfoType",
+        "required": false
+      },
+      {
+        "name": "maReleaseInd",
+        "type": "MaReleaseIndication",
+        "required": false
+      },
+      {
+        "name": "maNwUpgradeInd",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "maRequestInd",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "n3gPathSwitchExecutionInd",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "exemptionInd",
+        "type": "ExemptionInd",
+        "required": false
+      },
+      {
+        "name": "supportedFeatures",
+        "type": "supportedFeatures",
+        "required": false
+      },
+      {
+        "name": "moExpDataCounter",
+        "type": "moExpDataCounter",
+        "required": false
+      },
+      {
+        "name": "extendedNasSmTimerInd",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "forwardingFTeid",
+        "type": "pgwS8cFteid",
+        "required": false
+      },
+      {
+        "name": "forwardingBearerContexts",
+        "type": "array",
+        "required": false
+      },
+      {
+        "name": "ddnFailureSubs",
+        "type": "DdnFailureSubs",
+        "required": false
+      },
+      {
+        "name": "skipN2PduSessionResRelInd",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "secondaryRatUsageDataReportContainer",
+        "type": "array",
+        "required": false
+      },
+      {
+        "name": "smPolicyNotifyInd",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "pcfUeCallbackInfo",
+        "type": "pcfUeCallbackInfo",
+        "required": false
+      },
+      {
+        "name": "satelliteBackhaulCat",
+        "type": "satelliteBackhaulCat",
+        "required": false
+      },
+      {
+        "name": "cnBasedMt",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "geoSatelliteId",
+        "type": "geoSatelliteId",
+        "required": false
+      },
+      {
+        "name": "altSnssai",
+        "type": "sNssai",
+        "required": false
+      },
+      {
+        "name": "altHplmnSnssai",
+        "type": "sNssai",
+        "required": false
+      },
+      {
+        "name": "nsReplTerminInd",
+        "type": "boolean",
+        "required": false
+      }
+    ]
+  },
+  "sourceFile": "TS29502_Nsmf_PDUSession.yaml",
+  "nf": "SMF",
+  "service": "Nsmf_PDUSession",
+  "explorerUrl": "/?q=UpdateSmContext",
+  "storyUrl": "/specs/29.502",
+  "view": "request",
+  "envelope": {
+    "operationId": "UpdateSmContext",
+    "method": "POST",
+    "path": "/sm-contexts/{smContextRef}/modify",
+    "headers": {
+      "Content-Type": {
+        "type": "string",
+        "required": true,
+        "default": "application/json"
+      },
+      "Accept": {
+        "type": "string",
+        "required": false,
+        "default": "application/json"
+      },
+      "3gpp-Sbi-Message-Priority": {
+        "type": "integer",
+        "required": false
+      }
+    },
+    "body": {
+      "contentType": "application/json",
+      "schemaRef": "SmContextUpdateData",
+      "json": {
+        "pei": "imei-001010000000001",
+        "servingNfId": "smf-instance-001",
+        "anType": "3GPP_ACCESS",
+        "ratType": "NR",
+        "presenceInLadn": "IN_AREA",
+        "ueLocation": {
+          "nrLocation": {
+            "tai": {
+              "plmnId": {
+                "mcc": "001",
+                "mnc": "01"
+              },
+              "tac": "000001"
+            },
+            "ncgi": {
+              "plmnId": {
+                "mcc": "001",
+                "mnc": "01"
+              },
+              "nrCellId": "000000001"
+            }
+          }
+        },
+        "upCnxState": "ACTIVATED"
+      },
+      "schema": {
+        "type": "object",
+        "required": [],
+        "properties": {
+          "pei": {
+            "type": "pei"
+          },
+          "servingNfId": {
+            "type": "pcfId"
+          },
+          "guami": {
+            "type": "guami"
+          },
+          "servingNetwork": {
+            "type": "servingNetwork"
+          },
+          "backupAmfInfo": {
+            "type": "array"
+          },
+          "anType": {
+            "type": "anType"
+          },
+          "additionalAnType": {
+            "type": "anType"
+          },
+          "anTypeToReactivate": {
+            "type": "anType"
+          },
+          "anTypeOfN1N2Info": {
+            "type": "anType"
+          },
+          "ratType": {
+            "type": "ratType"
+          },
+          "presenceInLadn": {
+            "type": "presenceInLadn"
+          },
+          "ueLocation": {
+            "type": "ueLocation"
+          },
+          "ueTimeZone": {
+            "type": "ueTimeZone"
+          },
+          "addUeLocation": {
+            "type": "ueLocation"
+          },
+          "upCnxState": {
+            "type": "UpCnxState"
+          },
+          "hoState": {
+            "type": "HoState"
+          },
+          "toBeSwitched": {
+            "type": "boolean"
+          },
+          "failedToBeSwitched": {
+            "type": "boolean"
+          },
+          "n1SmMsg": {
+            "type": "moData"
+          },
+          "n2SmInfo": {
+            "type": "moData"
+          },
+          "n2SmInfoType": {
+            "type": "N2SmInfoType"
+          },
+          "targetId": {
+            "type": "targetId"
+          },
+          "targetServingNfId": {
+            "type": "pcfId"
+          },
+          "smContextStatusUri": {
+            "type": "smfUri"
+          },
+          "dataForwarding": {
+            "type": "boolean"
+          },
+          "n9ForwardingTunnel": {
+            "type": "TunnelInfo"
+          },
+          "n9DlForwardingTnlList": {
+            "type": "array"
+          },
+          "n9UlForwardingTnlList": {
+            "type": "array"
+          },
+          "n9DlForwardingTunnel": {
+            "type": "TunnelInfo"
+          },
+          "n9InactivityTimer": {
+            "type": "backOffTimer"
+          },
+          "epsBearerSetup": {
+            "type": "array"
+          },
+          "revokeEbiList": {
+            "type": "array"
+          },
+          "release": {
+            "type": "boolean"
+          },
+          "cause": {
+            "type": "Cause"
+          },
+          "ngApCause": {
+            "type": "ngApCause"
+          },
+          "5gMmCauseValue": {
+            "type": "retryAfter"
+          },
+          "sNssai": {
+            "type": "sNssai"
+          },
+          "traceData": {
+            "type": "traceData"
+          },
+          "epsInterworkingInd": {
+            "type": "EpsInterworkingIndication"
+          },
+          "anTypeCanBeChanged": {
+            "type": "boolean"
+          },
+          "n2SmInfoExt1": {
+            "type": "moData"
+          },
+          "n2SmInfoTypeExt1": {
+            "type": "N2SmInfoType"
+          },
+          "maReleaseInd": {
+            "type": "MaReleaseIndication"
+          },
+          "maNwUpgradeInd": {
+            "type": "boolean"
+          },
+          "maRequestInd": {
+            "type": "boolean"
+          },
+          "n3gPathSwitchExecutionInd": {
+            "type": "boolean"
+          },
+          "exemptionInd": {
+            "type": "ExemptionInd"
+          },
+          "supportedFeatures": {
+            "type": "supportedFeatures"
+          },
+          "moExpDataCounter": {
+            "type": "moExpDataCounter"
+          },
+          "extendedNasSmTimerInd": {
+            "type": "boolean"
+          },
+          "forwardingFTeid": {
+            "type": "pgwS8cFteid"
+          },
+          "forwardingBearerContexts": {
+            "type": "array"
+          },
+          "ddnFailureSubs": {
+            "type": "DdnFailureSubs"
+          },
+          "skipN2PduSessionResRelInd": {
+            "type": "boolean"
+          },
+          "secondaryRatUsageDataReportContainer": {
+            "type": "array"
+          },
+          "smPolicyNotifyInd": {
+            "type": "boolean"
+          },
+          "pcfUeCallbackInfo": {
+            "type": "pcfUeCallbackInfo"
+          },
+          "satelliteBackhaulCat": {
+            "type": "satelliteBackhaulCat"
+          },
+          "cnBasedMt": {
+            "type": "boolean"
+          },
+          "geoSatelliteId": {
+            "type": "geoSatelliteId"
+          },
+          "altSnssai": {
+            "type": "sNssai"
+          },
+          "altHplmnSnssai": {
+            "type": "sNssai"
+          },
+          "nsReplTerminInd": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

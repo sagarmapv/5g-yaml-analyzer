@@ -1,0 +1,32 @@
+# Virtual environments
+venv/
+5G-Env/
+.env
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# IDEs
+.vscode/
+.idea/
+
+# System
+*.DS_Store
+
+# 3GPP spec PDFs (local only — copyright)
+Yaml-Files/**/*.pdf
+content/specs/*-clauses.json
+
+# Generated output
+Bank/
+Parsed-JSON/
+index.json
+.build-status.json
+.topology.json
+.ts-catalog.json
+.nf-map.json
+*.log
+
+# Legacy Web-UI (removed in v2 overhaul)
+Web-UI/

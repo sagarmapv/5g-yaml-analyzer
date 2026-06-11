@@ -1,0 +1,105 @@
+{
+  "operationId": "PostSmContexts",
+  "method": "POST",
+  "path": "/sm-contexts",
+  "summary": "Create SM Context",
+  "description": "",
+  "parameters": [],
+  "requestHeaders": [],
+  "pathParams": [],
+  "queryParams": [],
+  "request": {
+    "contentType": "multipart/related",
+    "schemaRef": "",
+    "requiredProperties": [],
+    "properties": [
+      {
+        "name": "jsonData",
+        "type": "SmContextCreateData",
+        "required": false
+      },
+      {
+        "name": "binaryDataN1SmMessage",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "binaryDataN2SmInformation",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "binaryDataN2SmInformationExt1",
+        "type": "string",
+        "required": false
+      }
+    ]
+  },
+  "sourceFile": "TS29502_Nsmf_PDUSession.yaml",
+  "nf": "SMF",
+  "service": "Nsmf_PDUSession",
+  "explorerUrl": "/?q=PostSmContexts",
+  "storyUrl": "/specs/29.502",
+  "view": "request",
+  "envelope": {
+    "operationId": "PostSmContexts",
+    "method": "POST",
+    "path": "/sm-contexts",
+    "headers": {
+      "Content-Type": {
+        "type": "string",
+        "required": true,
+        "default": "multipart/related"
+      },
+      "Accept": {
+        "type": "string",
+        "required": false,
+        "default": "application/json"
+      },
+      "3gpp-Sbi-Message-Priority": {
+        "type": "integer",
+        "required": false
+      }
+    },
+    "body": {
+      "contentType": "multipart/related",
+      "schemaRef": "",
+      "json": {
+        "supi": "imsi-001010000000001",
+        "pei": "imei-001010000000001",
+        "pduSessionId": 5,
+        "dnn": "internet",
+        "sNssai": {
+          "sst": 1,
+          "sd": "010203"
+        },
+        "servingNetwork": {
+          "mcc": "001",
+          "mnc": "01"
+        },
+        "n1SmMsg": {
+          "contentId": "n1-sm-msg"
+        },
+        "anType": "3GPP_ACCESS"
+      },
+      "schema": {
+        "type": "object",
+        "required": [],
+        "properties": {
+          "jsonData": {
+            "type": "SmContextCreateData"
+          },
+          "binaryDataN1SmMessage": {
+            "type": "string"
+          },
+          "binaryDataN2SmInformation": {
+            "type": "string"
+          },
+          "binaryDataN2SmInformationExt1": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

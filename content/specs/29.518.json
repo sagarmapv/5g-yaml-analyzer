@@ -1,0 +1,164 @@
+{
+  "tsNumber": "29.518",
+  "title": "Access and Mobility Management Services; Stage 3 (AMF SBI)",
+  "tagline": "AMF — access anchor that hands PDU sessions to SMF",
+  "summary": "TS 29.518 defines the Namf services on the AMF. For PDU session establishment, the AMF is the access-side orchestrator: it receives the UE request over N1/N2, selects an SMF, and invokes Nsmf_PDUSession on SMF. It does not call Npcf_SMPolicyControl directly — session policy is SMF's responsibility after CreateSMContext.",
+  "defines": [
+    "Namf_Communication — UE context, N1N2 message transfer, registration",
+    "Namf_EventExposure — mobility and reachability events",
+    "Namf_MT — mobile-terminated domain selection",
+    "PduSessionContext in UE context — tracks active PDU sessions per UE"
+  ],
+  "whyItMatters": "Every PDU session in 5G starts on the AMF. Without understanding 29.518, the handoff from radio access to session management (29.502) and the return path when SMF completes establishment are opaque. The 29.512 policy call happens inside SMF after AMF triggers PostSmContexts.",
+  "stitchAnchor": "29.512",
+  "primaryNf": "AMF",
+  "entryPoints": [
+    {
+      "type": "procedure",
+      "name": "PDU Session Establishment Request",
+      "refSpec": "23.502",
+      "consumer": "UE",
+      "description": "UE requests a new PDU session via NAS — AMF receives over N1."
+    },
+    {
+      "type": "sbi",
+      "method": "POST",
+      "path": "/nsmf-pdusession/v1/sm-contexts",
+      "operationId": "PostSmContexts",
+      "consumer": "AMF",
+      "refSpec": "29.502",
+      "description": "AMF creates SM context on SMF — primary SBI trigger for PDU session on core."
+    },
+    {
+      "type": "sbi",
+      "method": "POST",
+      "operationId": "N1N2MessageTransfer",
+      "consumer": "SMF",
+      "description": "SMF requests AMF to deliver N1/N2 signalling toward UE and RAN during session setup."
+    },
+    {
+      "type": "procedure",
+      "name": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "description": "SMF requests session policy from PCF after AMF handoff — not an AMF SBI call."
+    }
+  ],
+  "elements": [
+    {
+      "nf": "AMF",
+      "role": "Access and Mobility Management — UE context and N1/N2 relay",
+      "inSpec": true,
+      "primarySpec": "29.518"
+    },
+    {
+      "nf": "SMF",
+      "role": "Receives PostSmContexts; runs PDU session and policy procedures",
+      "inSpec": false,
+      "primarySpec": "29.502"
+    },
+    {
+      "nf": "PCF",
+      "role": "Session policy — invoked by SMF after AMF trigger",
+      "inSpec": false,
+      "primarySpec": "29.512"
+    },
+    {
+      "nf": "UPF",
+      "role": "User plane — programmed by SMF after policy decision",
+      "inSpec": false,
+      "primarySpec": "29.564"
+    }
+  ],
+  "interactions": [
+    {
+      "from": "UE",
+      "to": "AMF",
+      "via": "NAS PDU Session Establishment Request",
+      "description": "Access-side start of the journey"
+    },
+    {
+      "from": "AMF",
+      "to": "SMF",
+      "via": "PostSmContexts",
+      "refSpec": "29.502",
+      "description": "Hand PDU session to SMF — SM context creation"
+    },
+    {
+      "from": "SMF",
+      "to": "PCF",
+      "via": "CreateSMPolicy",
+      "refSpec": "29.512",
+      "description": "Session policy inside SMF procedure (after AMF handoff)"
+    },
+    {
+      "from": "SMF",
+      "to": "AMF",
+      "via": "N1N2MessageTransfer",
+      "description": "Session accept and RAN configuration during establishment"
+    },
+    {
+      "from": "SMF",
+      "to": "AMF",
+      "via": "PostSmContexts response",
+      "refSpec": "29.502",
+      "description": "PDU session established — AMF updates PduSessionContext"
+    }
+  ],
+  "e2eFlow": {
+    "name": "PDU Session Establishment (AMF view)",
+    "refSpecs": [
+      { "ts": "23.502", "role": "Stage-2 procedures" },
+      { "ts": "29.502", "role": "SMF PDU Session SBI" },
+      { "ts": "29.512", "role": "Session policy on PCF" }
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "actors": ["UE", "RAN", "AMF"],
+        "action": "UE sends PDU Session Establishment Request — AMF handles NAS and selects SMF",
+        "inSpec": true
+      },
+      {
+        "order": 2,
+        "actors": ["AMF", "SMF"],
+        "action": "AMF invokes PostSmContexts (Create SM Context) on selected SMF",
+        "inSpec": false,
+        "refSpec": "29.502",
+        "operationId": "PostSmContexts"
+      },
+      {
+        "order": 4,
+        "actors": ["SMF", "PCF"],
+        "action": "SMF requests session policy via CreateSMPolicy",
+        "inSpec": false,
+        "refSpec": "29.512",
+        "operationId": "CreateSMPolicy"
+      },
+      {
+        "order": 7,
+        "actors": ["SMF", "UPF"],
+        "action": "SMF installs user-plane rules after SmPolicyDecision",
+        "inSpec": false,
+        "refSpec": "29.502"
+      },
+      {
+        "order": 8,
+        "actors": ["SMF", "AMF"],
+        "action": "SMF completes establishment — AMF updates UE PDU session context",
+        "inSpec": true
+      }
+    ]
+  },
+  "relatedSpecs": [
+    { "ts": "23.502", "role": "PDU session establishment procedure" },
+    { "ts": "29.502", "role": "PostSmContexts — AMF consumer of SMF" },
+    { "ts": "29.512", "role": "Session policy after SMF receives context" },
+    { "ts": "29.513", "role": "Signalling flow diagrams" }
+  ],
+  "relatedStory": [
+    { "ts": "23.502", "role": "When AMF selects SMF and starts PDU session" },
+    { "ts": "29.502", "role": "PostSmContexts request/response" },
+    { "ts": "29.512", "role": "Policy step inside SMF procedure" }
+  ],
+  "highlightClauses": ["4.1", "5.2", "5.2.2.2.3"]
+}

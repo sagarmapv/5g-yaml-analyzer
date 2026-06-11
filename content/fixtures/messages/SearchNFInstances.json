@@ -1,0 +1,7 @@
+{
+  "target-nf-type": "PCF",
+  "requester-nf-type": "SMF",
+  "snssais": [{ "sst": 1, "sd": "010203" }],
+  "dnn": "internet",
+  "supi": "imsi-001010000000001"
+}
