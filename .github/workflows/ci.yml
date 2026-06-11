@@ -28,5 +28,8 @@ jobs:
           pip install -r requirements.txt
           pip install -r requirements-dev.txt
 
+      - name: Build YAML bank
+        run: python scripts/build.py
+
       - name: Run tests
         run: pytest -v

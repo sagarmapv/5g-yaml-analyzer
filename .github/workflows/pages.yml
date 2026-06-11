@@ -30,6 +30,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Build YAML bank
+        run: python scripts/build.py
+
       - name: Export static demo
         run: python scripts/export_static_demo.py
 
